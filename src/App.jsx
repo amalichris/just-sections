@@ -1,13 +1,19 @@
 import { Routes, Route } from 'react-router-dom'
-import JustEjariPreview from './pages/JustEjariPreview'
+import DemoPage from './dev/DemoPage'
 import { GalleryIndex, GallerySection } from './dev/Gallery'
 import SectionFrame from './dev/SectionFrame'
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<JustEjariPreview />} />
-      <Route path="/justejari" element={<JustEjariPreview />} />
+      {/* A whole-page composition built from section fixtures. The gallery
+          checks sections in isolation; this checks what `ProductPage` does
+          around them.
+
+          There is deliberately no product page here any more. JustEjari's
+          landing page lives in that product's `web/` department, which consumes
+          this library as a versioned package. */}
+      <Route path="/" element={<DemoPage />} />
 
       {/* Development harness. `/gallery/frame/*` is what the gallery loads into
           its iframe, so it renders the section with no chrome around it. */}

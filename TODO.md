@@ -1,8 +1,10 @@
 # TODO — Graduate the section library into the product repos
 
-Status: **Phase 0 and Phase 1 complete (2026-07-27).** Phase 2 is ready to start.
+Status: **Phases 0–2 complete (2026-07-27), except T2.5 (Vercel), which is yours.**
+Phase 3 is ready to start.
 
-Phase 1 landed on branch `restructure/library-portability` (4 commits over a baseline commit).
+Phase 1 landed on branch `restructure/library-portability` (5 commits over a baseline commit),
+merged to `main` and tagged `v0.1.0` on 2026-07-27.
 Deviations and discoveries worth carrying forward:
 
 - **T1.2** also namespaced two component-internal custom properties by section
@@ -15,7 +17,9 @@ Deviations and discoveries worth carrying forward:
 - **T1.7** `remark-gfm` is required, not optional: JustConvert's privacy policy has 38 tables.
 - **T1.7** `legal-document-default` is the registry's one lazy section (+47.6 kB gzipped
   otherwise, on every landing page). `ProductPage` supplies the Suspense boundary.
-- **T1.8** the package is renamed but the **directory and git remote are not** — see that task.
+- **T1.8** complete: package, directory, GitHub repo, and remote all read `just-sections`.
+  The repo is **private**, which answers Open question 1 by default — Vercel needs a token to
+  resolve the git dependency in T2.5.
 
 - `~/Programming/just-design-system` created and committed — foundations + three surface docs.
 - JustConvert docs reduced to product specs, committed on branch `docs/design-system-layering`.
@@ -516,25 +520,55 @@ the skill rather than to this section.
 
 ### T1.8 — Rename the repo
 
-**Done:** `package.json` `name` is `just-sections@0.1.0`.
+**Complete (2026-07-27).** All four identities now read `just-sections`:
 
-**Still yours to do, deliberately left undone:**
+1. `package.json` `name` is `just-sections@0.1.0`.
+2. Directory renamed to `~/Programming/just-sections`.
+3. GitHub repo renamed via `gh repo rename`, which also rewrote `origin`. `package.json`
+   `repository` and the `README.md` title were updated in commit `458f4dd` — `gh` does not
+   touch either. GitHub redirects the old URL indefinitely, but that redirect dies the moment
+   anything is created under the old name, so nothing should rely on it.
+4. `restructure/library-portability` fast-forwarded onto `main` and tagged `v0.1.0`
+   (annotated), both pushed. Tagging waited for the merge because a git-tag install resolves
+   against the default branch.
 
-1. **Rename the directory** `~/Programming/landing-page-trials` → `~/Programming/just-sections`.
-   Not done automatically — moving the working directory out from under an open editor breaks
-   its state, and the path appears in your Claude Code project history.
-2. **Rename the GitHub repo** and update the remote. `package.json` `repository` still points at
-   `amalichris/landing-page-trials`; update it in the same change.
-3. **Merge to `main`, then tag `v0.1.0`.** Not tagged yet on purpose: a git-tag install resolves
-   against the default branch, so tagging a feature-branch commit would publish work that is not
-   on `main`.
+Consumers install with:
+`npm i github:amalichris/just-sections#v0.1.0`
 
-Until then consumers can install from the branch:
-`npm i github:amalichris/landing-page-trials#restructure/library-portability`
+**Carry into T2.5:** the repo is private, so Vercel's build environment needs a token to
+resolve that dependency. It resolves locally over SSH, which will not surface the problem.
 
 ---
 
 ## Phase 2 — Create the JustEjari `web/` department
+
+**T2.1–T2.4 complete (2026-07-27).** `justejari/web/` exists, renders the landing page and
+both legal pages against `just-sections@v0.1.0`, and the Mini App no longer serves public web
+pages. **T2.5 (Vercel) is still yours** — see that task.
+
+Deviations and discoveries worth carrying forward:
+
+- **The page config needed no rewriting.** T2.2 anticipated rewriting section imports; there
+  were none. A page config names sections by `type` string and the registry resolves them, so
+  the file copied verbatim. That is the composition contract working as designed.
+- **Cross-repo history did not transfer.** `git mv` cannot span repositories, so the page
+  config and its eight assets are a fresh add in `justejari`. Same limitation T0.1 hit.
+- **`PublicSiteFooter` was kept.** T2.4 said to check before removing; `PublicHomePlaceholder`
+  still uses it.
+- **The Mini App's trial landing page is retired.** `LandingPage.jsx` was the `*` catch-all
+  for every non-Telegram visitor, not a route — so removing it needed a replacement.
+  `PublicHomePlaceholder` took over: it already existed and was orphaned. That deleted ~2,200
+  lines (`components/landing/**`, `content/landing/`, `styles/landing.css`).
+- **Three dependencies died with it.** `motion` (trial landing only) plus `react-markdown` and
+  `remark-gfm` (`LegalMarkdown` only) were removed from `app/package.json`. The Mini App's
+  build lost the `LandingPage` (38 kB gzip) and `LegalMarkdown` (46 kB gzip) chunks.
+- **`PartyInputPage.jsx` had a relative `/privacy` link** that would have 404'd silently after
+  the split. Now absolute. `MenuSheet.jsx` was already absolute.
+- **The landing footer pointed at `#privacy` / `#terms`** — anchors resolving to nothing. Now
+  real routes, shared through `web/src/pages/justejari/chrome.js`.
+- **`app/AGENTS.md` described a department that served public pages.** Corrected.
+- **PRD-039 had no separable commit.** Its entire diff was four supersession lines belonging
+  to PRD-043, so Part 0's three commits split by concern rather than by PRD.
 
 ### T2.1 — Scaffold the department
 
@@ -677,6 +711,33 @@ page configs drop their `internalLinks` override and match JustEjari's exactly.
 **Outcome:** One palette definition across both products, and one legal-document filename
 convention. This is the payoff — until it lands, the family design system is still theoretical.
 
+### T3.5 — Re-sync the section dossiers with the moved page
+
+**Why this exists:** Phase 2 deleted `src/pages/justejari/` and the `/justejari` route from
+this repo. Seven dossiers still reference both. Four `prompt.md` files carry a verification
+step that now cannot be followed — "Inspect `/justejari` at 375px, 768px, 1024px, and
+1440px" — in `benefits-default`, `faq-default`, `how-it-works-default`, and
+`pricing-banner-default`. Two also instruct composing into
+`src/pages/justejari/page.config.js`.
+
+**Deliberately deferred, not overlooked.** `AGENTS.md` requires `plan.md` and `prompt.md` to
+carry the same Revision and to be updated together. Fixing the four `prompt.md` files alone
+would break that invariant; doing it correctly means revising seven dossiers and bumping
+each shared revision. That is its own task, and burying it inside the Phase 2 commits would
+have made an already-large change unreviewable.
+
+**Do:** For each affected dossier, repoint the verification step at `/gallery` (already the
+documented review surface in `AGENTS.md`), update composition references to name
+`justejari/web/src/pages/justejari/page.config.js`, and bump the shared revision in both
+documents.
+
+**Leave alone:** narrative in `plan.md` recording what *was* done at the time — e.g.
+"Composed into `src/pages/justejari/page.config.js` under id `benefits`". That is a dated
+decision record, not an instruction, and rewriting it would falsify history. Only
+present-tense instructions need to change.
+
+**Verify:** `grep -rn '/justejari' src/sections/*/prompt.md` returns nothing.
+
 ---
 
 ## Verification gate
@@ -688,21 +749,27 @@ The migration is done when all of these hold:
       any surface could be built to brand without reading an existing product's source
 - [ ] Neither product's `docs/design-system/` contains a surface convention — only its own
       component specs
-- [ ] `grep -rn 'var(--' just-sections/src | grep -v 'var(--just-'` → empty
-- [ ] `npm pack --dry-run` in `just-sections` ships no dev harness, docs, or assets
-- [ ] `find just-sections/src/sections -name '*.png' -o -name '*.svg'` → empty
-- [ ] `localhost:5173/gallery` renders every registered section
-- [ ] `justejari/web` builds and deploys, rendering identically to the pre-split preview
+- [x] `grep -rn 'var(--' just-sections/src | grep -v 'var(--just-'` → empty
+- [x] `npm pack --dry-run` in `just-sections` ships no dev harness, docs, or assets
+- [x] `find just-sections/src/sections -name '*.png' -o -name '*.svg'` → empty
+- [x] `localhost:5173/gallery` renders every registered section — 8 of 8
+- [ ] `justejari/web` builds and **deploys**, rendering identically to the pre-split preview
+      — builds and renders locally at 375 / 768 / 1280; the deploy half waits on T2.5
 - [ ] Both products serve `/terms` and `/privacy` from their `web/` department, rendering their
       own `docs/legal/` markdown, with cross-links between the two documents working
-- [ ] No legal page component remains in `justejari/app/`
+      — **JustEjari done**, verified at the DOM: one `h1` per page from the document, zero
+      `mailto:` links, cross-links resolving to `/terms` and `/privacy`, no stray `.md` hrefs.
+      JustConvert waits on T3.4
+- [x] No legal page component remains in `justejari/app/`
 - [ ] `justejari.md` source map lists both departments, dated today
 - [ ] Neither product's design doc contains a color hex value
 
 ## Open questions
 
-1. **Repo hosting.** Does `just-sections` go public on GitHub, or private? Private git
-   dependencies need a token in the Vercel build environment — worth confirming before T2.4.
+1. **Repo hosting.** ~~Public or private?~~ **Answered: private** (confirmed 2026-07-27). It
+   installs fine locally over SSH — `justejari/web` resolves `just-sections@0.1.0` from the
+   tag today — so the gap only appears in CI. Vercel's build environment needs a token before
+   T2.5 can deploy.
 2. **`just-design-system` as a skill.** It currently sits in `skills/` without a `SKILL.md`.
    Once it is docs-only at family level, does it stay a passive doc repo, or does it get a
    real SKILL.md that maintains itself the way `product-docs` does?
