@@ -1,0 +1,213 @@
+.faq-default {
+  padding: 96px clamp(20px, 4.444vw, 64px);
+  color: var(--color-near-black);
+}
+
+.faq-default--parchment {
+  background: var(--color-parchment);
+}
+
+.faq-default--ivory {
+  background: var(--color-ivory);
+}
+
+.faq-default__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+.faq-default__eyebrow {
+  color: var(--color-sienna);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+.faq-default__intro {
+  width: min(100%, 624px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.faq-default__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.faq-default__intro h2 {
+  color: var(--color-near-black);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.faq-default__subtitle {
+  max-width: 34rem;
+  margin: 16px auto 0;
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.faq-default__accordion {
+  width: 100%;
+  max-width: 624px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--color-border-cream);
+}
+
+.faq-default__item {
+  border-top: 1px solid var(--color-border-cream);
+}
+
+.faq-default__item h3 {
+  font: inherit;
+}
+
+.faq-default__item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 72px;
+  padding: 24px 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-near-black);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 100ms ease-out;
+}
+
+.faq-default__item button > span:first-child {
+  padding: 10px 16px 10px 0;
+}
+
+.faq-default__item button:focus-visible {
+  outline: 2px solid var(--color-focus-blue);
+  outline-offset: 2px;
+}
+
+.faq-default__item button:active {
+  transform: scale(0.97);
+}
+
+.faq-default__icon {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  color: var(--color-stone-gray);
+  place-items: center;
+  transition: color 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.faq-default__item--open .faq-default__icon {
+  color: var(--color-near-black);
+  transform: rotate(45deg);
+}
+
+.faq-default__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms ease-out;
+}
+
+.faq-default__answer > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.faq-default__answer p {
+  padding: 0 60px 24px 0;
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.faq-default__item--open .faq-default__answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .faq-default__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .faq-default {
+    padding-block: 128px;
+  }
+
+  .faq-default__intro h2 {
+    font-size: 3rem;
+  }
+
+  .faq-default__subtitle {
+    font-size: 1.125rem;
+  }
+
+  .faq-default__layout {
+    gap: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq-default__intro {
+    width: auto;
+    margin: 0;
+    text-align: left;
+  }
+
+  .faq-default__layout {
+    grid-template-columns: minmax(280px, 400px) minmax(0, 624px);
+    justify-content: space-between;
+    gap: clamp(64px, 6.667vw, 96px);
+  }
+
+  .faq-default__accordion {
+    margin: 0 0 0 auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .faq-default__intro h2 {
+    font-size: 4rem;
+  }
+
+  .faq-default__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-default__item button,
+  .faq-default__icon,
+  .faq-default__answer {
+    transition: none;
+  }
+
+  .faq-default__item button:active {
+    transform: none;
+  }
+}

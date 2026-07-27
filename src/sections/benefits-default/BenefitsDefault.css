@@ -1,0 +1,222 @@
+.benefits-default {
+  padding: 96px clamp(20px, 4.444vw, 64px);
+  background: var(--color-parchment);
+  color: var(--color-near-black);
+}
+
+.benefits-default__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+.benefits-default__intro {
+  width: min(100%, 624px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.benefits-default__eyebrow {
+  color: var(--color-sienna);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.benefits-default__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.benefits-default__intro h2 {
+  color: var(--color-near-black);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.benefits-default__subtitle {
+  max-width: 34rem;
+  margin: 16px auto 0;
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.benefits-default__grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Cards are not links or controls: no hover, no press, no focus ring, no
+   motion. The proof line is always visible instead of hiding behind a hover
+   that touch and keyboard users never get. */
+.benefits-default__card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--color-ivory);
+  box-shadow: 0 0 0 1px var(--color-ring-warm);
+}
+
+.benefits-default__media {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-parchment);
+  aspect-ratio: 16 / 10;
+}
+
+.benefits-default__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.benefits-default__card h3 {
+  color: var(--color-near-black);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Spacing on the pair, appearance on the element: the card keeps its type
+   even if the frame above it ever becomes optional. */
+.benefits-default__media + h3 {
+  margin-top: 16px;
+}
+
+.benefits-default__description {
+  margin-top: 8px;
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.benefits-default__proof {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-cream);
+}
+
+.benefits-default__proof blockquote {
+  color: var(--color-charcoal-warm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+.benefits-default__proof figcaption {
+  margin-top: 8px;
+  color: var(--color-stone-gray);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .benefits-default__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .benefits-default {
+    padding-block: 128px;
+  }
+
+  .benefits-default__layout {
+    gap: 64px;
+  }
+
+  .benefits-default__intro h2 {
+    font-size: 3rem;
+  }
+
+  .benefits-default__subtitle {
+    font-size: 1.125rem;
+  }
+
+  .benefits-default__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .benefits-default__card {
+    padding: 24px;
+  }
+
+  /* Anchor spans the full width above the flanking pair. */
+  .benefits-default__card--anchor {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Full viewport with the content centred rather than a fixed height: the
+     anchor card grows with its copy, so the section may exceed a screen and
+     must never clip. */
+  .benefits-default {
+    display: grid;
+    min-block-size: 100dvh;
+    align-content: center;
+  }
+
+  .benefits-default__intro {
+    width: auto;
+    margin: 0;
+    text-align: left;
+  }
+
+  .benefits-default__subtitle {
+    margin-inline: 0;
+  }
+
+  .benefits-default__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Two thirds of the width, both rows: the anchor benefit outweighs the pair
+     beside it rather than sitting in a row of equals. */
+  .benefits-default__card--anchor {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .benefits-default__card--anchor .benefits-default__media {
+    flex: 1;
+    min-height: 240px;
+    aspect-ratio: auto;
+  }
+
+  .benefits-default__card--anchor h3 {
+    font-size: 1.5625rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .benefits-default__intro h2 {
+    font-size: 4rem;
+  }
+
+  .benefits-default__subtitle {
+    font-size: 1.25rem;
+  }
+}

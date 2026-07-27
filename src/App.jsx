@@ -1,12 +1,11 @@
-import { Routes, Route, Link } from 'react-router-dom'
-import Home from './pages/Home'
+import { Routes, Route } from 'react-router-dom'
+import JustEjariPreview from './pages/JustEjariPreview'
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      {/* Add more trial routes here */}
-      {/* <Route path="/v2" element={<TrialV2 />} /> */}
+      <Route path="/" element={<JustEjariPreview />} />
+      <Route path="/justejari" element={<JustEjariPreview />} />
     </Routes>
   )
 }

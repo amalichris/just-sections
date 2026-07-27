@@ -1,0 +1,488 @@
+.how-it-works-default {
+  padding: 96px clamp(20px, 4.444vw, 64px);
+  background: var(--color-parchment);
+  color: var(--color-near-black);
+}
+
+.how-it-works-default__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+.how-it-works-default__intro {
+  width: min(100%, 624px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.how-it-works-default__eyebrow {
+  color: var(--color-sienna);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.how-it-works-default__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.how-it-works-default__intro h2 {
+  color: var(--color-near-black);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.how-it-works-default__subtitle {
+  max-width: 34rem;
+  margin: 16px auto 0;
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.how-it-works-default__track {
+  width: min(100%, 624px);
+  margin: 0 auto;
+}
+
+.how-it-works-default__steps {
+  list-style: none;
+  border-bottom: 1px solid var(--color-border-cream);
+}
+
+.how-it-works-default__step {
+  border-top: 1px solid var(--color-border-cream);
+}
+
+.how-it-works-default__step h3 {
+  font: inherit;
+}
+
+/* Mobile accordion trigger. Scoped by class, not `.step button`, so the
+   desktop step control does not inherit the accordion row's box. */
+.how-it-works-default__trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 72px;
+  padding: 24px 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-near-black);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 100ms ease-out;
+}
+
+.how-it-works-default__trigger:focus-visible {
+  outline: 2px solid var(--color-focus-blue);
+  outline-offset: 2px;
+}
+
+.how-it-works-default__trigger:active {
+  transform: scale(0.97);
+}
+
+.how-it-works-default__number {
+  color: var(--color-stone-gray);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+  transition: color 200ms ease-out;
+}
+
+.how-it-works-default__step-title {
+  flex: 1;
+  padding: 10px 16px;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.how-it-works-default__icon {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  color: var(--color-stone-gray);
+  place-items: center;
+  transition: color 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.how-it-works-default__step--open .how-it-works-default__icon {
+  color: var(--color-near-black);
+  transform: rotate(45deg);
+}
+
+.how-it-works-default__disclosure {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms ease-out;
+}
+
+.how-it-works-default__disclosure > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.how-it-works-default__step--open .how-it-works-default__disclosure {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.how-it-works-default__description {
+  color: var(--color-olive-gray);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.how-it-works-default__disclosure .how-it-works-default__description {
+  padding-right: 60px;
+}
+
+.how-it-works-default__inline-media {
+  display: grid;
+  margin: 16px 0 24px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--color-ivory);
+  box-shadow: 0 0 0 1px var(--color-ring-warm);
+  place-items: center;
+}
+
+.how-it-works-default__inline-media img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 420px;
+}
+
+.how-it-works-default__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 32px;
+  padding: 0 24px;
+  border: 1px solid var(--color-sienna);
+  border-radius: 99px;
+  background: var(--color-sienna);
+  box-shadow: 0 0 0 1px var(--color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 100ms ease-out;
+}
+
+.how-it-works-default__cta:hover {
+  border-color: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
+  background: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+}
+
+.how-it-works-default__cta:focus-visible {
+  outline: 2px solid var(--color-focus-blue);
+  outline-offset: 3px;
+}
+
+.how-it-works-default__cta:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .how-it-works-default__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .how-it-works-default {
+    padding-block: 128px;
+  }
+
+  .how-it-works-default__layout {
+    gap: 64px;
+  }
+
+  .how-it-works-default__intro h2 {
+    font-size: 3rem;
+  }
+
+  .how-it-works-default__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* The composition is held still and the reader's scroll changes only which
+     step is current: title, step list, and media frame never move. */
+  .how-it-works-default {
+    padding: 0;
+  }
+
+  .how-it-works-default__scroll-track {
+    /* Scroll distance one step is worth. The single knob for how fast the
+       section advances — everything below is derived from it. */
+    --step-scroll: 70dvh;
+
+    position: relative;
+    /* A step's worth of scroll each, plus half a step and half a viewport, so
+       the last step holds for a full step before the pin releases. */
+    min-block-size: calc((var(--step-count) + 0.5) * var(--step-scroll) + 50dvh);
+  }
+
+  /* The composition is centred in the pinned viewport as one block. Sizing the
+     body to fill the leftover height instead pushes the steps to the bottom of
+     the screen and strands the title on its own. */
+  .how-it-works-default__pinned {
+    display: grid;
+    position: sticky;
+    top: 0;
+    block-size: 100dvh;
+    padding: clamp(40px, 7vh, 96px) clamp(24px, 4.444vw, 64px);
+    align-content: center;
+  }
+
+  /* Empty markers spaced a step apart down the track. Scroll position is read
+     from these rather than from the composition, which no longer moves. */
+  .how-it-works-default__markers {
+    display: grid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    grid-auto-rows: var(--step-scroll);
+    pointer-events: none;
+  }
+
+  .how-it-works-default__layout {
+    gap: clamp(24px, 4vh, 48px);
+  }
+
+  .how-it-works-default__intro {
+    width: auto;
+    margin: 0;
+    text-align: left;
+  }
+
+  .how-it-works-default__subtitle {
+    margin-inline: 0;
+  }
+
+  /* Both columns stretch to the taller one — the step list — so the media frame
+     starts and ends level with it instead of running the height of the screen. */
+  .how-it-works-default__body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .how-it-works-default__track {
+    display: grid;
+    width: auto;
+    margin: 0;
+    align-content: start;
+  }
+
+  /* Grid items stretch by default, which would pull the pill to the full column
+     width. The CTA keeps its intrinsic width. */
+  .how-it-works-default__cta {
+    justify-self: start;
+  }
+
+  /* No dividers in the split: the rail carries the sequence instead. */
+  .how-it-works-default__steps {
+    border-bottom: 0;
+  }
+
+  .how-it-works-default__step {
+    position: relative;
+    padding: 12px 0 12px 32px;
+    border-top: 0;
+  }
+
+  /* Track and fill are two layers of one rail: abutting segments read as a
+     single continuous line, and the fill marks the current step only. */
+  .how-it-works-default__step::before,
+  .how-it-works-default__step::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 2px;
+  }
+
+  .how-it-works-default__step::before {
+    background: var(--color-border-cream);
+  }
+
+  .how-it-works-default__step::after {
+    background: var(--color-sienna);
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+  }
+
+  .how-it-works-default__step--active::after {
+    opacity: 1;
+  }
+
+  .how-it-works-default__step--active .how-it-works-default__number {
+    color: var(--color-sienna);
+  }
+
+  /* The step title is the control; its hit area is stretched over the whole
+     step block, so the accessible name stays the title and each step is one
+     tab stop rather than a block of unfocusable text next to a link. */
+  .how-it-works-default__step-link {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .how-it-works-default__step-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+  }
+
+  .how-it-works-default__step-link:focus-visible {
+    outline: 0;
+  }
+
+  /* Drawn on the stretched area so keyboard focus rings the whole step. */
+  .how-it-works-default__step-link:focus-visible::after {
+    outline: 2px solid var(--color-focus-blue);
+    outline-offset: 2px;
+  }
+
+  /* Press feedback sits on the content, not the step: scaling the step would
+     take the rail segment with it and break the continuous track. */
+  .how-it-works-default__step-content {
+    transition: transform 100ms ease-out;
+  }
+
+  .how-it-works-default__step:has(.how-it-works-default__step-link:active)
+    .how-it-works-default__step-content {
+    transform: scale(0.97);
+    transform-origin: left center;
+  }
+
+  .how-it-works-default__step h3 {
+    margin-top: 8px;
+    color: var(--color-near-black);
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .how-it-works-default__step h3 + .how-it-works-default__description {
+    margin-top: 8px;
+  }
+
+  .how-it-works-default__panel {
+    position: relative;
+    min-block-size: 320px;
+    border-radius: 20px;
+    background: var(--color-ivory);
+    box-shadow: 0 0 0 1px var(--color-ring-warm);
+  }
+
+  /* Taken out of flow so a tall portrait capture cannot size the row: the frame
+     takes its height from the step list beside it and the image fits inside.
+     Every step image occupies the same box, so the change is opacity plus a
+     short rise — enough to give it a direction without moving the frame. */
+  .how-it-works-default__panel img {
+    position: absolute;
+    inset: 24px;
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+    object-fit: contain;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .how-it-works-default__panel img.how-it-works-default__panel-image--visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .how-it-works-default__intro h2 {
+    font-size: 4rem;
+  }
+
+  .how-it-works-default__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .how-it-works-default__body {
+    gap: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-it-works-default__trigger,
+  .how-it-works-default__icon,
+  .how-it-works-default__number,
+  .how-it-works-default__disclosure,
+  .how-it-works-default__cta,
+  .how-it-works-default__step::before,
+  .how-it-works-default__step::after,
+  .how-it-works-default__step-content,
+  .how-it-works-default__panel img {
+    transition: none;
+  }
+
+  .how-it-works-default__trigger:active,
+  .how-it-works-default__cta:active {
+    transform: none;
+  }
+
+  .how-it-works-default__step:has(.how-it-works-default__step-link:active)
+    .how-it-works-default__step-content {
+    transform: none;
+  }
+
+  /* The step image still changes — that is content, not decoration. Only the
+     movement into place goes. */
+  .how-it-works-default__panel img {
+    transform: none;
+  }
+}

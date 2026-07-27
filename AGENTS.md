@@ -1,0 +1,103 @@
+# AGENTS.md
+
+## Operating principles
+
+- Think before coding. Do not assume requirements; surface material uncertainty, tradeoffs, or conflicting evidence before making a consequential choice.
+- Simplicity first. Implement the smallest change that fully solves the request. Do not add speculative features, abstractions, dependencies, or configuration.
+- Make surgical changes. Touch only files required by the task. Preserve existing behavior and style; clean up only issues introduced by the current change.
+- Execute against a goal. State or infer checkable success criteria, then verify the relevant criteria before declaring the work complete.
+
+## Product goal and design authority
+
+Build a library of reusable landing-page section components that can be composed and configured into high-converting product pages for **JustEjari** and **JustConvert**. Favor configurable content and variants over one-off, product-specific page implementations.
+
+`docs/design-system/design.md` is the single source of truth for visual and interaction design. All components and pages must follow its specifications, including tokens, typography, layout, responsive behavior, components, and motion.
+
+- Use `docs/inspiration/` to study patterns and outcomes, not as a design specification to copy verbatim.
+- Before introducing a pattern that conflicts with, extends, or is absent from the design system, explain the proposed exception and obtain agreement.
+- Once agreed, update `docs/design-system/design.md` in the same change so the decision becomes part of the system before relying on it elsewhere.
+- If `docs/design-system/design.md` is unavailable or unclear, do not invent a replacement system. Flag the gap and request direction before making a design decision that depends on it.
+
+When implementing web UI, check these non-negotiables from the system:
+
+- Use the warm token palette: `parchment` for page backgrounds, warm neutrals only, and no white page backgrounds or heavy drop shadows.
+- Use Outfit at weight 500 for headlines and values; use Inter for body and UI text. Reserve Inter 600 for status badges.
+- Map every interactive control to a defined button or circular-icon-button variant. Primary full-width CTAs use the Sienna Brand Pill treatment; do not invent button styles.
+- Use ring elevation by default, the 8pt spacing scale, documented radii, 44×44px minimum interactive hit targets, and `focusBlue` for web keyboard focus.
+- Honor `prefers-reduced-motion`; otherwise use the documented press scale (0.96–0.97) and web transition curves. Do not animate typing or data entry.
+
+## Section dossier workflow
+
+Each reusable section lives in `src/sections/<section-id>/`. This folder contains its planning artifacts, implementation code, local styles, and section-local assets. Do not split these artifacts across parallel trees or join them with symlinks.
+
+Start each new section by copying `src/sections/_template/`. Do not add a generic abstraction during dossier setup; establish one only when a completed section demonstrates a concrete need.
+
+Follow this order for every section:
+
+1. Find the section in `docs/inspiration/sections.md` and follow its linked source folder.
+2. Read the original prompt and source material. Extract only the section-specific structure, behavior, and useful mechanics; never copy an inspiration wholesale.
+3. Translate the selected ideas through `docs/design-system/design.md`, recording any proposed system extension for agreement before implementation.
+4. Complete `plan.md` and `prompt.md` in the section folder.
+5. Implement the section code, styles, and assets in that same folder.
+6. Verify the documented acceptance checks, then synchronize both Markdown artifacts with the final implementation.
+
+`plan.md` and `prompt.md` are both required before implementation. They must carry the same **Section ID** and **Revision**. If either is missing or their revisions differ, the dossier is not implementation-ready. When an implementation decision changes, update both documents and increment the shared revision before treating the work as complete.
+
+- `plan.md` is the decision record: conversion goal, source extraction, design-system translation, public configuration/variants, responsive and interaction behavior, accessibility, and acceptance checks.
+- `prompt.md` is the execution contract: it references the plan, gives precise implementation work, and must not contradict the plan or design system.
+
+## Page composition contract
+
+Pages are composed from configuration, not hand-written JSX. A finished section is registered once and then driven entirely by page config.
+
+- Each section's `plan.md` **Public configuration** section declares its props as **required**, **optional**, or **variant**. Required means the section is meaningless without it; the section renders nothing and reports the omission in development. Optional means `undefined` renders nothing. A variant is a documented enum with a default.
+- Absence of content is the only signal for optional content. Never add a `showEyebrow`-style boolean, and never expose `className` or `style` overrides — that is how the design system leaks.
+- Declare spacing on the adjacent-sibling pair rather than on the element, so omitting optional content leaves no residual margin.
+- Repeatable content is an array of objects carrying a stable `id`, used as the React key and for any derived DOM ids. Derive `aria-labelledby` ids from `useId()` so a section type can appear more than once on a page.
+- Shared content shapes (`Cta`, `Media`, `Brand`, `NavigationItem`) live in `src/sections/types.js`. Reuse them instead of inventing a new shape for the same idea.
+- Register a completed section in `src/sections/registry.js` under its section ID, then compose pages in `src/pages/<product>/page.config.js`. Keep the config JSON-like so a CMS could supply it later, share repeated values with plain constants, and do not build a template-token interpolation layer.
+
+## Project map
+
+This is a personal landing-page trial built with React 19 and Vite.
+
+- `src/main.jsx` configures the app entry point, router, and fonts.
+- `src/App.jsx` defines top-level routes.
+- `src/pages/ProductPage.jsx` renders a page from its config module.
+- `src/pages/justejari/page.config.js` is the JustEjari page config; `src/pages/JustEjariPreview.jsx` binds it to a route.
+- `src/sections/` is the reusable section library; each section dossier is self-contained in this directory.
+- `src/sections/registry.js` maps a config `type` to its section component.
+- `src/sections/types.js` holds the shared content typedefs; `src/sections/requireProps.js` is the shared required-prop guard.
+- `src/sections/_template/` is the starting template for a new section dossier and is not runtime code.
+- `src/index.css` holds the reset and global design tokens.
+- `public/` holds runtime assets that are not owned by a section dossier.
+- `docs/design-system/design.md` defines the authoritative design system.
+- `docs/inspiration/` is a reference archive. Do not treat nested example projects or copied prompts there as production code unless the task explicitly names them.
+- `docs/learnings.md` records reusable project insights; update it only when a task produces a durable, non-obvious learning.
+
+## Development
+
+- Install dependencies: `npm install`
+- Start the dev server: `npm run dev`
+- Lint: `npm run lint`
+- Create a production build: `npm run build`
+- Preview a production build: `npm run preview`
+
+There is no automated test suite at present. For code changes, run `npm run lint` and `npm run build`. For visible UI changes, also inspect the affected route in a browser at appropriate viewport sizes.
+
+## Implementation conventions
+
+- Use React function components and the existing client-side React Router setup.
+- Build landing pages by composing reusable sections with explicit, product-agnostic configuration; avoid duplicating a section solely for different copy or a minor visual variant.
+- Reuse the established font variables: `var(--font-heading)` for headings and `var(--font-body)` for body text.
+- Prefer CSS in `src/index.css` for shared rules; keep page-specific styling local only when it remains small and readable.
+- Reuse installed packages (`lucide-react`, `motion`, `gsap`, and `react-markdown`) when they directly fit the request. Do not install a package without a clear need.
+- Match the formatting and quote/semicolon style of the file being edited. Avoid repository-wide formatting churn.
+- Provide meaningful `alt` text for informative images, preserve keyboard access for interactive controls, and respect reduced-motion preferences when adding nonessential animation.
+
+## Change hygiene
+
+- Read the relevant code and nearby documentation before editing; inspect `git status` first and preserve unrelated user changes.
+- Do not modify lockfiles, build configuration, dependencies, or generated output unless the task requires it.
+- Do not remove or rewrite existing copy, assets, or routes merely to simplify a task.
+- In the final handoff, summarize the changed files and report the verification actually run, including any checks that could not be performed.

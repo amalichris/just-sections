@@ -1,6 +1,7 @@
-# react-vite-landing-vanilla
+# landing-page-trials
 
-Personal landing page scaffold. Clone via GitHub template, `npm install`, go.
+A library of reusable landing-page section components, composed into high-converting product
+pages for JustEjari and JustConvert.
 
 ## Stack
 
@@ -22,7 +23,14 @@ npm run dev
 
 ```
 src/
-  main.jsx        # Router + font imports
-  index.css       # Reset + CSS vars
-  pages/Home.jsx  # Starter page (delete/replace)
+  main.jsx                    # Router + font imports
+  index.css                   # Reset + design tokens
+  App.jsx                     # Routes
+  pages/JustEjariPreview.jsx  # Current preview page
+  sections/                   # Reusable section library (one dossier per section)
+docs/
+  design-system/design.md     # Authoritative design system
+  inspiration/                # Reference archive
 ```
+
+See [AGENTS.md](AGENTS.md) for the section dossier workflow and design authority.

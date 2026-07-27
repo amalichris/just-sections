@@ -1,0 +1,130 @@
+.pricing-banner-default {
+  display: grid;
+  min-block-size: 440px;
+  padding: 64px 20px;
+  background: var(--color-dark-surface);
+  color: var(--color-ivory);
+  place-items: center;
+  text-align: center;
+}
+
+.pricing-banner-default__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 960px);
+}
+
+.pricing-banner-default__eyebrow {
+  color: var(--color-coral);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.pricing-banner-default__eyebrow + h2 {
+  margin-top: 16px;
+}
+
+.pricing-banner-default h2 {
+  color: var(--color-ivory);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.pricing-banner-default__subtitle {
+  max-width: 40rem;
+  margin-top: 24px;
+  color: var(--color-warm-silver);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.pricing-banner-default__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 32px;
+  padding: 0 24px;
+  border: 1px solid var(--color-sienna);
+  border-radius: 99px;
+  background: var(--color-sienna);
+  box-shadow: 0 0 0 1px var(--color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 100ms ease-out;
+}
+
+.pricing-banner-default__cta:hover {
+  border-color: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
+  background: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+}
+
+.pricing-banner-default__cta:focus-visible {
+  outline: 2px solid var(--color-focus-blue);
+  outline-offset: 3px;
+}
+
+.pricing-banner-default__cta:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .pricing-banner-default h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .pricing-banner-default {
+    min-block-size: 480px;
+    padding: 96px clamp(24px, 4.444vw, 64px);
+  }
+
+  .pricing-banner-default h2 {
+    font-size: 3rem;
+  }
+
+  .pricing-banner-default__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .pricing-banner-default h2 {
+    font-size: 4rem;
+  }
+
+  .pricing-banner-default__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-banner-default__cta {
+    transition: none;
+  }
+
+  .pricing-banner-default__cta:active {
+    transform: none;
+  }
+}

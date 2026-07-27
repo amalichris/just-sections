@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1300" width="640" height="1300" role="img">
+  <title>Placeholder: step 2 screen — fill in the contract details</title>
+  <rect width="640" height="1300" fill="#F5F4ED"/>
+  <rect x="40" y="40" width="560" height="1220" rx="56" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+  <rect x="88" y="112" width="260" height="32" rx="16" fill="#87867F"/>
+  <rect x="88" y="212" width="180" height="18" rx="9" fill="#87867F"/>
+  <rect x="88" y="250" width="464" height="92" rx="24" fill="#F5F4ED" stroke="#F0EEE6" stroke-width="2"/>
+  <rect x="128" y="286" width="280" height="20" rx="10" fill="#D1CFC5"/>
+  <rect x="88" y="386" width="220" height="18" rx="9" fill="#87867F"/>
+  <rect x="88" y="424" width="464" height="92" rx="24" fill="#F5F4ED" stroke="#3898EC" stroke-width="4"/>
+  <rect x="128" y="460" width="340" height="20" rx="10" fill="#87867F"/>
+  <rect x="88" y="560" width="200" height="18" rx="9" fill="#87867F"/>
+  <rect x="88" y="598" width="464" height="92" rx="24" fill="#F5F4ED" stroke="#F0EEE6" stroke-width="2"/>
+  <rect x="128" y="634" width="240" height="20" rx="10" fill="#D1CFC5"/>
+  <rect x="88" y="734" width="240" height="18" rx="9" fill="#87867F"/>
+  <rect x="88" y="772" width="464" height="92" rx="24" fill="#F5F4ED" stroke="#F0EEE6" stroke-width="2"/>
+  <rect x="128" y="808" width="300" height="20" rx="10" fill="#D1CFC5"/>
+  <rect x="88" y="1108" width="464" height="88" rx="44" fill="#E8E6DC"/>
+  <rect x="232" y="1142" width="176" height="20" rx="10" fill="#87867F"/>
+</svg>
