@@ -656,19 +656,44 @@ Mini App still builds with the pages removed.
 
 ### T2.5 — Deployment
 
-**Do:** New Vercel project, Root Directory `web/`. The legal pages import company docs via
-`?raw` across the department boundary, so this is **mandatory, not optional**:
+**Decision (2026-07-27): two Vercel projects, one domain each.** A project maps to a single
+root directory, so a second department needs a second project.
 
-- `server.fs.allow: ['..']` in `web/vite.config.js` — without it the dev server 403s on
-  `../docs/legal/*.md` while the production build succeeds, which is easy to miss.
-- Enable "Include source files outside of the Root Directory" in the Vercel project settings —
-  without it the build cannot see `../docs/` and fails only on Vercel, not locally.
+| Domain | Project | Root Dir | Serves |
+|---|---|---|---|
+| `justejari.ae` + `www` | **new** | `web/` | `/`, `/terms`, `/privacy` |
+| `app.justejari.ae` | existing | `app/` | Mini App + `/p/:token`, `/v/:token` |
 
-Installing from a git dependency also requires the build environment to reach GitHub — verify
-the first deploy resolves `just-sections`.
+**Party links move to `app.`** rather than being proxied from the apex. Proxying was the
+alternative and it works, but it requires setting a distinct Vite `base` on the app deploy:
+both apps emit assets at `/assets/*`, so a proxied party page would request
+`justejari.ae/assets/…`, hit the web deploy's SPA catch-all, receive `index.html`, and fail
+on MIME type — in production only. Redirecting instead lands the browser on `app.` where its
+own assets resolve natively, and needs no `base` change.
 
-**Verify:** Preview deploy renders the landing page and both legal pages, and every CTA
-resolves.
+**Do — code (done):** `web/vercel.json` carries 307 redirects for `/p/:token` and `/v/:token`
+to `app.justejari.ae`, covering links already in recipients' chat histories. Party links
+expire after 3 days, vault invitations after 30, so **those redirects can be deleted after
+2026-08-27.** See `web/AGENTS.md` § Domains.
+
+**Do — dashboard and Supabase (yours):**
+
+1. Create the project, Root Directory `web/`. Deploy on its `*.vercel.app` URL and confirm
+   both legal pages render **before** attaching any domain.
+2. Enable **"Include source files outside of the Root Directory"** — without it the build
+   cannot see `../docs/legal/` and fails on Vercel only, never locally.
+3. Add a **token for the private `just-sections` repo** so the git dependency resolves. It
+   installs fine locally over SSH, which is exactly why this surfaces only in CI.
+4. Set `PUBLIC_PARTY_LINK_BASE_URL=https://app.justejari.ae` in the Supabase Edge Function
+   environment. One variable drives both `partyUrl()` and `vaultUrl()`.
+5. Move `justejari.ae` off the app project and onto the web project. **Do this last** — until
+   the web project owns the apex and its redirects are live, apex party links are dark.
+
+`server.fs.allow: ['..']` is already set in `web/vite.config.js` — that one is a dev-server
+concern, and without it dev 403s on `../docs/legal/*.md` while the build succeeds.
+
+**Verify:** Preview deploy renders the landing page and both legal pages; every CTA resolves;
+a freshly issued party link opens on `app.justejari.ae`; an apex `/p/` URL redirects there.
 
 ---
 
