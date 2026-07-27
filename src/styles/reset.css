@@ -1,0 +1,53 @@
+/**
+ * Reset and base element styles for a standalone Just web surface.
+ *
+ * This file sets global element styles: it zeroes margins, changes
+ * `box-sizing`, and paints the document background. Do NOT import it into a
+ * host application that already has its own reset — import `tokens.css` and the
+ * section stylesheets instead, which touch only their own class names.
+ *
+ * Requires `tokens.css` to be imported first.
+ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--just-font-body);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--just-color-near-black);
+  background: var(--just-color-parchment);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--just-font-heading);
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

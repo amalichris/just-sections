@@ -23,13 +23,16 @@ npm run dev
 
 ```
 src/
-  main.jsx                    # Router + font imports
-  index.css                   # Reset + design tokens
+  main.jsx                    # Router + stylesheet imports
   App.jsx                     # Routes
+  styles/tokens.css           # --just-* design tokens, nothing else
+  styles/reset.css            # Global reset + base elements (standalone sites only)
+  styles/fonts.css            # Outfit + Inter
   pages/JustEjariPreview.jsx  # Current preview page
-  sections/                   # Reusable section library (one dossier per section)
+  pages/justejari/            # Page config + every asset the page supplies
+  sections/                   # Reusable section library (one dossier per section, no assets)
 docs/
-  design-system/design.md     # Authoritative design system
+  design-system/design.md     # Pointer to the just-design-system repo
   inspiration/                # Reference archive
 ```
 

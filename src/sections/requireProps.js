@@ -23,7 +23,9 @@ export default function requireProps(sectionName, required) {
 
   if (missing.length === 0) return false
 
-  if (import.meta.env.DEV) {
+  // `process.env.NODE_ENV` rather than `import.meta.env.DEV`: this module ships
+  // in a shared package, and the latter only exists under Vite.
+  if (process.env.NODE_ENV !== 'production') {
     console.error(
       `[${sectionName}] Missing required prop${missing.length > 1 ? 's' : ''}: ${missing.join(', ')}. Section not rendered.`,
     )

@@ -1,7 +1,7 @@
 .benefits-default {
   padding: 96px clamp(20px, 4.444vw, 64px);
-  background: var(--color-parchment);
-  color: var(--color-near-black);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
 }
 
 .benefits-default__layout {
@@ -18,8 +18,8 @@
 }
 
 .benefits-default__eyebrow {
-  color: var(--color-sienna);
-  font-family: var(--font-body);
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.6;
@@ -34,8 +34,8 @@
 }
 
 .benefits-default__intro h2 {
-  color: var(--color-near-black);
-  font-family: var(--font-heading);
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
   font-size: 2.25rem;
   font-weight: 500;
   line-height: 1.1;
@@ -45,8 +45,8 @@
 .benefits-default__subtitle {
   max-width: 34rem;
   margin: 16px auto 0;
-  color: var(--color-olive-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -66,14 +66,14 @@
   flex-direction: column;
   padding: 20px;
   border-radius: 20px;
-  background: var(--color-ivory);
-  box-shadow: 0 0 0 1px var(--color-ring-warm);
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
 }
 
 .benefits-default__media {
   overflow: hidden;
   border-radius: 12px;
-  background: var(--color-parchment);
+  background: var(--just-color-parchment);
   aspect-ratio: 16 / 10;
 }
 
@@ -86,8 +86,8 @@
 }
 
 .benefits-default__card h3 {
-  color: var(--color-near-black);
-  font-family: var(--font-heading);
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.2;
@@ -102,8 +102,8 @@
 
 .benefits-default__description {
   margin-top: 8px;
-  color: var(--color-olive-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -112,12 +112,12 @@
 .benefits-default__proof {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid var(--color-border-cream);
+  border-top: 1px solid var(--just-color-border-cream);
 }
 
 .benefits-default__proof blockquote {
-  color: var(--color-charcoal-warm);
-  font-family: var(--font-body);
+  color: var(--just-color-charcoal-warm);
+  font-family: var(--just-font-body);
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.43;
@@ -125,8 +125,8 @@
 
 .benefits-default__proof figcaption {
   margin-top: 8px;
-  color: var(--color-stone-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-stone-gray);
+  font-family: var(--just-font-body);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.6;

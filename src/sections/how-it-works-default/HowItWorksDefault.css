@@ -1,7 +1,7 @@
 .how-it-works-default {
   padding: 96px clamp(20px, 4.444vw, 64px);
-  background: var(--color-parchment);
-  color: var(--color-near-black);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
 }
 
 .how-it-works-default__layout {
@@ -18,8 +18,8 @@
 }
 
 .how-it-works-default__eyebrow {
-  color: var(--color-sienna);
-  font-family: var(--font-body);
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.6;
@@ -34,8 +34,8 @@
 }
 
 .how-it-works-default__intro h2 {
-  color: var(--color-near-black);
-  font-family: var(--font-heading);
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
   font-size: 2.25rem;
   font-weight: 500;
   line-height: 1.1;
@@ -45,8 +45,8 @@
 .how-it-works-default__subtitle {
   max-width: 34rem;
   margin: 16px auto 0;
-  color: var(--color-olive-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -59,11 +59,11 @@
 
 .how-it-works-default__steps {
   list-style: none;
-  border-bottom: 1px solid var(--color-border-cream);
+  border-bottom: 1px solid var(--just-color-border-cream);
 }
 
 .how-it-works-default__step {
-  border-top: 1px solid var(--color-border-cream);
+  border-top: 1px solid var(--just-color-border-cream);
 }
 
 .how-it-works-default__step h3 {
@@ -80,7 +80,7 @@
   padding: 24px 0;
   border: 0;
   background: transparent;
-  color: var(--color-near-black);
+  color: var(--just-color-near-black);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -88,7 +88,7 @@
 }
 
 .how-it-works-default__trigger:focus-visible {
-  outline: 2px solid var(--color-focus-blue);
+  outline: 2px solid var(--just-color-focus-blue);
   outline-offset: 2px;
 }
 
@@ -97,8 +97,8 @@
 }
 
 .how-it-works-default__number {
-  color: var(--color-stone-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-stone-gray);
+  font-family: var(--just-font-body);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.6;
@@ -110,7 +110,7 @@
 .how-it-works-default__step-title {
   flex: 1;
   padding: 10px 16px;
-  font-family: var(--font-heading);
+  font-family: var(--just-font-heading);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.2;
@@ -122,13 +122,13 @@
   flex: 0 0 44px;
   width: 44px;
   height: 44px;
-  color: var(--color-stone-gray);
+  color: var(--just-color-stone-gray);
   place-items: center;
   transition: color 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .how-it-works-default__step--open .how-it-works-default__icon {
-  color: var(--color-near-black);
+  color: var(--just-color-near-black);
   transform: rotate(45deg);
 }
 
@@ -150,8 +150,8 @@
 }
 
 .how-it-works-default__description {
-  color: var(--color-olive-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -166,8 +166,8 @@
   margin: 16px 0 24px;
   padding: 16px;
   border-radius: 20px;
-  background: var(--color-ivory);
-  box-shadow: 0 0 0 1px var(--color-ring-warm);
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
   place-items: center;
 }
 
@@ -184,12 +184,12 @@
   min-height: 44px;
   margin-top: 32px;
   padding: 0 24px;
-  border: 1px solid var(--color-sienna);
+  border: 1px solid var(--just-color-sienna);
   border-radius: 99px;
-  background: var(--color-sienna);
-  box-shadow: 0 0 0 1px var(--color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
-  color: var(--color-ivory);
-  font-family: var(--font-body);
+  background: var(--just-color-sienna);
+  box-shadow: 0 0 0 1px var(--just-color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;
@@ -202,13 +202,13 @@
 }
 
 .how-it-works-default__cta:hover {
-  border-color: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
-  background: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+  border-color: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  background: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
 }
 
 .how-it-works-default__cta:focus-visible {
-  outline: 2px solid var(--color-focus-blue);
+  outline: 2px solid var(--just-color-focus-blue);
   outline-offset: 3px;
 }
 
@@ -250,12 +250,12 @@
   .how-it-works-default__scroll-track {
     /* Scroll distance one step is worth. The single knob for how fast the
        section advances — everything below is derived from it. */
-    --step-scroll: 70dvh;
+    --how-it-works-step-scroll: 70dvh;
 
     position: relative;
     /* A step's worth of scroll each, plus half a step and half a viewport, so
        the last step holds for a full step before the pin releases. */
-    min-block-size: calc((var(--step-count) + 0.5) * var(--step-scroll) + 50dvh);
+    min-block-size: calc((var(--how-it-works-step-count) + 0.5) * var(--how-it-works-step-scroll) + 50dvh);
   }
 
   /* The composition is centred in the pinned viewport as one block. Sizing the
@@ -278,7 +278,7 @@
     top: 0;
     left: 0;
     width: 1px;
-    grid-auto-rows: var(--step-scroll);
+    grid-auto-rows: var(--how-it-works-step-scroll);
     pointer-events: none;
   }
 
@@ -340,11 +340,11 @@
   }
 
   .how-it-works-default__step::before {
-    background: var(--color-border-cream);
+    background: var(--just-color-border-cream);
   }
 
   .how-it-works-default__step::after {
-    background: var(--color-sienna);
+    background: var(--just-color-sienna);
     opacity: 0;
     transition: opacity 200ms ease-out;
   }
@@ -354,7 +354,7 @@
   }
 
   .how-it-works-default__step--active .how-it-works-default__number {
-    color: var(--color-sienna);
+    color: var(--just-color-sienna);
   }
 
   /* The step title is the control; its hit area is stretched over the whole
@@ -382,7 +382,7 @@
 
   /* Drawn on the stretched area so keyboard focus rings the whole step. */
   .how-it-works-default__step-link:focus-visible::after {
-    outline: 2px solid var(--color-focus-blue);
+    outline: 2px solid var(--just-color-focus-blue);
     outline-offset: 2px;
   }
 
@@ -400,8 +400,8 @@
 
   .how-it-works-default__step h3 {
     margin-top: 8px;
-    color: var(--color-near-black);
-    font-family: var(--font-heading);
+    color: var(--just-color-near-black);
+    font-family: var(--just-font-heading);
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.2;
@@ -416,8 +416,8 @@
     position: relative;
     min-block-size: 320px;
     border-radius: 20px;
-    background: var(--color-ivory);
-    box-shadow: 0 0 0 1px var(--color-ring-warm);
+    background: var(--just-color-ivory);
+    box-shadow: 0 0 0 1px var(--just-color-ring-warm);
   }
 
   /* Taken out of flow so a tall portrait capture cannot size the row: the frame

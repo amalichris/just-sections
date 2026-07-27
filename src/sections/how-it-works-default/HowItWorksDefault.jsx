@@ -238,7 +238,7 @@ export default function HowItWorksDefault({
       <section id={id} className="how-it-works-default" aria-labelledby={titleId}>
         <div
           className="how-it-works-default__scroll-track"
-          style={{ '--step-count': steps.length }}
+          style={{ '--how-it-works-step-count': steps.length }}
         >
           {/* Held still for the length of the track: the reader's scroll changes
               which step is current and nothing else. */}

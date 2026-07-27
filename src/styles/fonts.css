@@ -1,0 +1,21 @@
+/**
+ * Font faces for the Just web surface: Outfit for headings, Inter for body.
+ *
+ * The host opts in by importing this file. Sections never import it themselves —
+ * that would load the families once per section. A host that already serves
+ * Outfit and Inter should skip this file and keep its own loading strategy;
+ * `tokens.css` only names the families, it does not fetch them.
+ *
+ * Weights match `foundations.md` §3: Outfit 500 is the only headline weight, and
+ * Inter 600 is reserved for status badges. The extra weights are loaded because
+ * existing sections use them; drop a weight here when nothing references it.
+ */
+
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/outfit/400.css';
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/600.css';
+@import '@fontsource/outfit/700.css';

@@ -25,7 +25,7 @@ export default function ProductPage({ config }) {
     const Section = sectionRegistry[entry.type]
 
     if (!Section) {
-      if (import.meta.env.DEV) {
+      if (process.env.NODE_ENV !== 'production') {
         console.error(
           `[ProductPage] No section registered for type "${entry.type}". Entry skipped.`,
         )

@@ -2,17 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
-// Fonts
-import '@fontsource/inter/400.css'
-import '@fontsource/inter/500.css'
-import '@fontsource/inter/600.css'
-import '@fontsource/inter/700.css'
-import '@fontsource/outfit/400.css'
-import '@fontsource/outfit/500.css'
-import '@fontsource/outfit/600.css'
-import '@fontsource/outfit/700.css'
+// Standalone site: tokens, then fonts, then the global reset. A host application
+// embedding a single section imports only `styles/tokens.css` plus that section's
+// own stylesheet — `reset.css` would fight its existing global styles.
+import './styles/tokens.css'
+import './styles/fonts.css'
+import './styles/reset.css'
 
-import './index.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(

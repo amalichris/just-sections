@@ -84,11 +84,11 @@ The whole composition is held still and the reader's scroll changes one thing: w
 
 | Piece | Behaviour |
 | --- | --- |
-| Scroll track | `position: relative`, `min-block-size: calc((step-count + 0.5) × --step-scroll + 50dvh)` |
+| Scroll track | `position: relative`, `min-block-size: calc((step-count + 0.5) × --how-it-works-step-scroll + 50dvh)` |
 | Pinned composition | `position: sticky; top: 0; block-size: 100dvh`, holding intro, step list, CTA, and media frame |
-| Markers | One empty `span` per step, absolutely positioned down the track, spaced `--step-scroll` apart |
+| Markers | One empty `span` per step, absolutely positioned down the track, spaced `--how-it-works-step-scroll` apart |
 
-`--step-scroll` (currently `70dvh`) is the single tuning knob: it is the scroll distance one step is worth, and the track length derives from it. The extra half-step plus half-viewport in the track length is what gives the final step a full step's worth of dwell before the pin releases — without it, step 3 would activate at the exact moment the section starts scrolling away.
+`--how-it-works-step-scroll` (currently `70dvh`) is the single tuning knob: it is the scroll distance one step is worth, and the track length derives from it. The extra half-step plus half-viewport in the track length is what gives the final step a full step's worth of dwell before the pin releases — without it, step 3 would activate at the exact moment the section starts scrolling away.
 
 **Scroll position is read from the markers, not the content**, because the content no longer moves. One `IntersectionObserver` with a `-45% 0px -45% 0px` `rootMargin` reports which marker is crossing the middle 10% of the viewport — no scroll listener, no scroll maths, no scrub. Entries arrive in unspecified order and a fast flick can put two markers in the band, so the active step is resolved by whichever candidate's centre is nearest the viewport centre, which is order-independent. Between markers nothing is in the band and the current step holds.
 

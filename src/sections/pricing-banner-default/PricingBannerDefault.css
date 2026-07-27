@@ -2,8 +2,8 @@
   display: grid;
   min-block-size: 440px;
   padding: 64px 20px;
-  background: var(--color-dark-surface);
-  color: var(--color-ivory);
+  background: var(--just-color-dark-surface);
+  color: var(--just-color-ivory);
   place-items: center;
   text-align: center;
 }
@@ -16,8 +16,8 @@
 }
 
 .pricing-banner-default__eyebrow {
-  color: var(--color-coral);
-  font-family: var(--font-body);
+  color: var(--just-color-coral);
+  font-family: var(--just-font-body);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.6;
@@ -32,8 +32,8 @@
 }
 
 .pricing-banner-default h2 {
-  color: var(--color-ivory);
-  font-family: var(--font-heading);
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-heading);
   font-size: 2.25rem;
   font-weight: 500;
   line-height: 1.1;
@@ -43,8 +43,8 @@
 .pricing-banner-default__subtitle {
   max-width: 40rem;
   margin-top: 24px;
-  color: var(--color-warm-silver);
-  font-family: var(--font-body);
+  color: var(--just-color-warm-silver);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -56,12 +56,12 @@
   min-height: 44px;
   margin-top: 32px;
   padding: 0 24px;
-  border: 1px solid var(--color-sienna);
+  border: 1px solid var(--just-color-sienna);
   border-radius: 99px;
-  background: var(--color-sienna);
-  box-shadow: 0 0 0 1px var(--color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
-  color: var(--color-ivory);
-  font-family: var(--font-body);
+  background: var(--just-color-sienna);
+  box-shadow: 0 0 0 1px var(--just-color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;
@@ -74,13 +74,13 @@
 }
 
 .pricing-banner-default__cta:hover {
-  border-color: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
-  background: color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-sienna) 88%, var(--color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+  border-color: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  background: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
 }
 
 .pricing-banner-default__cta:focus-visible {
-  outline: 2px solid var(--color-focus-blue);
+  outline: 2px solid var(--just-color-focus-blue);
   outline-offset: 3px;
 }
 

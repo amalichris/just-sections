@@ -1,8 +1,9 @@
-import heroBackground from "../../sections/hero-default/assets/hero-bg-1.png";
-import appMockup from "../../sections/hero-default/assets/justejari-home-screen-mockup.png";
+// Every asset a section renders is page-owned content. Sections ship no imagery,
+// so swapping any of these never touches the section library.
+import heroBackground from "./assets/hero-bg-1.png";
+import appMockup from "./assets/justejari-home-screen-mockup.png";
 
-// Placeholder UI fragments. These are page-owned content, not section assets —
-// swap each one for a real product capture without touching a section.
+// Placeholder UI fragments. Swap each one for a real product capture.
 import benefitContracts from "./assets/benefit-1-contracts.svg";
 import benefitGenerate from "./assets/benefit-2-generate.svg";
 import benefitFields from "./assets/benefit-3-fields.svg";

@@ -7,7 +7,7 @@
   min-height: 100dvh;
   overflow: visible;
   z-index: 1;
-  color: var(--color-near-black);
+  color: var(--just-color-near-black);
 }
 
 .hero-default__backdrop {
@@ -16,7 +16,7 @@
   inset: 0 0 auto;
   height: 100dvh;
   overflow: hidden;
-  background: var(--color-parchment);
+  background: var(--just-color-parchment);
 }
 
 .hero-default__backdrop img,
@@ -52,7 +52,7 @@
 .hero-default__content h1 {
   width: 100%;
   max-width: 1000px;
-  font-family: var(--font-heading);
+  font-family: var(--just-font-heading);
   font-size: clamp(3.75rem, 5.6vw, 4.25rem);
   font-weight: 500;
   line-height: 1.05;
@@ -63,8 +63,8 @@
   width: 100%;
   max-width: 620px;
   margin-top: 24px;
-  color: var(--color-olive-gray);
-  font-family: var(--font-body);
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.6;

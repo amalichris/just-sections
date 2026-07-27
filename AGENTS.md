@@ -69,9 +69,9 @@ This is a personal landing-page trial built with React 19 and Vite.
 - `src/sections/registry.js` maps a config `type` to its section component.
 - `src/sections/types.js` holds the shared content typedefs; `src/sections/requireProps.js` is the shared required-prop guard.
 - `src/sections/_template/` is the starting template for a new section dossier and is not runtime code.
-- `src/index.css` holds the reset and global design tokens.
-- `public/` holds runtime assets that are not owned by a section dossier.
-- `docs/design-system/design.md` defines the authoritative design system.
+- `src/styles/tokens.css` declares the `--just-*` design tokens and nothing else; `src/styles/reset.css` holds the global reset and base element styles; `src/styles/fonts.css` loads Outfit and Inter. A host application embedding a section imports `tokens.css` only — `reset.css` would fight its own global styles.
+- `public/` holds runtime assets that are not owned by a section dossier. Sections themselves ship no imagery: every image a section renders is supplied by page configuration.
+- `docs/design-system/design.md` points at `just-design-system`, the family-level design authority. Read `foundations.md` and `surfaces/web.md` there.
 - `docs/inspiration/` is a reference archive. Do not treat nested example projects or copied prompts there as production code unless the task explicitly names them.
 - `docs/learnings.md` records reusable project insights; update it only when a task produces a durable, non-obvious learning.
 
@@ -89,8 +89,9 @@ There is no automated test suite at present. For code changes, run `npm run lint
 
 - Use React function components and the existing client-side React Router setup.
 - Build landing pages by composing reusable sections with explicit, product-agnostic configuration; avoid duplicating a section solely for different copy or a minor visual variant.
-- Reuse the established font variables: `var(--font-heading)` for headings and `var(--font-body)` for body text.
-- Prefer CSS in `src/index.css` for shared rules; keep page-specific styling local only when it remains small and readable.
+- Reuse the established font variables: `var(--just-font-heading)` for headings and `var(--just-font-body)` for body text.
+- Every design token carries the `--just-` prefix. A bare `--color-*` collides with host application themes; this palette already drifted once because of it. Component-internal custom properties are not tokens — namespace them by section (`--hero-device-offset`, `--how-it-works-step-scroll`) and do not add them to `tokens.css`.
+- Prefer CSS in `src/styles/` for shared rules; keep page-specific styling local only when it remains small and readable.
 - Reuse installed packages (`lucide-react`, `motion`, `gsap`, and `react-markdown`) when they directly fit the request. Do not install a package without a clear need.
 - Match the formatting and quote/semicolon style of the file being edited. Avoid repository-wide formatting churn.
 - Provide meaningful `alt` text for informative images, preserve keyboard access for interactive controls, and respect reduced-motion preferences when adding nonessential animation.
