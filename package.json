@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/amalichris/landing-page-trials.git"
+    "url": "git+ssh://git@github.com/amalichris/just-sections.git"
   },
   "files": [
     "src/index.js",

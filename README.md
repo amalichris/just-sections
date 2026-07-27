@@ -1,4 +1,4 @@
-# landing-page-trials
+# just-sections
 
 A library of reusable landing-page section components, composed into high-converting product
 pages for JustEjari and JustConvert.
