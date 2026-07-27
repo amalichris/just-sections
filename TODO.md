@@ -1,6 +1,21 @@
 # TODO — Graduate the section library into the product repos
 
-Status: **Phase 0 complete (2026-07-27).** Phase 1 is ready to start.
+Status: **Phase 0 and Phase 1 complete (2026-07-27).** Phase 2 is ready to start.
+
+Phase 1 landed on branch `restructure/library-portability` (4 commits over a baseline commit).
+Deviations and discoveries worth carrying forward:
+
+- **T1.2** also namespaced two component-internal custom properties by section
+  (`--step-*` → `--how-it-works-step-*`). Design tokens take `--just-`; component internals take
+  their section id. Both rules are now in `AGENTS.md`.
+- **T1.5** the gallery previews in an iframe. A width-constrained `div` does not trigger media
+  queries. The first implementation was still wrong — the global reset's `border-box` let a 1px
+  border eat 2px, so the 768 chip rendered at 766px and `min-width: 768px` was false. Fixed, and
+  the gallery now displays the measured width so it cannot regress silently.
+- **T1.7** `remark-gfm` is required, not optional: JustConvert's privacy policy has 38 tables.
+- **T1.7** `legal-document-default` is the registry's one lazy section (+47.6 kB gzipped
+  otherwise, on every landing page). `ProductPage` supplies the Suspense boundary.
+- **T1.8** the package is renamed but the **directory and git remote are not** — see that task.
 
 - `~/Programming/just-design-system` created and committed — foundations + three surface docs.
 - JustConvert docs reduced to product specs, committed on branch `docs/design-system-layering`.
@@ -501,8 +516,21 @@ the skill rather than to this section.
 
 ### T1.8 — Rename the repo
 
-**Do:** Rename the directory and git remote `landing-page-trials` → `just-sections`. Tag
-`v0.1.0` once T1.1–T1.6 pass lint and build.
+**Done:** `package.json` `name` is `just-sections@0.1.0`.
+
+**Still yours to do, deliberately left undone:**
+
+1. **Rename the directory** `~/Programming/landing-page-trials` → `~/Programming/just-sections`.
+   Not done automatically — moving the working directory out from under an open editor breaks
+   its state, and the path appears in your Claude Code project history.
+2. **Rename the GitHub repo** and update the remote. `package.json` `repository` still points at
+   `amalichris/landing-page-trials`; update it in the same change.
+3. **Merge to `main`, then tag `v0.1.0`.** Not tagged yet on purpose: a git-tag install resolves
+   against the default branch, so tagging a feature-branch commit would publish work that is not
+   on `main`.
+
+Until then consumers can install from the branch:
+`npm i github:amalichris/landing-page-trials#restructure/library-portability`
 
 ---
 

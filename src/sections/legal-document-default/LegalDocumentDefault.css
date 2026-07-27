@@ -1,0 +1,191 @@
+/**
+ * Legal document section.
+ *
+ * Editorial typography and the 680px content measure come from
+ * `just-design-system/surfaces/web.md` §2 and §4. Every element style below
+ * targets the prose produced by react-markdown, so the section owns no markup
+ * class names beyond its container.
+ */
+
+.legal-document-default {
+  padding-block: 96px;
+  padding-inline: 20px;
+}
+
+.legal-document-default--parchment {
+  background: var(--just-color-parchment);
+}
+
+.legal-document-default--ivory {
+  background: var(--just-color-ivory);
+}
+
+.legal-document-default__container {
+  max-width: 680px;
+  margin-inline: auto;
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Headings. Outfit 500 only — no bold, no light. */
+.legal-document-default__container :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--just-font-heading);
+  font-weight: 500;
+  color: var(--just-color-near-black);
+  text-wrap: balance;
+}
+
+.legal-document-default__container h1 {
+  font-size: 36px;
+  line-height: 1.3;
+  margin-block-end: 24px;
+}
+
+.legal-document-default__container h2 {
+  font-size: 32px;
+  line-height: 1.1;
+  margin-block-start: 48px;
+  margin-block-end: 16px;
+}
+
+.legal-document-default__container h3 {
+  font-size: 25px;
+  line-height: 1.2;
+  margin-block-start: 32px;
+  margin-block-end: 12px;
+}
+
+.legal-document-default__container :is(h4, h5, h6) {
+  font-size: 20px;
+  line-height: 1.2;
+  margin-block-start: 24px;
+  margin-block-end: 8px;
+}
+
+/* Declare spacing on the adjacent-sibling pair so a document that omits an
+   element leaves no residual margin. */
+.legal-document-default__container > * + * {
+  margin-block-start: 16px;
+}
+
+.legal-document-default__container p {
+  color: var(--just-color-olive-gray);
+}
+
+/* The skill emits the effective date, last-updated date, and version as bold
+   paragraphs directly under the heading. */
+.legal-document-default__container h1 + p strong {
+  color: var(--just-color-charcoal-warm);
+}
+
+.legal-document-default__container strong {
+  font-weight: 500;
+  color: var(--just-color-near-black);
+}
+
+.legal-document-default__container :is(ul, ol) {
+  padding-inline-start: 24px;
+  color: var(--just-color-olive-gray);
+}
+
+.legal-document-default__container li + li {
+  margin-block-start: 8px;
+}
+
+.legal-document-default__container a {
+  color: var(--just-color-sienna);
+  text-underline-offset: 3px;
+}
+
+.legal-document-default__container a:hover {
+  color: var(--just-color-near-black);
+}
+
+.legal-document-default__container a:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.legal-document-default__container hr {
+  border: none;
+  border-top: 1px solid var(--just-color-border-cream);
+  margin-block: 32px;
+}
+
+.legal-document-default__container blockquote {
+  border-inline-start: 2px solid var(--just-color-ring-warm);
+  padding-inline-start: 16px;
+  color: var(--just-color-olive-gray);
+}
+
+/* GFM tables. JustConvert's privacy policy carries 38 of them, so this is a
+   primary path, not an edge case. The wrapper is supplied by the component, not
+   by a `:has()` rule — see the `table` override in the JSX for why. It is
+   focusable so a keyboard user can scroll a wide table without a pointer. */
+.legal-document-default__table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.legal-document-default__table-wrap:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 2px;
+}
+
+.legal-document-default__container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+/* Without a floor the table compresses to the container instead of scrolling,
+   and cell text wraps one character per line. */
+.legal-document-default__container th {
+  min-width: 7rem;
+}
+
+.legal-document-default__container :is(th, td) {
+  border: 1px solid var(--just-color-border-cream);
+  padding: 10px 12px;
+  text-align: start;
+  vertical-align: top;
+}
+
+.legal-document-default__container th {
+  font-weight: 500;
+  color: var(--just-color-near-black);
+  background: var(--just-color-warm-sand);
+}
+
+.legal-document-default__container td {
+  color: var(--just-color-olive-gray);
+}
+
+.legal-document-default__container :is(code, pre) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.legal-document-default__container code {
+  background: var(--just-color-warm-sand);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+@media (min-width: 768px) {
+  .legal-document-default {
+    padding-block: 128px;
+    padding-inline: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .legal-document-default {
+    padding-inline: 64px;
+  }
+}

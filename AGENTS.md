@@ -77,7 +77,8 @@ This is a personal landing-page trial built with React 19 and Vite.
 - `src/pages/ProductPage.jsx` renders a page from its config module.
 - `src/pages/justejari/page.config.js` is the JustEjari page config; `src/pages/JustEjariPreview.jsx` binds it to a route.
 - `src/sections/` is the reusable section library; each section dossier is self-contained in this directory.
-- `src/sections/registry.js` maps a config `type` to its section component.
+- `src/index.js` is the package entry point; `src/ProductPage.jsx` is the page composer. Both are published — `src/pages/`, `src/dev/`, `src/main.jsx`, and `src/App.jsx` are not.
+- `src/sections/registry.js` maps a config `type` to its section component. Sections are static imports except `legal-document-default`, which is lazy because `react-markdown` and `remark-gfm` cost +47.6 kB gzipped on pages that never render a document. Measure before adding another lazy entry; a section earns one by pulling a heavy dependency most pages do not use, not by being large itself.
 - `src/sections/types.js` holds the shared content typedefs; `src/sections/requireProps.js` is the shared required-prop guard.
 - `src/sections/_template/` is the starting template for a new section dossier and is not runtime code.
 - `src/sections/<section-id>/fixtures.js` supplies the gallery's sample configurations for that section; `src/sections/fixtureMedia.js` builds inline placeholder imagery for them so no fixture introduces an asset file.
@@ -105,7 +106,7 @@ There is no automated test suite at present. For code changes, run `npm run lint
 - Reuse the established font variables: `var(--just-font-heading)` for headings and `var(--just-font-body)` for body text.
 - Every design token carries the `--just-` prefix. A bare `--color-*` collides with host application themes; this palette already drifted once because of it. Component-internal custom properties are not tokens — namespace them by section (`--hero-device-offset`, `--how-it-works-step-scroll`) and do not add them to `tokens.css`.
 - Prefer CSS in `src/styles/` for shared rules; keep page-specific styling local only when it remains small and readable.
-- Reuse installed packages (`lucide-react`, `motion`, `gsap`, and `react-markdown`) when they directly fit the request. Do not install a package without a clear need.
+- Reuse installed packages when they directly fit the request. Do not install a package without a clear need. Note which tier a package sits in: `react`, `react-dom`, and `lucide-react` are peer dependencies; `react-markdown`, `remark-gfm`, and `@fontsource/*` are runtime dependencies the package ships with; `react-router-dom`, `gsap`, and `motion` are dev-only and must not be imported from `src/sections/`, `src/index.js`, or `src/ProductPage.jsx`. A section that needs a dev-only package has to promote it to a dependency first, and that is a cost worth weighing.
 - Match the formatting and quote/semicolon style of the file being edited. Avoid repository-wide formatting churn.
 - Provide meaningful `alt` text for informative images, preserve keyboard access for interactive controls, and respect reduced-motion preferences when adding nonessential animation.
 

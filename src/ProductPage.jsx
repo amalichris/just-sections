@@ -1,4 +1,5 @@
-import sectionRegistry from '../sections/registry'
+import { Suspense } from 'react'
+import sectionRegistry from './sections/registry'
 import './ProductPage.css'
 
 /**
@@ -41,11 +42,18 @@ export default function ProductPage({ config }) {
     return sections.filter((entry) => (entry.slot ?? 'main') === slot).map(renderSection)
   }
 
+  // One boundary for the whole page rather than one per section: the only lazy
+  // section is `legal-document-default`, and a page carrying it is a legal page
+  // whose document *is* the content. A `null` fallback keeps the surrounding
+  // header and footer painted while it resolves, with no layout-shifting
+  // skeleton to swap out.
   return (
     <div className="product-page">
-      {sectionsIn('header')}
-      <main>{sectionsIn('main')}</main>
-      {sectionsIn('footer')}
+      <Suspense fallback={null}>
+        {sectionsIn('header')}
+        <main>{sectionsIn('main')}</main>
+        {sectionsIn('footer')}
+      </Suspense>
     </div>
   )
 }
