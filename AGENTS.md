@@ -38,13 +38,24 @@ Follow this order for every section:
 2. Read the original prompt and source material. Extract only the section-specific structure, behavior, and useful mechanics; never copy an inspiration wholesale.
 3. Translate the selected ideas through `docs/design-system/design.md`, recording any proposed system extension for agreement before implementation.
 4. Complete `plan.md` and `prompt.md` in the section folder.
-5. Implement the section code, styles, and assets in that same folder.
-6. Verify the documented acceptance checks, then synchronize both Markdown artifacts with the final implementation.
+5. Implement the section code and styles in that same folder. Sections ship no imagery — every image a section renders is supplied by page configuration.
+6. Write `fixtures.js` and register the section, then review it in the gallery at each documented breakpoint.
+7. Verify the documented acceptance checks, then synchronize both Markdown artifacts with the final implementation.
 
 `plan.md` and `prompt.md` are both required before implementation. They must carry the same **Section ID** and **Revision**. If either is missing or their revisions differ, the dossier is not implementation-ready. When an implementation decision changes, update both documents and increment the shared revision before treating the work as complete.
 
 - `plan.md` is the decision record: conversion goal, source extraction, design-system translation, public configuration/variants, responsive and interaction behavior, accessibility, and acceptance checks.
 - `prompt.md` is the execution contract: it references the plan, gives precise implementation work, and must not contradict the plan or design system.
+- `fixtures.js` is the reviewable proof: sample configurations the gallery renders. It must cover a fully dressed `default`, a `minimal` with required props only, one fixture per documented variant, and at least one invalid configuration marked `expectsNothing: true`. A section without fixtures cannot be reviewed without a full page config, so it is not implementation-complete.
+
+## Section gallery
+
+`npm run dev`, then open `/gallery`. It lists every section in `registry.js` and renders each against its `fixtures.js` at 375, 430, 768, 1024, and 1440.
+
+- Fixtures are discovered automatically from `src/sections/*/fixtures.js`; there is no second registry to keep in sync. A registered section with no fixtures is reported on the index rather than hidden.
+- Previews render in an iframe so CSS media queries see a real viewport. A width-constrained `div` would show the desktop layout squeezed and report the wrong breakpoint.
+- The gallery displays the iframe's measured width beside the width chips and flags any mismatch. If that reads anything other than the width you selected, the preview is showing the wrong breakpoint — fix that before trusting what you see.
+- Gallery chrome deliberately avoids the `--just-*` tokens so tool and output are never confused.
 
 ## Page composition contract
 
@@ -69,6 +80,8 @@ This is a personal landing-page trial built with React 19 and Vite.
 - `src/sections/registry.js` maps a config `type` to its section component.
 - `src/sections/types.js` holds the shared content typedefs; `src/sections/requireProps.js` is the shared required-prop guard.
 - `src/sections/_template/` is the starting template for a new section dossier and is not runtime code.
+- `src/sections/<section-id>/fixtures.js` supplies the gallery's sample configurations for that section; `src/sections/fixtureMedia.js` builds inline placeholder imagery for them so no fixture introduces an asset file.
+- `src/dev/` is the local development harness — the section gallery. It is excluded from the published package and is the only place `import.meta.glob` or other Vite-specific APIs may be used.
 - `src/styles/tokens.css` declares the `--just-*` design tokens and nothing else; `src/styles/reset.css` holds the global reset and base element styles; `src/styles/fonts.css` loads Outfit and Inter. A host application embedding a section imports `tokens.css` only — `reset.css` would fight its own global styles.
 - `public/` holds runtime assets that are not owned by a section dossier. Sections themselves ship no imagery: every image a section renders is supplied by page configuration.
 - `docs/design-system/design.md` points at `just-design-system`, the family-level design authority. Read `foundations.md` and `surfaces/web.md` there.

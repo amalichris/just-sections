@@ -1,0 +1,204 @@
+/**
+ * Gallery chrome.
+ *
+ * Deliberately does NOT use the `--just-*` tokens. The chrome must be visually
+ * unmistakable from the section it is previewing — if the toolbar shared the
+ * warm palette you would not be able to tell tool from output at a glance.
+ * System fonts and cool neutrals here, on purpose.
+ */
+
+.gallery {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #1f2328;
+  background: #ffffff;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.gallery__masthead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.gallery__back {
+  font-size: 13px;
+  color: #57606a;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.gallery__back:hover {
+  text-decoration: underline;
+}
+
+.gallery__title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.gallery__lede {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #57606a;
+  max-width: 68ch;
+}
+
+.gallery code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: #f0f1f3;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.gallery__warning,
+.gallery__note,
+.gallery__expectation {
+  font-size: 13px;
+  line-height: 1.6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 0 0 12px;
+  max-width: 88ch;
+}
+
+.gallery__warning {
+  background: #fff4e5;
+  border: 1px solid #f0c489;
+  color: #6b4a12;
+}
+
+.gallery__note {
+  background: #f6f8fa;
+  border: 1px solid #d8dee4;
+  color: #57606a;
+}
+
+.gallery__expectation {
+  background: #eef4ff;
+  border: 1px solid #b6cffb;
+  color: #23407c;
+}
+
+.gallery__list {
+  list-style: none;
+  display: grid;
+  gap: 2px;
+  max-width: 560px;
+  margin: 0;
+  padding: 0;
+}
+
+.gallery__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px;
+  border: 1px solid #d8dee4;
+  border-radius: 6px;
+}
+
+.gallery__item-link {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: #0969da;
+  text-decoration: none;
+}
+
+.gallery__item-link:hover {
+  text-decoration: underline;
+}
+
+.gallery__item-meta {
+  font-size: 12px;
+  color: #57606a;
+}
+
+.gallery__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.gallery__control-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.gallery__chip {
+  font: inherit;
+  font-size: 13px;
+  padding: 5px 11px;
+  border: 1px solid #d8dee4;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1f2328;
+  cursor: pointer;
+}
+
+.gallery__chip:hover {
+  background: #f6f8fa;
+}
+
+.gallery__chip:focus-visible {
+  outline: 2px solid #0969da;
+  outline-offset: 2px;
+}
+
+.gallery__chip[aria-pressed='true'] {
+  background: #1f2328;
+  border-color: #1f2328;
+  color: #ffffff;
+}
+
+/* The stage scrolls rather than scaling the iframe: a transform would make
+   every measurement in the preview a lie. */
+.gallery__stage {
+  overflow-x: auto;
+  background: #f6f8fa;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* `content-box` is load-bearing. The global reset sets `box-sizing: border-box`,
+   which made the 1px border eat into the declared width — a "768" preview was
+   really 766px, so `min-width: 768px` evaluated false and the chip silently
+   showed the tier below. The gallery reports the measured width next to the
+   chips so any remaining discrepancy (classic scrollbars, zoom) is visible
+   rather than silent. */
+.gallery__viewport {
+  display: block;
+  box-sizing: content-box;
+  height: 80vh;
+  min-height: 560px;
+  border: 1px solid #d8dee4;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.gallery__measure {
+  font-size: 12px;
+  color: #57606a;
+  align-self: center;
+}
+
+.gallery__measure--mismatch {
+  color: #b3541e;
+  font-weight: 600;
+}
+
+.gallery-frame__message {
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #6b4a12;
+  background: #fff4e5;
+  padding: 16px;
+}

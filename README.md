@@ -19,6 +19,11 @@ npm install
 npm run dev
 ```
 
+| Route | What it is |
+| ----- | ---------- |
+| `/justejari` | The composed JustEjari landing page |
+| `/gallery` | Section gallery — every registered section against its fixtures, at real viewport widths |
+
 ## Structure
 
 ```
@@ -31,6 +36,7 @@ src/
   pages/JustEjariPreview.jsx  # Current preview page
   pages/justejari/            # Page config + every asset the page supplies
   sections/                   # Reusable section library (one dossier per section, no assets)
+  dev/                        # Section gallery — dev harness, not published
 docs/
   design-system/design.md     # Pointer to the just-design-system repo
   inspiration/                # Reference archive
