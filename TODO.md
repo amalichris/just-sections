@@ -18,8 +18,8 @@ Deviations and discoveries worth carrying forward:
 - **T1.7** `legal-document-default` is the registry's one lazy section (+47.6 kB gzipped
   otherwise, on every landing page). `ProductPage` supplies the Suspense boundary.
 - **T1.8** complete: package, directory, GitHub repo, and remote all read `just-sections`.
-  The repo is **private**, which answers Open question 1 by default — Vercel needs a token to
-  resolve the git dependency in T2.5.
+  The repo was private and **went public on 2026-07-27** when T2.5's first deploy failed —
+  see Open question 1.
 
 - `~/Programming/just-design-system` created and committed — foundations + three surface docs.
 - JustConvert docs reduced to product specs, committed on branch `docs/design-system-layering`.
@@ -535,8 +535,8 @@ the skill rather than to this section.
 Consumers install with:
 `npm i github:amalichris/just-sections#v0.1.0`
 
-**Carry into T2.5:** the repo is private, so Vercel's build environment needs a token to
-resolve that dependency. It resolves locally over SSH, which will not surface the problem.
+**Carry into T2.5:** a consumer's build environment cannot resolve this dependency the way a
+laptop does. It resolves locally over SSH, which hides the problem entirely — see T2.5.
 
 ---
 
@@ -678,22 +678,46 @@ expire after 3 days, vault invitations after 30, so **those redirects can be del
 
 **Do — dashboard and Supabase (yours):**
 
-1. Create the project, Root Directory `web/`. Deploy on its `*.vercel.app` URL and confirm
-   both legal pages render **before** attaching any domain.
-2. Enable **"Include source files outside of the Root Directory"** — without it the build
-   cannot see `../docs/legal/` and fails on Vercel only, never locally.
-3. Add a **token for the private `just-sections` repo** so the git dependency resolves. It
-   installs fine locally over SSH, which is exactly why this surfaces only in CI.
-4. Set `PUBLIC_PARTY_LINK_BASE_URL=https://app.justejari.ae` in the Supabase Edge Function
-   environment. One variable drives both `partyUrl()` and `vaultUrl()`.
-5. Move `justejari.ae` off the app project and onto the web project. **Do this last** — until
-   the web project owns the apex and its redirects are live, apex party links are dark.
+1. ~~Create the project, Root Directory `web/`, deploy on its `*.vercel.app` URL.~~
+   **Done 2026-07-27 — builds and renders.**
+2. ~~Enable "Include source files outside of the Root Directory".~~ **Done.** Without it the
+   build cannot see `../docs/legal/` and fails on Vercel only, never locally.
+3. ~~Resolve the `just-sections` git dependency in CI.~~ **Done — see the build-container
+   note below; it cost one failed deploy.**
+4. **Still to do:** create a DNS record for `app.justejari.ae`. It has **none** — verified
+   2026-07-27 against the local resolver, Cloudflare, and Google. The Mini App is reachable
+   only on its `*.vercel.app` URL today, and `isMiniAppContext()`'s `app.` hostname check
+   never fires there; it works because Telegram supplies `initData`.
+5. **Still to do:** attach `justejari.ae` + `www` to the web project. They point at Vercel
+   (`216.198.79.1`) but no project claims them — the apex answers
+   `X-Vercel-Error: DEPLOYMENT_NOT_FOUND` on port 80 and has no TLS certificate at all.
+6. **Still to do:** set `PUBLIC_PARTY_LINK_BASE_URL=https://app.justejari.ae` in the Supabase
+   Edge Function environment. One variable drives both `partyUrl()` and `vaultUrl()`.
+7. **Still to do:** point BotFather at the `app.` URL once it resolves.
+
+**The deployment ordering worry was unfounded.** Earlier drafts of this task warned against
+deploying `app/` before the web project existed, on the assumption the apex was live. It is
+not: nothing has ever been served on these domains. There is no downtime window and nothing
+to roll back.
+
+#### The build container cannot resolve a GitHub git dependency
+
+This cost a failed deploy and is worth remembering. **npm always writes
+`git+ssh://git@github.com/…` into `package-lock.json`** for a GitHub dependency —
+`hosted-git-info`'s default — no matter how the spec is written in `package.json`. GitHub
+serves anonymous traffic over HTTPS only, so a build container with no SSH key fails with
+`Permission denied (publickey)`. Making the repo public does not fix it on its own.
+
+`web/vercel.json` carries an `installCommand` that rewrites those URLs to HTTPS before npm
+runs. It lives in the repo rather than the dashboard's Install Command field so it survives
+the project being recreated.
 
 `server.fs.allow: ['..']` is already set in `web/vite.config.js` — that one is a dev-server
 concern, and without it dev 403s on `../docs/legal/*.md` while the build succeeds.
 
-**Verify:** Preview deploy renders the landing page and both legal pages; every CTA resolves;
-a freshly issued party link opens on `app.justejari.ae`; an apex `/p/` URL redirects there.
+**Verify:** ~~Preview deploy renders the landing page and both legal pages~~ (done); every CTA
+resolves; a freshly issued party link opens on `app.justejari.ae`; an apex `/p/` URL
+redirects there.
 
 ---
 
@@ -791,10 +815,21 @@ The migration is done when all of these hold:
 
 ## Open questions
 
-1. **Repo hosting.** ~~Public or private?~~ **Answered: private** (confirmed 2026-07-27). It
-   installs fine locally over SSH — `justejari/web` resolves `just-sections@0.1.0` from the
-   tag today — so the gap only appears in CI. Vercel's build environment needs a token before
-   T2.5 can deploy.
+1. **Repo hosting.** ~~Public or private?~~ **Answered: public** (2026-07-27). It started
+   private; T2.5's first deploy failed on `Permission denied (publickey)` and public was the
+   chosen fix over a read-only PAT.
+
+   Scanned every commit before flipping: no secrets, no `.env` ever tracked, and the only
+   real addresses are `chris@justejari.ae` and `chris@amalilabs.com`, both already published
+   in the live legal documents.
+
+   **What this exposes, deliberately:** this `TODO.md` (a strategic roadmap naming JustConvert
+   throughout), `docs/inspiration/`, and every section dossier's `plan.md` / `prompt.md`. If
+   that becomes unwanted, moving the planning material to a private repo is cheap now and
+   expensive once indexed.
+
+   Note that repo visibility is unrelated to `package.json`'s `"private": true`, which only
+   blocks `npm publish`. Consumers install from the git tag, so that flag stays as it is.
 2. **`just-design-system` as a skill.** It currently sits in `skills/` without a `SKILL.md`.
    Once it is docs-only at family level, does it stay a passive doc repo, or does it get a
    real SKILL.md that maintains itself the way `product-docs` does?

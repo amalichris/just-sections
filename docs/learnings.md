@@ -51,3 +51,38 @@ Source images: the "Premium AI Backgrounds" Figma collection (gradients + AI-gen
 - Adding only a slow push-in instead of internal motion: *"Almost imperceptible camera zoom in, roughly 2–3% over 6 seconds, linear easing. Background contents otherwise completely static — no drift, no morphing, no parallax."*
 
 **Workflow:** generate a few seeds per background and pick the calmest result (over-animated ones get rejected first), then run the winning clip through the same optimization pipeline above (trim, compress, no audio, upload to Bunny) before it goes anywhere near the hero.
+
+## Consuming this library from a CI build
+
+Two failures here look like configuration mistakes and are not. Both share a shape worth
+recognising: **they succeed on a laptop and fail only in CI**, so a green local build proves
+nothing about either.
+
+**npm rewrites GitHub git dependencies to SSH, and the lockfile wins.** Declaring
+`"just-sections": "git+https://github.com/..."` does not produce an HTTPS install. npm
+normalises any GitHub dependency to `git+ssh://git@github.com/...` in `package-lock.json`
+via `hosted-git-info`, and the lockfile is what the install actually reads. GitHub serves
+anonymous traffic over HTTPS only, so a build container with no SSH key fails with
+`Permission denied (publickey)` — **including on a public repository.** Regenerating the
+lockfile from scratch does not help; it re-derives the same SSH URL.
+
+The fix is to rewrite the URL at the git layer, before npm runs:
+
+```
+git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" && npm install
+```
+
+Keep it in `vercel.json`'s `installCommand`, not the dashboard field, so recreating the
+project does not silently lose it. If the repo is private, the rewrite carries a token
+instead: `url."https://$GH_PAT@github.com/".insteadOf ...`.
+
+To test a keyless environment without one, disable SSH and watch the URL still resolve:
+`GIT_SSH_COMMAND=/bin/false git ls-remote ssh://git@github.com/<owner>/<repo>.git <tag>`.
+It fails without the rewrite and succeeds with it.
+
+**Cross-boundary `?raw` imports need `server.fs.allow`, and the symptom is inverted.** A page
+config importing `../../docs/legal/*.md?raw` from outside the Vite root 403s in the *dev
+server* while the *production build* succeeds. The instinct is to distrust the build; the
+build is fine. Set `server.fs.allow: ['..']` in `vite.config.js`. Vercel needs the matching
+"Include source files outside of the Root Directory" setting, which fails the other way
+round — only in CI.
