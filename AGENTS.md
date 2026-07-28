@@ -66,25 +66,22 @@ Pages are composed from configuration, not hand-written JSX. A finished section 
 - Declare spacing on the adjacent-sibling pair rather than on the element, so omitting optional content leaves no residual margin.
 - Repeatable content is an array of objects carrying a stable `id`, used as the React key and for any derived DOM ids. Derive `aria-labelledby` ids from `useId()` so a section type can appear more than once on a page.
 - Shared content shapes (`Cta`, `Media`, `Brand`, `NavigationItem`) live in `src/sections/types.js`. Reuse them instead of inventing a new shape for the same idea.
-- Register a completed section in `src/sections/registry.js` under its section ID, then compose pages in `src/pages/<product>/page.config.js`. Keep the config JSON-like so a CMS could supply it later, share repeated values with plain constants, and do not build a template-token interpolation layer.
+- Register a completed section in `src/sections/registry.js` under its section ID. Pages are composed in the consuming product's own department — `justejari/web/src/pages/<product>/page.config.js` — never here. Keep the config JSON-like so a CMS could supply it later, share repeated values with plain constants, and do not build a template-token interpolation layer.
 
 ## Project map
 
-This is a personal landing-page trial built with React 19 and Vite.
+A published section library built with React 19 and Vite, consumed by each product's `web/` department. It contains no product page of its own: JustEjari's landing page moved to `justejari/web/` in Phase 2, and this repo is deliberately product-agnostic and asset-free.
 
-- `src/main.jsx` configures the app entry point, router, and fonts.
-- `src/App.jsx` defines top-level routes.
-- `src/pages/ProductPage.jsx` renders a page from its config module.
-- `src/pages/justejari/page.config.js` is the JustEjari page config; `src/pages/JustEjariPreview.jsx` binds it to a route.
+- `src/index.js` is the package entry point; `src/ProductPage.jsx` is the page composer. Both are published — `src/dev/`, `src/main.jsx`, and `src/App.jsx` are not.
+- `src/main.jsx` configures the dev harness entry point, router, and fonts; `src/App.jsx` defines its routes.
 - `src/sections/` is the reusable section library; each section dossier is self-contained in this directory.
-- `src/index.js` is the package entry point; `src/ProductPage.jsx` is the page composer. Both are published — `src/pages/`, `src/dev/`, `src/main.jsx`, and `src/App.jsx` are not.
 - `src/sections/registry.js` maps a config `type` to its section component. Sections are static imports except `legal-document-default`, which is lazy because `react-markdown` and `remark-gfm` cost +47.6 kB gzipped on pages that never render a document. Measure before adding another lazy entry; a section earns one by pulling a heavy dependency most pages do not use, not by being large itself.
 - `src/sections/types.js` holds the shared content typedefs; `src/sections/requireProps.js` is the shared required-prop guard.
 - `src/sections/_template/` is the starting template for a new section dossier and is not runtime code.
 - `src/sections/<section-id>/fixtures.js` supplies the gallery's sample configurations for that section; `src/sections/fixtureMedia.js` builds inline placeholder imagery for them so no fixture introduces an asset file.
-- `src/dev/` is the local development harness — the section gallery. It is excluded from the published package and is the only place `import.meta.glob` or other Vite-specific APIs may be used.
+- `src/dev/` is the local development harness — the section gallery plus `DemoPage.jsx`, a whole-page composition built from every section's `default` fixture. The gallery checks sections in isolation; the demo page checks what `ProductPage` does around them. It is excluded from the published package and is the only place `import.meta.glob` or other Vite-specific APIs may be used.
 - `src/styles/tokens.css` declares the `--just-*` design tokens and nothing else; `src/styles/reset.css` holds the global reset and base element styles; `src/styles/fonts.css` loads Outfit and Inter. A host application embedding a section imports `tokens.css` only — `reset.css` would fight its own global styles.
-- `public/` holds runtime assets that are not owned by a section dossier. Sections themselves ship no imagery: every image a section renders is supplied by page configuration.
+- `public/` holds dev-harness assets only — currently just `favicon.svg`. Sections ship no imagery: every image a section renders is supplied by page configuration, and fixtures use `fixtureMedia.js` rather than files.
 - `docs/design-system/design.md` points at `just-design-system`, the family-level design authority. Read `foundations.md` and `surfaces/web.md` there.
 - `docs/inspiration/` is a reference archive. Do not treat nested example projects or copied prompts there as production code unless the task explicitly names them.
 - `docs/learnings.md` records reusable project insights; update it only when a task produces a durable, non-obvious learning.

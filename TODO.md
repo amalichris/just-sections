@@ -1,883 +1,188 @@
 # TODO — Graduate the section library into the product repos
 
-Status: **Phases 0–2 complete (2026-07-27), except T2.5 (Vercel), which is yours.**
-Phase 3 is ready to start.
+**Status (2026-07-28): Phases 0–3 complete except T3.4.** What remains is deployment
+configuration in dashboards we do not control from here, one gated migration, and this
+file's own retirement.
 
-Phase 1 landed on branch `restructure/library-portability` (5 commits over a baseline commit),
-merged to `main` and tagged `v0.1.0` on 2026-07-27.
-Deviations and discoveries worth carrying forward:
-
-- **T1.2** also namespaced two component-internal custom properties by section
-  (`--step-*` → `--how-it-works-step-*`). Design tokens take `--just-`; component internals take
-  their section id. Both rules are now in `AGENTS.md`.
-- **T1.5** the gallery previews in an iframe. A width-constrained `div` does not trigger media
-  queries. The first implementation was still wrong — the global reset's `border-box` let a 1px
-  border eat 2px, so the 768 chip rendered at 766px and `min-width: 768px` was false. Fixed, and
-  the gallery now displays the measured width so it cannot regress silently.
-- **T1.7** `remark-gfm` is required, not optional: JustConvert's privacy policy has 38 tables.
-- **T1.7** `legal-document-default` is the registry's one lazy section (+47.6 kB gzipped
-  otherwise, on every landing page). `ProductPage` supplies the Suspense boundary.
-- **T1.8** complete: package, directory, GitHub repo, and remote all read `just-sections`.
-  The repo was private and **went public on 2026-07-27** when T2.5's first deploy failed —
-  see Open question 1.
-
-- `~/Programming/just-design-system` created and committed — foundations + three surface docs.
-- JustConvert docs reduced to product specs, committed on branch `docs/design-system-layering`.
-- JustEjari `docs/design-system/design.md` reduced to product specs — **left uncommitted**, its
-  working tree had 32 files of unrelated in-progress work.
-- T0.1 deviation: full git history could not be preserved across three source repositories, so
-  provenance is recorded in the new repo's `README.md` and `CHANGELOG.md` instead of via
-  `git subtree`.
-
-## Goal
-
-Turn this trial repo into a shared, versioned section library consumed by each product's
-`web/` department, and collapse the four diverging `design.md` copies into one layered
-design system.
-
-Target layout:
-
-```
-~/Programming/
-├── skills/                  ← cross-product SOPs (exists, unchanged)
-├── just-design-system/      ← family design authority (docs only, no code)
-├── just-sections/           ← this repo, graduated: React section library
-├── 08_justejari/justejari/  ← docs/ + app/ + web/   (web/ is NEW)
-└── 02_justconvert/justconvert/ ← docs/ + web/ + ios/ + backend/ + …
-```
-
-Two rules govern every task below:
-
-1. **Import, don't copy.** A doc or token value has exactly one home. Everything else
-   points at it.
-2. **Never delete.** Superseded files become pointer files. The user removes them after
-   verifying the replacement works.
+The goal was to turn a personal landing-page trial into a shared, versioned section library
+consumed by each product's `web/` department, and to collapse four diverging `design.md`
+copies into one layered design system. Both happened.
 
 ---
 
-## Design system: the three-layer split
+## Done
 
-Evidence for the split (verified 2026-07-27):
+Brief by design. The reasoning lives where it is useful now: `docs/learnings.md` for
+reusable insights, each section's `plan.md` for its own decisions, `web/AGENTS.md` in
+JustEjari for department rules, and git history for everything else.
 
-| Copy | Lines | Actual content |
-|---|---|---|
-| `skills/just-design-system/design.md` | 689 | foundations + landing surface |
-| `landing-page-trials/docs/design-system/design.md` | 689 | byte-identical vendored copy |
-| `justejari/docs/design-system/design.md` | 673 | foundations + Mini App surface |
-| `justconvert/docs/design-system/design.md` | 201 | foundations only ("Brand Foundation") |
+### Phase 0 — Reconcile the design system ✅
 
-Each copy is `shared foundations + one surface`. Factor that apart:
+Split the shared `design.md` into three layers and gave the top two their own repo,
+`~/Programming/just-design-system`: `foundations.md` (platform-agnostic brand truth) plus
+`surfaces/{web,ios,miniapp}.md`. Each product's `docs/design-system/` now keeps only its own
+component specs. Adopted `--just-*` as the family token namespace.
 
-**Layer 1 — Family foundations.** `just-design-system/foundations.md`
-Palette, type families + scale, 8pt spacing, radii, elevation, motion curves,
-brand do's/don'ts. Platform-agnostic — no CSS, no SwiftUI, no component anatomy.
-Consumed by every product on every surface.
+Full git history could not be preserved across three source repositories, so provenance is
+recorded in the new repo's `README.md` and `CHANGELOG.md`.
 
-**Layer 2 — Surface systems.** One doc per surface, **all at family level**. Extends Layer 1,
-never restates it. Each opens with "Foundations: see `foundations.md`" and describes how the
-Just brand becomes an app on that surface — independent of which product.
+### Phase 1 — Make this repo a publishable library ✅
 
-| Surface | Doc | Covers |
-|---|---|---|
-| Landing / marketing web | `just-design-system/surfaces/web.md` | Section components, glass treatments, web focus + motion |
-| iOS | `just-design-system/surfaces/ios.md` | SwiftUI theme, button styles, sheets, haptics, motion |
-| Telegram Mini App | `just-design-system/surfaces/miniapp.md` | Telegram theme params, safe areas, dense mobile forms, haptics |
+Split `index.css` into `tokens.css` / `reset.css` / `fonts.css`; applied `--just-*`
+throughout; replaced the one Vite-only API in library code; evicted every product asset;
+built the section gallery; configured the package manifest; built `legal-document-default`;
+renamed the repo. Tagged `v0.1.0` on `main`.
 
-**Layer 3 — Implementations.** Code. Shared implementations live in family packages;
-product-specific components stay in the product.
+Worth remembering: the gallery previews in an **iframe** because a width-constrained `div`
+does not trigger media queries, and it displays the measured width so a wrong breakpoint
+cannot pass silently. `legal-document-default` is the registry's one lazy section — it costs
++47.6 kB gzipped and only legal pages render it.
 
-| Implementation | Home |
-|---|---|
-| `tokens.css` + section components | `just-sections/` — family package |
-| SwiftUI theme, button styles, motion, haptics | `just-ios-kit/` — family package (see Open question 4) |
-| JustConvert onboarding modifiers, top-bar views | `justconvert/ios/…/DesignSystem/` — product-specific |
-| JustEjari Mini App screens and styles | `justejari/app/src/` — product-specific |
+### Phase 2 — Create the JustEjari `web/` department ✅ (except T2.5 dashboard steps)
 
-### The placement test
+`justejari/web/` composes the landing page and both legal pages from configuration against
+`just-sections@v0.1.0`, and implements no sections. The Mini App stopped serving public web
+pages: its legal pages, its trial landing page (~2,200 lines), and three orphaned
+dependencies were removed.
 
-For any design artifact, ask: **would a second app on this same surface need it?**
+The page config needed **no rewriting** — a config names sections by `type` string and the
+registry resolves them, so it moved verbatim. That is the composition contract working.
 
-- Yes → family level (`just-design-system/` for docs, a family package for code)
-- No → the product that owns it
+This repo now serves `/` from a fixture-built demo page in `src/dev/`, so `ProductPage`
+still gets a whole-page check without the library owning product content.
 
-This is uniform across surfaces. There is no special case for web.
+### Phase 3 — Downstream consumers ✅ (except T3.4)
 
-Evidence this is right, from `justconvert/ios/JustConvert/DesignSystem/` (verified 2026-07-27):
-
-| Reusable on any Just iOS app | JustConvert-only |
-|---|---|
-| `Theme.swift`, `Typography.swift`, `Spacing.swift` | `OnboardingBlinkingCursorModifier.swift` |
-| `Motion.swift`, `Haptics.swift` | `OnboardingDigitNudgeModifier.swift` |
-| `PressScaleButtonStyle.swift`, `CircularIconButtonStyle.swift` | `OnboardingPulseModifier.swift` |
-| `SheetContentHeightKey.swift` | `TopBarEditModeButtonView.swift` |
-| ~244 lines | ~262 lines |
-
-`PressScaleButtonStyle` and `CircularIconButtonStyle` implement rules the shared design system
-already mandates — the circular-icon-button variant and the 0.96–0.97 press scale. Family-level
-iOS design content already exists; it is just trapped as Swift inside one product.
+Source map, root `AGENTS.md`, and tree snapshot updated for two departments. Five section
+dossiers re-synced with the moved page, both documents each, shared revisions bumped.
 
 ---
 
-## Phase 0 — Reconcile the design system
-
-Blocks everything else. Do not start Phase 1 until this is committed.
-
-### T0.1 — Scaffold `just-design-system` as a real repo
-
-**Do:** Promote `~/Programming/skills/just-design-system/` (currently a bare folder holding
-one `design.md`, with no `SKILL.md`, so it is not a functioning skill) into a standalone
-git repo at `~/Programming/just-design-system/`. Structure:
-
-```
-just-design-system/
-├── foundations.md
-├── surfaces/
-│   ├── web.md
-│   ├── ios.md
-│   └── miniapp.md
-├── README.md          ← what each layer is, who consumes it, how to propose a change
-└── CHANGELOG.md       ← every token or rule change, dated
-```
-
-**Outcome:** A repo whose README states the three-layer model and names each consumer.
-The old `skills/just-design-system/design.md` becomes a pointer file naming the new repo.
-
-**Verify:** `git log` shows the original `design.md` history preserved (use `git subtree`
-or `git mv` + init, not a fresh copy).
-
-### T0.2 — Write `foundations.md`
-
-**Do:** Start from JustConvert's 201-line "Brand Foundation" — it is already the right
-shape and scope. Reconcile its token values against the palette blocks in the other three
-copies. Resolve every conflict explicitly; note each resolution in `CHANGELOG.md`.
-
-Known reconciliations needed:
-- `--color-coral`, `--color-dark-surface`, `--color-warm-silver` are each declared twice in
-  this repo's `src/index.css`. Keep one.
-- JustConvert web uses `--public-color-*`; this repo uses bare `--color-*`. Same hex values.
-  See T0.3 for the naming decision.
-
-**Outcome:** One document, ~200-250 lines, containing only what is true on every surface of
-every product. If a rule mentions CSS, SwiftUI, hover, or haptics, it belongs in Layer 2.
-
-**Verify:** Grep `foundations.md` for `css`, `swiftui`, `hover`, `haptic`, `px` — near-zero
-hits. Spacing and type scale express as unitless scale steps plus a base.
-
-### T0.3 — Decide the token namespace
-
-**Do:** Adopt `--just-*` across the family: `--just-color-sienna`, `--just-font-heading`,
-`--just-space-4`, `--just-radius-lg`. Record it in `foundations.md`.
-
-Rationale: this repo's bare `--color-*` will collide inside any host app, and JustConvert
-already diverged to `--public-color-*` to dodge exactly that. `--just-` is unambiguous,
-greppable, and marks family ownership. The rename is mechanical.
-
-**Outcome:** A naming rule in `foundations.md` and a rename table (old → new) for the two
-existing prefixes, so T1.2 and the JustConvert migration are lookup jobs, not judgment calls.
-
-### T0.4 — Write `surfaces/web.md`
-
-**Correction (2026-07-27):** a web surface doc already exists —
-`justconvert/docs/design-system/design-web.md`, 193 lines, and by its headings it is almost
-entirely family-reusable (scope, inheritance, web typography, semantic HTML mapping, layout,
-breakpoints, accessibility, page patterns). It has no landing *section components*. So this
-task is a **merge of two lineages**:
-
-- **Base:** `design-web.md` — take wholesale, it is already surface-level and product-neutral.
-- **Add:** the landing section components from this repo's 689-line `design.md`, which
-  `design-web.md` lacks entirely.
-
-Where the two conflict, `design-web.md` wins on layout/typography/breakpoints (it is the
-newer, deliberately-split lineage) and the trial doc wins on section component anatomy (it is
-the only source). Log every conflict resolution in `CHANGELOG.md`.
-
-**Do:** Move the landing-only sections out of this repo's 689-line `design.md`:
-Marketing Landing Typography, Marketing Benefits Bento, Marketing Process Story,
-Marketing CTA Banner, Marketing FAQ, Default Legal Footer, Landing Hero Warm Glass Backdrop,
-Landing Header Glass Pill CTA, Landing Mobile Glass Rail. Add the web-specific interaction
-rules currently embedded in the foundations text: `focusBlue` keyboard focus, web transition
-curves, press scale 0.96–0.97, `prefers-reduced-motion`, 44×44px hit targets.
-
-**Outcome:** `surfaces/web.md` opens with a foundations pointer and contains only landing
-surface material. Every "*(approved extension)*" marker is preserved — that provenance is
-how a future exception gets reviewed.
-
-**Verify:** No color hex, type scale, or spacing value is restated here. Anything numeric
-that isn't component geometry should be a reference to a foundations token.
-
-### T0.5 — Write `surfaces/ios.md`
-
-**Correction (2026-07-27):** an iOS surface doc already exists —
-`justconvert/docs/design-system/design-app.md`, 686 lines. This task is a **split**, not an
-extraction from Swift.
-
-**Do:** Divide `design-app.md` by the placement test. Roughly lines 1–170 are family-level
-iOS surface; the rest is JustConvert product detail.
-
-| Goes to `surfaces/ios.md` (family) | Stays with JustConvert (product) |
-|---|---|
-| Screen Padding, App Typography Rules | §11 Components (11.1–11.16: ConvertSheet, UnitRow, InputCard, OutputCard, UnitPill, Keypad, Sidebar, SearchField, History, Onboarding, Subscription) |
-| §7 Button Variants (Warm Sand, Dark Charcoal, Sienna Brand, Sienna Brand Pill, Near Black) | §10 Icon Reference → Converter Categories |
-| §8 Haptic Feedback | §12 Number Formatting |
-| §9 Animation Constants + Animation Rules | `component-specs.json` |
-| Circular Icon Buttons (from §11.11) | |
-| §13 Accessibility, §14 Do's & Don'ts (App Interaction) | |
-
-Cross-check each retained rule against the SwiftUI source in
-`justconvert/ios/JustConvert/DesignSystem/` — `Theme.swift`, `Typography.swift`,
-`Spacing.swift`, `Motion.swift`, `Haptics.swift`, `PressScaleButtonStyle.swift`,
-`CircularIconButtonStyle.swift`, `SheetContentHeightKey.swift`. Where doc and code disagree,
-that is a real conflict — resolve it deliberately and log it in `CHANGELOG.md`.
-
-**Outcome:** A second Just iOS app can be built to brand from this doc alone, without reading
-JustConvert's source.
-
-**Verify:** No JustConvert component name (`ConvertSheet`, `InputCard`, `UnitRow`,
-`Converter*`, `Onboarding*`) appears in `surfaces/ios.md`.
-
-### T0.6 — Write `surfaces/miniapp.md`
-
-**Do:** Extract the Mini App conventions from `justejari/docs/design-system/design.md` (673
-lines) — Telegram theme params, safe-area handling, dense mobile form patterns, and anything
-else that would apply to a second Telegram Mini App. Fold in
-`justejari/docs/design-system/haptics-guidelines.md` if its rules are surface-general rather
-than JustEjari-specific; if it is already general, move it wholesale and leave a pointer.
-
-**Outcome:** The Mini App surface is documented independently of JustEjari's features.
-
-### T0.7 — Reduce the product design docs to product specs
-
-**Do:** With foundations at Layer 1 and surface conventions at Layer 2, each product's
-`docs/design-system/` keeps only what is unique to that product:
-
-- **JustEjari** keeps Upload Status Cards, Uploaded Document Preview, Document Vault Actions,
-  `component-specs.json`, and the wireframe HTML/PDFs. Everything else becomes a pointer.
-  Rename `design.md` → `component-specs.md` if that better describes what remains.
-- **JustConvert**'s 201-line doc is pure foundations, so after T0.2 it retains nothing.
-  Replace it with a pointer file. This is the correct outcome, not a mistake — JustConvert's
-  iOS component specs have not been written yet, and now there is an obvious place for them.
-
-**Outcome:** Neither product repo restates a token value or a surface convention. Both open
-with pointers to `foundations.md` and the relevant surface doc.
-
-**Verify:** `grep -c '#[0-9a-fA-F]\{6\}'` on both product design docs returns 0.
-
-### T0.8 — Replace the vendored copy in this repo
-
-**Do:** `docs/design-system/design.md` here becomes a pointer to `just-design-system`.
-Update the `docs/design-system/design.md` references in `AGENTS.md` and `CLAUDE.md` to name
-`foundations.md` and `surfaces/web.md` explicitly — the current text points at a single file
-that will no longer be authoritative.
-
-**Outcome:** Zero copies of foundations content in this repo.
-
-### T0.9 — Note the JustEjari landing docs
-
-**Do:** No move required. `justejari/docs/landing-page/` (thoughts.md,
-thoughts-consolidated.md, 2026-07-08_justejari-dream-landing.md, Landing Page Design
-Analysis.pdf) and `justejari/docs/design-system/landing/` (blueprint.md, animations.md) are
-**product-specific landing intent** — what JustEjari's landing page should say and do. That
-is company-level product truth, not family design system. It stays.
-
-**Outcome:** A line in `justejari/docs/design-system/miniapp.md` or the root `AGENTS.md`
-distinguishing the two: `landing/` = this product's landing intent;
-`just-design-system/surfaces/web.md` = how any landing page is built.
-
----
-
-## Phase 1 — Make this repo a publishable library
-
-All work stays in this repo. `npm run dev` must keep working throughout.
-
-### T1.1 — Split `src/index.css` into three files
-
-**Do:** Break `src/index.css` (64 lines, currently tokens + reset + base element styles) into:
-
-```
-src/styles/
-├── tokens.css   ← :root custom properties ONLY. Always safe for any host to import.
-├── reset.css    ← the * reset, html/body rules, section[id] scroll-margin,
-│                  prefers-reduced-motion block. Standalone sites only.
-└── fonts.css    ← the @fontsource imports currently in src/main.jsx
-```
-
-**Outcome:** A host app embedding a section imports `tokens.css` and the section's own CSS,
-and nothing touches its `body` background or global box-sizing. A standalone landing site
-imports all three.
-
-**Verify:** `tokens.css` contains no selector other than `:root`.
-
-### T1.2 — Apply the `--just-*` namespace
-
-**Do:** Rename every custom property per the T0.3 table, across `tokens.css` and all seven
-section CSS files. Mechanical — `sed` it, then grep for stragglers.
-
-**Verify:** `grep -rn 'var(--' src/ | grep -v 'var(--just-'` returns nothing.
-
-### T1.3 — Replace `import.meta.env.DEV`
-
-**Do:** Swap for `process.env.NODE_ENV !== 'production'` in `src/sections/requireProps.js:26`
-and `src/pages/ProductPage.jsx:28`.
-
-**Why:** `import.meta.env` is Vite-only. Both consumers are Vite today, so this is not
-urgent — but a shared package must not assume its consumer's bundler, and this is the only
-place the library does.
-
-**Verify:** `grep -rn 'import.meta' src/` returns nothing.
-
-### T1.4 — Evict product assets from the library
-
-**Do:** `src/sections/hero-default/assets/` holds `hero-bg-1.png` and
-`justejari-home-screen-mockup.png`, both imported by `src/pages/justejari/page.config.js:1-2`.
-These are JustEjari content sitting in shared code. Move them to the page's own assets
-folder alongside the six SVGs already there.
-
-Then audit every remaining `src/sections/*/assets/` folder. The rule: **a section ships no
-imagery.** If a section needs a decorative shape, inline it as SVG in the component.
-
-**Outcome:** `find src/sections -name '*.png' -o -name '*.jpg' -o -name '*.svg'` is empty.
-The library becomes asset-free, which is what makes it publishable without a build step.
-
-### T1.5 — Build the section gallery (answers "can I still work on sections here?")
-
-**Do:** Yes — and make it better than today. Add a dev-only gallery so a section can be
-built and viewed without a full page config.
-
-- Each section dossier gains `fixtures.js` exporting representative props, including one
-  fixture per documented variant and one minimal fixture (required props only). This keeps
-  the dossier self-contained per `AGENTS.md`.
-- Add `src/dev/Gallery.jsx`: reads `sections/registry.js`, renders every registered section
-  against its fixtures, one per route plus an index. Add a viewport-width switcher
-  (375 / 768 / 1280) so responsive checks don't need devtools.
-- Route it at `/gallery` in `src/App.jsx`, alongside the existing `/justejari` preview.
-
-**Outcome:** `npm run dev` → `localhost:5173/gallery` lists every section. Building a new
-section means: copy `_template/`, write `plan.md` + `prompt.md`, implement, add `fixtures.js`,
-register it, and it appears in the gallery. Full-page verification still lives at the
-JustEjari preview route until Phase 2 moves it.
-
-**Verify:** Every key in `sectionRegistry` renders in the gallery. A section with a missing
-required prop renders nothing and logs — confirm the `requireProps` path via the minimal
-fixture.
-
-### T1.6 — Configure the package manifest
-
-**Do:** Update `package.json`:
-
-```jsonc
-{
-  "name": "just-sections",
-  "private": false,
-  "version": "0.1.0",
-  "type": "module",
-  "files": ["src/sections", "src/styles"],   // dev harness is NOT published
-  "exports": {
-    ".": "./src/sections/index.js",
-    "./registry": "./src/sections/registry.js",
-    "./styles/tokens.css": "./src/styles/tokens.css",
-    "./styles/reset.css": "./src/styles/reset.css",
-    "./styles/fonts.css": "./src/styles/fonts.css"
-  },
-  "peerDependencies": { "react": "^19", "react-dom": "^19", "lucide-react": "^1" }
-}
-```
-
-Move `react`, `react-dom`, and `lucide-react` from `dependencies` to `peerDependencies` +
-`devDependencies`. Drop `gsap`, `motion`, `react-markdown`, and `react-router-dom` from the
-published surface — verified 2026-07-27 that no section imports any of them; the router is
-used only by `src/main.jsx` and `src/App.jsx`, which are dev harness.
-
-Add `src/sections/index.js` re-exporting each section, `ProductPage`, `types.js`, and
-`requireProps.js`.
-
-**Outcome:** The package ships source, not a build. Consumers are Vite, so no compile step
-is needed; a future Next.js consumer adds `transpilePackages: ['just-sections']`.
-
-**Verify:** `npm pack --dry-run` lists only `src/sections/**`, `src/styles/**`,
-`package.json`, `README.md`. No `dist/`, no `node_modules/`, no `src/dev/`, no `docs/`.
-
-### T1.7 — Build the `legal-document-default` section
-
-**Decision (2026-07-27):** legal pages move into the `web/` department, adopt the landing
-breakpoints and shared footer, and keep rendering markdown from each product's own
-`docs/legal/`. A legal page becomes a **page config**, not a component.
-
-Evidence this is right: `justejari/app/src/pages/TermsPage.jsx` and
-`justconvert/web/src/pages/TermsPage.jsx` are already near-identical copies — same structure,
-same `public-page__shell` / `public-legal__content` class names, same `PublicSiteFooter`. They
-were copy-pasted between products and have drifted only in details. JustConvert already hosts
-them in `web/`; **JustEjari is the anomaly**, serving legal pages out of the Mini App.
-
-**Do:** Add a section whose only job is rendering a supplied markdown string.
-
-```js
-// web/src/pages/<product>/terms.config.js
-import termsContent from '../../../../docs/legal/terms-of-service.md?raw'
-
-export default {
-  sections: [
-    { type: 'header-default',  slot: 'header', props: { /* … */ } },
-    { type: 'legal-document-default', props: { content: termsContent } },
-    { type: 'footer-default', slot: 'footer', props: { productName: 'JustEjari', privacyHref: '/privacy', termsHref: '/terms' } },
-  ],
-}
-```
-
-**Public configuration.** Required: `content` (raw markdown string — the page does the `?raw`
-import, exactly as it already imports images). Optional: `internalLinks`, overriding the default
-cross-link map. Variant: `surface` (`parchment` | `ivory`), default `parchment`.
-
-#### All content lives in the legal document — nothing else
-
-There is **no `title` prop.** The document supplies its own heading: JustEjari's file opens with
-`# JustEjari - Terms of Service`, followed by its effective date, last-updated date, and version
-as body content. Passing a title through page config would create a second place to edit the
-same string, and the two would drift the way the contact email already did.
-
-The consequence is that the legal document is the single source for its own heading, dates, and
-version. The `terms-and-privacy-consultant` skill maintains all of it. Nothing in the web
-department restates any of it.
-
-**Single `h1` per page.** The document's `#` heading renders as the page `h1`, per
-`surfaces/web.md` §3. Confirm `header-default` does not also emit an `h1` on these routes — a
-wordmark in the header should be a `div` or `p`, not a heading. Check this when wiring the
-route, not after.
-
-#### The `terms-and-privacy-consultant` skill defines the contract
-
-The skill (`skills/terms-and-privacy-consultant/SKILL.md` §"Save all outputs") writes to fixed,
-stable paths:
-
-```
-docs/legal/terms-of-service.md
-docs/legal/privacy-policy.md
-docs/legal/changelog.md
-```
-
-Version and effective date live **inside** the document (`**Version: 1.3**`,
-`**Last Updated: 23 July 2026**`) and in `changelog.md` — deliberately not in the filename. The
-skill also writes cross-links as plain relative filenames; JustEjari's docs currently contain
-exactly `](privacy-policy.md)` and `](terms-of-service.md)`.
-
-Three consequences:
-
-1. **`internalLinks` ships a default and is only an override.** The section defaults to
-   `{ 'privacy-policy.md': '/privacy', 'terms-of-service.md': '/terms' }`, matching the skill's
-   output. A page supplies the prop only if it routes those documents somewhere else.
-2. **JustConvert's dated filenames are legacy, not a competing convention.**
-   `20260520_terms-of-service_v2-1.md` predates the skill. Do not design around it — it
-   converges on the plain names the next time those documents are regenerated. Track that as
-   part of T3.4.
-3. **Page configs are near-identical across products.** Only the product name, title, and
-   routes differ. That is the signal the section is at the right altitude.
-
-#### Drop from the shared version
-
-- **The hardcoded email address.** `LegalMarkdown.jsx:33` strips
-  `mailto:chris@amalilabs.com` — but the current documents contain only `chris@justejari.ae`.
-  The branch is dead code and has been since the 23 July 2026 changelog entry changed the
-  contact address. This is precisely why a shared component must not hardcode content: it went
-  stale silently and nothing failed.
-
-  **Keep the behavior, drop the address.** Render **every** `mailto:` link as plain text — the
-  link's text content, unlinked. No address list, no configuration. The address then lives only
-  in the legal document, which is the point: change it in the markdown and every page follows.
-
-  Emails stay selectable and copyable, just not clickable. This is one rule in one component,
-  so reversing it later is a single change with a `CHANGELOG.md` entry — not a prop. Do not add
-  a `linkEmails` boolean; that is the `showEyebrow` anti-pattern the section contract forbids.
-- **Analytics.** `justconvert/web/src/pages/TermsPage.jsx` calls `trackStaticPageView` — a route
-  concern, not a section concern. It stays in the page.
-
-**Keep** JustEjari's empty-content fallback: `content` is required, so an empty string renders
-nothing and reports the omission via `requireProps`.
-
-**Layout.** Use the editorial content width — 680px — inside the standard landing shell, per
-`just-design-system/surfaces/web.md` §4. This is not a conflict with the 1120px landing
-container; the surface doc already scopes both. Breakpoints follow the family 1024px standard,
-which is the documented migration away from JustConvert's legacy 992px.
-
-**Generality.** Do not build "a Terms page" and "a Privacy page". The skill emits a third
-document — `changelog.md` — on every update, so a third page already exists whether or not it
-is routed. One section, N page configs.
-
-Decide separately whether `changelog.md` is public. It is a genuine transparency asset (it
-records what changed in the legal terms and when), but it is written for an internal audience —
-JustEjari's entries carry "Review Recommendations" addressed to the operator. If it goes
-public, that section of each entry should be dropped at generation time, which is a change to
-the skill rather than to this section.
-
-**Verify:**
-
-- Both products' Terms and Privacy render from their own `docs/legal/`, at 375 / 768 / 1280.
-- Cross-links between the two documents resolve to routes, not to `.md` files.
-- `chris@justejari.ae` renders as plain text on both pages — not a link, still selectable.
-- Exactly one `h1` per page, supplied by the document.
-- Changing the contact email in `docs/legal/terms-of-service.md` changes what the page shows,
-  with no code edit anywhere.
-- `justejari/app/src/assets/legalDocuments/` is already an empty leftover directory — remove it
-  once the migration lands.
-
-### T1.8 — Rename the repo
-
-**Complete (2026-07-27).** All four identities now read `just-sections`:
-
-1. `package.json` `name` is `just-sections@0.1.0`.
-2. Directory renamed to `~/Programming/just-sections`.
-3. GitHub repo renamed via `gh repo rename`, which also rewrote `origin`. `package.json`
-   `repository` and the `README.md` title were updated in commit `458f4dd` — `gh` does not
-   touch either. GitHub redirects the old URL indefinitely, but that redirect dies the moment
-   anything is created under the old name, so nothing should rely on it.
-4. `restructure/library-portability` fast-forwarded onto `main` and tagged `v0.1.0`
-   (annotated), both pushed. Tagging waited for the merge because a git-tag install resolves
-   against the default branch.
-
-Consumers install with:
-`npm i github:amalichris/just-sections#v0.1.0`
-
-**Carry into T2.5:** a consumer's build environment cannot resolve this dependency the way a
-laptop does. It resolves locally over SSH, which hides the problem entirely — see T2.5.
-
----
-
-## Phase 2 — Create the JustEjari `web/` department
-
-**T2.1–T2.4 complete (2026-07-27).** `justejari/web/` exists, renders the landing page and
-both legal pages against `just-sections@v0.1.0`, and the Mini App no longer serves public web
-pages. **T2.5 (Vercel) is still yours** — see that task.
-
-Deviations and discoveries worth carrying forward:
-
-- **The page config needed no rewriting.** T2.2 anticipated rewriting section imports; there
-  were none. A page config names sections by `type` string and the registry resolves them, so
-  the file copied verbatim. That is the composition contract working as designed.
-- **Cross-repo history did not transfer.** `git mv` cannot span repositories, so the page
-  config and its eight assets are a fresh add in `justejari`. Same limitation T0.1 hit.
-- **`PublicSiteFooter` was kept.** T2.4 said to check before removing; `PublicHomePlaceholder`
-  still uses it.
-- **The Mini App's trial landing page is retired.** `LandingPage.jsx` was the `*` catch-all
-  for every non-Telegram visitor, not a route — so removing it needed a replacement.
-  `PublicHomePlaceholder` took over: it already existed and was orphaned. That deleted ~2,200
-  lines (`components/landing/**`, `content/landing/`, `styles/landing.css`).
-- **Three dependencies died with it.** `motion` (trial landing only) plus `react-markdown` and
-  `remark-gfm` (`LegalMarkdown` only) were removed from `app/package.json`. The Mini App's
-  build lost the `LandingPage` (38 kB gzip) and `LegalMarkdown` (46 kB gzip) chunks.
-- **`PartyInputPage.jsx` had a relative `/privacy` link** that would have 404'd silently after
-  the split. Now absolute. `MenuSheet.jsx` was already absolute.
-- **The landing footer pointed at `#privacy` / `#terms`** — anchors resolving to nothing. Now
-  real routes, shared through `web/src/pages/justejari/chrome.js`.
-- **`app/AGENTS.md` described a department that served public pages.** Corrected.
-- **PRD-039 had no separable commit.** Its entire diff was four supersession lines belonging
-  to PRD-043, so Part 0's three commits split by concern rather than by PRD.
-
-### T2.1 — Scaffold the department
-
-**Do:** Create `justejari/web/` per `skills/project-restructuring/references/target-structure.md`.
-JustEjari currently has exactly one department (`app/`); this is its second.
-
-```
-justejari/web/
-├── prd/_template/{prd.md,tasks.md}   ← copy from app/prd/_template/, then adapt to
-│                                       landing work: sections touched, page config
-│                                       changes, responsive breakpoints, Lighthouse budget
-├── src/
-│   ├── pages/justejari/{page.config.js,assets/}
-│   ├── App.jsx
-│   └── main.jsx
-├── public/
-├── AGENTS.md
-├── CLAUDE.md
-├── index.html
-├── package.json
-├── vite.config.js
-└── vercel.json
-```
-
-**Outcome:** A department that owns page config, product assets, routes, and deploy config —
-and no section implementations.
-
-### T2.2 — Move the JustEjari page in
-
-**Do:** Move `src/pages/justejari/page.config.js` and `src/pages/justejari/assets/` (six
-SVGs plus the two PNGs relocated in T1.4) into `justejari/web/src/pages/justejari/`. Use
-`git mv` where history is worth keeping.
-
-Add `just-sections` to `web/package.json` as
-`"just-sections": "github:amalichris/just-sections#v0.1.0"`. Rewrite the config's section
-imports to come from the package.
-
-Replace the placeholder in `page.config.js:28` — `justEjariUrl = "#pricing"` — with the real
-Mini App URL, or leave it with the existing TODO comment if the URL still isn't live.
-
-**Outcome:** `npm run dev` in `justejari/web/` renders the full landing page from the
-published library.
-
-**Verify:** Page renders identically to the current `/justejari` preview at 375 / 768 / 1280.
-Compare against a screenshot taken before the move.
-
-### T2.3 — Write the department AGENTS.md and CLAUDE.md
-
-**Do:** Follow the department template in `target-structure.md`. The context section points
-at:
-- `../../docs/product/product-brief.md`
-- `../../docs/landing-page/` — this product's landing intent
-- `just-design-system/foundations.md` and `surfaces/web.md` — how it's built
-
-State the boundary explicitly, because it is the whole point of the split:
-
-> This department composes pages from configuration. It does not implement sections.
-> A new section or a change to an existing one is a `just-sections` change, released as a
-> version bump. Never fork a section into this repo.
-
-**Outcome:** An agent working in `justejari/web/` knows to edit config, and knows a section
-change means switching repos.
-
-### T2.4 — Move JustEjari's legal pages out of the Mini App
-
-**Do:** JustEjari currently serves `/terms` and `/privacy` from `app/` — the Telegram Mini App
-department. They are public web pages and belong in `web/`. Move them:
-
-- Delete `app/src/pages/TermsPage.jsx`, `app/src/pages/PrivacyPage.jsx`, and
-  `app/src/components/LegalMarkdown.jsx` **only after** the `web/` equivalents render
-  correctly. Their behavior is absorbed by `legal-document-default` (T1.7).
-- Create `web/src/pages/justejari/terms.config.js` and `privacy.config.js`, each importing
-  from `../../../../docs/legal/`.
-- Route them in `web/src/App.jsx`.
-- Remove the empty leftover `app/src/assets/legalDocuments/` directory.
-- `app/src/components/PublicSiteFooter.jsx` is superseded by `footer-default`. Check whether
-  anything else in the Mini App still uses it before removing.
-
-**Watch for:** anything in the Mini App that links to `/terms` or `/privacy` — those routes now
-live on a different deploy. If the Mini App and landing site are on different domains, those
-links must become absolute URLs.
-
-**Verify:** Both routes render from `docs/legal/` with working cross-links between them. The
-Mini App still builds with the pages removed.
-
-### T2.5 — Deployment
-
-**Decision (2026-07-27): two Vercel projects, one domain each.** A project maps to a single
-root directory, so a second department needs a second project.
-
-| Domain | Project | Root Dir | Serves |
-|---|---|---|---|
-| `justejari.ae` + `www` | **new** | `web/` | `/`, `/terms`, `/privacy` |
-| `app.justejari.ae` | existing | `app/` | Mini App + `/p/:token`, `/v/:token` |
-
-**Party links move to `app.`** rather than being proxied from the apex. Proxying was the
-alternative and it works, but it requires setting a distinct Vite `base` on the app deploy:
-both apps emit assets at `/assets/*`, so a proxied party page would request
-`justejari.ae/assets/…`, hit the web deploy's SPA catch-all, receive `index.html`, and fail
-on MIME type — in production only. Redirecting instead lands the browser on `app.` where its
-own assets resolve natively, and needs no `base` change.
-
-**Do — code (done):** `web/vercel.json` carries 307 redirects for `/p/:token` and `/v/:token`
-to `app.justejari.ae`, covering links already in recipients' chat histories. Party links
-expire after 3 days, vault invitations after 30, so **those redirects can be deleted after
-2026-08-27.** See `web/AGENTS.md` § Domains.
-
-**Do — dashboard and Supabase (yours):**
-
-1. ~~Create the project, Root Directory `web/`, deploy on its `*.vercel.app` URL.~~
-   **Done 2026-07-27 — builds and renders.**
-2. ~~Enable "Include source files outside of the Root Directory".~~ **Done.** Without it the
-   build cannot see `../docs/legal/` and fails on Vercel only, never locally.
-3. ~~Resolve the `just-sections` git dependency in CI.~~ **Done — see the build-container
-   note below; it cost one failed deploy.**
-4. **Still to do:** create a DNS record for `app.justejari.ae`. It has **none** — verified
-   2026-07-27 against the local resolver, Cloudflare, and Google. The Mini App is reachable
-   only on its `*.vercel.app` URL today, and `isMiniAppContext()`'s `app.` hostname check
-   never fires there; it works because Telegram supplies `initData`.
-5. **Still to do:** attach `justejari.ae` + `www` to the web project. They point at Vercel
-   (`216.198.79.1`) but no project claims them — the apex answers
-   `X-Vercel-Error: DEPLOYMENT_NOT_FOUND` on port 80 and has no TLS certificate at all.
-6. **Still to do:** set `PUBLIC_PARTY_LINK_BASE_URL=https://app.justejari.ae` in the Supabase
-   Edge Function environment. One variable drives both `partyUrl()` and `vaultUrl()`.
-7. **Still to do:** point BotFather at the `app.` URL once it resolves.
-
-**The deployment ordering worry was unfounded.** Earlier drafts of this task warned against
-deploying `app/` before the web project existed, on the assumption the apex was live. It is
-not: nothing has ever been served on these domains. There is no downtime window and nothing
-to roll back.
-
-#### The build container cannot resolve a GitHub git dependency
-
-This cost a failed deploy and is worth remembering. **npm always writes
-`git+ssh://git@github.com/…` into `package-lock.json`** for a GitHub dependency —
-`hosted-git-info`'s default — no matter how the spec is written in `package.json`. GitHub
-serves anonymous traffic over HTTPS only, so a build container with no SSH key fails with
-`Permission denied (publickey)`. Making the repo public does not fix it on its own.
-
-`web/vercel.json` carries an `installCommand` that rewrites those URLs to HTTPS before npm
-runs. It lives in the repo rather than the dashboard's Install Command field so it survives
-the project being recreated.
-
-`server.fs.allow: ['..']` is already set in `web/vite.config.js` — that one is a dev-server
-concern, and without it dev 403s on `../docs/legal/*.md` while the build succeeds.
-
-**Verify:** ~~Preview deploy renders the landing page and both legal pages~~ (done); every CTA
-resolves; a freshly issued party link opens on `app.justejari.ae`; an apex `/p/` URL
-redirects there.
-
----
-
-## Phase 3 — Downstream consumers
-
-Per the restructuring skill's Phase 3: these break silently. Nothing warns you.
-
-**T3.1, T3.2, T3.3, and T3.5 are complete (2026-07-28).** T3.4 remains, gated — see below.
-
-### T3.1 — Update the JustEjari source map ✅
-
-**Done.** `skills/product-docs/references/justejari.md` now describes two departments, points
-the design-system entry at `just-design-system` (`foundations.md` plus the relevant surface
-doc) with `docs/design-system/` holding only JustEjari-specific component anatomy, records
-that the legal pages are now page configs in `web/`, and states that `web/` implements no
-components so nobody goes looking for section markup there. Verified date bumped.
-
-### T3.2 — Update the JustEjari root AGENTS.md ✅
-
-**Done.** `web/` added to the structure block and the department table with its deploy target,
-plus the boundary rule. The "Read Depending on Task" table gained rows for landing work, for
-"a section renders wrong" (pointing out of the repo), and for token values, and its
-frontend row now leads with the family design system.
-
-### T3.3 — Regenerate the tree snapshot ✅
-
-**Done.** `skills/tools/project-trees/2026-07-28_justejari_project-tree.md`. Confirmed it
-captures `web/` in full and that the deleted trees (`components/landing/**`, the legal pages)
-are absent.
+## Open
+
+### T2.5 — Finish the deployment
+
+The web project builds and renders on its `*.vercel.app` URL. **Everything below is dashboard
+or DNS work.** Nothing here needs a code change; the repo side is done.
+
+Verified 2026-07-28 — these are facts, not assumptions:
+
+- `justejari.ae` and `www` resolve to Vercel (`216.198.79.1`) but **no project claims them**.
+  Port 80 answers `X-Vercel-Error: DEPLOYMENT_NOT_FOUND` and there is no TLS certificate, so
+  HTTPS fails the handshake outright.
+- `app.justejari.ae` has **no DNS record at all** — confirmed against the local resolver,
+  Cloudflare, and Google.
+
+So nothing has ever been served on either domain. There is no live traffic to protect, no
+downtime window, and no ordering constraint.
+
+**Remaining steps:**
+
+1. **Attach `justejari.ae` + `www`** to the web Vercel project.
+2. **Create DNS for `app.justejari.ae`** and attach it to the app project. Until it exists,
+   `isMiniAppContext()`'s `app.` hostname check never fires — the Mini App works only because
+   Telegram supplies `initData`.
+3. **Set `PUBLIC_PARTY_LINK_BASE_URL=https://app.justejari.ae`** in the Supabase Edge Function
+   environment. One variable drives both `partyUrl()` and `vaultUrl()`.
+4. **Repoint BotFather** at the `app.` URL once it resolves.
+5. **Confirm** a freshly issued party link opens on `app.justejari.ae`, and that an apex
+   `/p/` URL redirects there.
+
+**Then, after 2026-08-27:** delete the `/p/:token` and `/v/:token` redirects from
+`web/vercel.json`. They exist only for links already sent to recipients before the cutover —
+party links expire after 3 days, vault invitations after 30, so 31 days clears every one.
+See `web/AGENTS.md` § Domains.
 
 ### T3.4 — Migrate JustConvert's web department
 
-**Do:** Last, and only after JustEjari has run in production for a while.
-`justconvert/web/src/styles/web-public.css` declares the same palette under
-`--public-color-*` (verified identical hex values, lines 24-39). Point it at
-`just-sections/styles/tokens.css`, migrate its hand-rolled sections to library sections, and
-delete the local palette.
+**Gate status: closed, and not close to opening.** This task begins "only after JustEjari has
+run in production for a while." JustEjari's landing page has never served a request on a real
+domain. Migrating JustConvert onto a library whose only consumer is untested by real traffic
+would defeat the point of the gate.
 
-Also converge its legal documents onto the skill's convention. JustConvert currently has
-`docs/legal/20260520_privacy-policy_v2-1.md` and `20260520_terms-of-service_v2-1.md`; the
-`terms-and-privacy-consultant` skill writes `privacy-policy.md` and `terms-of-service.md` with
-the version and date inside the document. Regenerating or renaming lets JustConvert's legal
-page configs drop their `internalLinks` override and match JustEjari's exactly.
+Reopen once JustEjari has been live on `justejari.ae` long enough to surface what local
+verification cannot: real fonts over real latency, real devices, real Lighthouse numbers.
 
-**Outcome:** One palette definition across both products, and one legal-document filename
+**Then do:**
+
+- `justconvert/web/src/styles/web-public.css` declares the same palette under
+  `--public-color-*` (verified identical hex values, lines 24–39). Point it at
+  `just-sections/styles/tokens.css` and delete the local palette.
+- Migrate its hand-rolled sections to library sections.
+- Converge its legal documents onto the consultant skill's convention. It currently has
+  `docs/legal/20260520_privacy-policy_v2-1.md` and `20260520_terms-of-service_v2-1.md`; the
+  skill writes `privacy-policy.md` and `terms-of-service.md` with the version and date inside
+  the document. Renaming lets JustConvert's legal page configs drop their `internalLinks`
+  override and match JustEjari's exactly.
+
+**Outcome:** one palette definition across both products, and one legal-document filename
 convention. This is the payoff — until it lands, the family design system is still theoretical.
 
-**Gate status (2026-07-28): not ready.** This task opens "only after JustEjari has run in
-production for a while." JustEjari's landing page has never served a request on a real
-domain — `justejari.ae` is not yet attached to the web project. The gate is not close to
-open, and forcing it would migrate JustConvert onto a library whose only consumer has never
-been exercised by real traffic.
-
-Reopen this once JustEjari has been live on `justejari.ae` long enough to have found the
-things local verification cannot: real fonts over real latency, real devices, real
-Lighthouse numbers.
-
-### T3.5 — Re-sync the section dossiers with the moved page
-
-**Why this existed:** Phase 2 deleted `src/pages/justejari/` and the `/justejari` route from
-this repo, leaving dossiers that still referenced both — including verification steps that
-could no longer be followed.
-
-**Done (2026-07-28).** Five dossiers, not the seven estimated when this task was written:
-`benefits-default`, `faq-default`, `hero-default`, `how-it-works-default`, and
-`pricing-banner-default`. Each had both documents updated and its shared revision bumped
-(0.4→0.5, 0.4→0.5, 0.8→0.9, 0.9→1.0, 0.3→0.4).
-
-The split was not cleanly plan-vs-prompt, which is why the estimate was off. Some `plan.md`
-lines were present-tense claims that had become false — "Page config supplies placeholder SVG
-UI skeletons from `src/pages/justejari/assets/`" — and those were corrected to describe
-`fixtureMedia.js` and page-owned media. Verification steps now name
-`/gallery/<section-id>` and include 430px, which the gallery has and the old preview did not.
-
-**Left alone, deliberately:** past-tense narrative recording what *was* done — "Composed into
-`src/pages/justejari/page.config.js` under id `benefits` … were deleted". Two such lines
-remain, in `benefits-default/plan.md` and `how-it-works-default/plan.md`. They are dated
-decision records; rewriting them would falsify history.
-
-**Verified:** `grep -rn '/justejari' src/sections --include=prompt.md` returns nothing, and
-every dossier's `plan.md` and `prompt.md` revisions match.
-
----
-
-## Verification gate
+### Verification gate
 
 The migration is done when all of these hold:
 
-- [ ] Exactly one file in `~/Programming` defines the brand palette
+- [ ] Exactly one file in `~/Programming` defines the brand palette — waits on T3.4
 - [ ] `just-design-system/surfaces/` holds `web.md`, `ios.md`, `miniapp.md`; a second app on
       any surface could be built to brand without reading an existing product's source
 - [ ] Neither product's `docs/design-system/` contains a surface convention — only its own
-      component specs
+      component specs. **JustEjari done**; JustConvert waits on T3.4
 - [x] `grep -rn 'var(--' just-sections/src | grep -v 'var(--just-'` → empty
-- [x] `npm pack --dry-run` in `just-sections` ships no dev harness, docs, or assets
+- [x] `npm pack --dry-run` ships no dev harness, docs, or assets — 52 files, 53.7 kB
 - [x] `find just-sections/src/sections -name '*.png' -o -name '*.svg'` → empty
-- [x] `localhost:5173/gallery` renders every registered section — 8 of 8
-- [ ] `justejari/web` builds and **deploys**, rendering identically to the pre-split preview
-      — builds and deploys on Vercel (2026-07-27); still on its `*.vercel.app` URL, so the
-      apex half waits on T2.5's DNS steps
-- [ ] Both products serve `/terms` and `/privacy` from their `web/` department, rendering their
-      own `docs/legal/` markdown, with cross-links between the two documents working
-      — **JustEjari done**, verified at the DOM: one `h1` per page from the document, zero
-      `mailto:` links, cross-links resolving to `/terms` and `/privacy`, no stray `.md` hrefs.
-      JustConvert waits on T3.4
+- [x] `/gallery` renders every registered section — 8 of 8
+- [ ] `justejari/web` builds and **deploys** — builds and deploys on Vercel; the apex half
+      waits on T2.5
+- [ ] Both products serve `/terms` and `/privacy` from their `web/` department.
+      **JustEjari done**, verified at the DOM: one `h1` per page from the document, zero
+      `mailto:` links, cross-links resolving to routes, no stray `.md` hrefs. JustConvert
+      waits on T3.4
 - [x] No legal page component remains in `justejari/app/`
-- [x] `justejari.md` source map lists both departments, dated today
-- [ ] Neither product's design doc contains a color hex value
+- [x] `justejari.md` source map lists both departments, dated
+- [ ] Neither product's design doc contains a color hex value — JustEjari done; JustConvert
+      waits on T3.4
 
-## Closing task — retire this file
+### Closing task — retire this file
 
-**Do this last, once the gate above is green.** Delete `TODO.md` and replace it with a real
-`README.md` for this repo, written for us rather than for a public audience — what the
-library is, how to add a section, how the gallery works, how a consumer pins and upgrades it.
+**Do this last, once the gate above is green.** Delete `TODO.md`. `README.md` has already
+been rewritten as the repo's real entry point, so nothing here needs to move into it — this
+file just stops being true.
 
-Carry forward only what stays true: the durable decisions and their reasoning. Everything in
-here that is migration bookkeeping — phase status, task checklists, deviation logs — dies
-with the file. `docs/learnings.md` already holds the reusable insights, and each section's
-`plan.md` already holds its own decision record, so the README should point at those rather
-than restate them.
-
-The repo is public, but write the README for the two of us; it does not need to sell
-anything. It is a landing-page section library, not a product.
+---
 
 ## Open questions
 
-1. **Repo hosting.** ~~Public or private?~~ **Answered: public** (2026-07-27). It started
-   private; T2.5's first deploy failed on `Permission denied (publickey)` and public was the
-   chosen fix over a read-only PAT.
+1. ~~**Repo hosting.** Public or private?~~ **Answered: public** (2026-07-27). It started
+   private; T2.5's first deploy failed on `Permission denied (publickey)`, and public was
+   chosen over a read-only PAT.
 
-   Scanned every commit before flipping: no secrets, no `.env` ever tracked, and the only
+   Every commit was scanned before flipping: no secrets, no `.env` ever tracked, and the only
    real addresses are `chris@justejari.ae` and `chris@amalilabs.com`, both already published
-   in the live legal documents.
-
-   **What this exposes, deliberately:** this `TODO.md` (a strategic roadmap naming JustConvert
-   throughout), `docs/inspiration/`, and every section dossier's `plan.md` / `prompt.md`. If
-   that becomes unwanted, moving the planning material to a private repo is cheap now and
-   expensive once indexed.
+   in the live legal documents. What is deliberately exposed: this file, `docs/inspiration/`,
+   and every section dossier's `plan.md` / `prompt.md`.
 
    Note that repo visibility is unrelated to `package.json`'s `"private": true`, which only
-   blocks `npm publish`. Consumers install from the git tag, so that flag stays as it is.
-2. **`just-design-system` as a skill.** It currently sits in `skills/` without a `SKILL.md`.
-   Once it is docs-only at family level, does it stay a passive doc repo, or does it get a
-   real SKILL.md that maintains itself the way `product-docs` does?
+   blocks `npm publish`. Consumers install from the git tag, so that flag stays.
+
+2. **`just-design-system` as a skill.** It sits in `skills/` without a `SKILL.md`, so it is
+   not a functioning skill. Now that it is docs-only at family level, does it stay a passive
+   doc repo, or get a real `SKILL.md` that maintains itself the way `product-docs` does?
+
 3. **Versioning discipline.** Git tags give real pinning, but nothing forces a bump. Worth a
-   `CHANGELOG.md` in `just-sections` and a rule that any section prop change is a minor
-   version.
-4. **`just-ios-kit` — when?** `surfaces/ios.md` (T0.5) documents the shared iOS conventions,
-   but the code still lives in `justconvert/ios/…/DesignSystem/`. The symmetric move is a
-   Swift package holding `Theme`, `Typography`, `Spacing`, `Motion`, `Haptics`,
-   `PressScaleButtonStyle`, `CircularIconButtonStyle`, and `SheetContentHeightKey` — mirroring
-   what `just-sections` does for web.
+   `CHANGELOG.md` here and a rule that any section prop change is a minor version.
 
-   **Recommendation: document now, extract later.** The doc is what a second iOS app actually
-   needs to start; the package is what stops the two apps drifting. With one iOS app there is
-   nothing to drift from, and extracting a Swift package against a single consumer risks
-   baking JustConvert's assumptions into the shared API. Do T0.5 in Phase 0, and open the
-   package when the second iOS app is real — at that point you extract against two known
-   consumers, which is when the right API is visible.
+   This is no longer hypothetical: `justejari/web` pins `v0.1.0`, and the next section change
+   has no defined path to reaching it.
 
-   This is deliberately the opposite call from web, where `just-sections` gets extracted
-   immediately. The difference: two web consumers already exist (JustEjari's new `web/` and
-   JustConvert's existing one), so the shared API is already constrained by reality.
+4. **`just-ios-kit` — when?** `surfaces/ios.md` documents the shared iOS conventions, but the
+   code still lives in `justconvert/ios/…/DesignSystem/`. The symmetric move is a Swift
+   package holding `Theme`, `Typography`, `Spacing`, `Motion`, `Haptics`,
+   `PressScaleButtonStyle`, `CircularIconButtonStyle`, and `SheetContentHeightKey`.
+
+   **Recommendation: document now, extract later.** The doc is what a second iOS app needs to
+   start; the package is what stops two apps drifting. With one iOS app there is nothing to
+   drift from, and extracting against a single consumer risks baking JustConvert's
+   assumptions into the shared API.
+
+   Deliberately the opposite call from web, where extraction happened immediately — two web
+   consumers already existed, so the shared API was constrained by reality from the start.

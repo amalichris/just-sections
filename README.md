@@ -1,18 +1,39 @@
 # just-sections
 
-A library of reusable landing-page section components, composed into high-converting product
-pages for JustEjari and JustConvert.
+A library of reusable landing-page section components for the Just product family. Pages are
+composed from configuration, not hand-written JSX.
 
-## Stack
+Consumers install it from a git tag and drive it entirely with data:
 
-- React 19 + Vite
-- Outfit (headings) + Inter (body) via Fontsource
-- GSAP + Motion
-- React Router
-- React Markdown
-- Lucide Icons
+```jsx
+import { ProductPage } from 'just-sections'
+import 'just-sections/styles/tokens.css'
+import config from './page.config'
 
-## Setup
+<ProductPage config={config} />
+```
+
+Today's consumer is JustEjari's `web/` department. JustConvert is next.
+
+## Install
+
+```bash
+npm i git+https://github.com/amalichris/just-sections.git#v0.1.0
+```
+
+The package ships **source, not a build** — consumers are Vite, so no compile step is needed.
+A future Next.js consumer would add `transpilePackages: ['just-sections']`.
+
+Two things bite in CI and only in CI, both documented in `docs/learnings.md`:
+
+- npm rewrites GitHub dependencies to `git+ssh://` in the lockfile no matter how the spec is
+  written, so a build container with no SSH key fails even against this public repo. Rewrite
+  the URL at the git layer before installing.
+- A page importing markdown across a directory boundary with `?raw` needs
+  `server.fs.allow: ['..']`. The symptom is inverted — the dev server 403s while the
+  production build succeeds.
+
+## Develop
 
 ```bash
 npm install
@@ -21,25 +42,58 @@ npm run dev
 
 | Route | What it is |
 | ----- | ---------- |
-| `/justejari` | The composed JustEjari landing page |
-| `/gallery` | Section gallery — every registered section against its fixtures, at real viewport widths |
+| `/gallery` | Every registered section against its fixtures, at 375 / 430 / 768 / 1024 / 1440 |
+| `/` | A whole-page composition built from those same fixtures |
 
-## Structure
+The gallery checks sections in isolation; `/` checks what `ProductPage` does around them —
+landmark slots, section order, and the spacing declared on adjacent-sibling pairs. Neither
+carries product content: fixture imagery is generated inline by `src/sections/fixtureMedia.js`,
+so the library ships no assets.
+
+Previews render in an **iframe**, because a width-constrained `div` does not trigger media
+queries. The gallery shows the iframe's measured width beside the width chips — if that
+disagrees with the width you picked, the preview is lying and nothing you see is trustworthy.
+
+## Adding a section
+
+1. Copy `src/sections/_template/` to `src/sections/<section-id>/`.
+2. Write `plan.md` (the decision record) and `prompt.md` (the execution contract). Both carry
+   the same **Section ID** and **Revision**; if they disagree, the dossier is not ready.
+3. Implement the component and its CSS in that folder.
+4. Write `fixtures.js` — a dressed `default`, a `minimal` with required props only, one per
+   variant, and at least one invalid config marked `expectsNothing: true`.
+5. Register it in `src/sections/registry.js` and review it in the gallery at every width.
+
+See [AGENTS.md](AGENTS.md) for the full workflow and the page composition contract.
+
+## Layout
 
 ```
 src/
-  main.jsx                    # Router + stylesheet imports
-  App.jsx                     # Routes
-  styles/tokens.css           # --just-* design tokens, nothing else
-  styles/reset.css            # Global reset + base elements (standalone sites only)
-  styles/fonts.css            # Outfit + Inter
-  pages/JustEjariPreview.jsx  # Current preview page
-  pages/justejari/            # Page config + every asset the page supplies
-  sections/                   # Reusable section library (one dossier per section, no assets)
-  dev/                        # Section gallery — dev harness, not published
+  index.js                # Package entry point
+  ProductPage.jsx         # Renders a page from its config
+  sections/               # One self-contained dossier per section
+    registry.js           # config `type` → component
+    types.js              # Shared content shapes (Cta, Media, Brand, NavigationItem)
+    requireProps.js       # Required-prop guard
+    fixtureMedia.js       # Inline placeholder imagery for fixtures
+  styles/
+    tokens.css            # --just-* design tokens, nothing else
+    reset.css             # Global reset — standalone sites only
+    fonts.css             # Outfit + Inter
+  dev/                    # Gallery + demo page. Not published
+  main.jsx, App.jsx       # Dev harness entry. Not published
 docs/
-  design-system/design.md     # Pointer to the just-design-system repo
-  inspiration/                # Reference archive
+  learnings.md            # Durable, non-obvious insights
+  design-system/design.md # Pointer to the just-design-system repo
+  inspiration/            # Reference archive, not production code
 ```
 
-See [AGENTS.md](AGENTS.md) for the section dossier workflow and design authority.
+A host embedding a single section imports `tokens.css` only — `reset.css` would fight its own
+global styles.
+
+## Design authority
+
+`~/Programming/just-design-system` is the family-level source of truth: `foundations.md` for
+tokens, type, spacing, and motion; `surfaces/web.md` for how a landing page is built. This
+repo restates none of it.
