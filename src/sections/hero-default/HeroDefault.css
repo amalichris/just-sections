@@ -34,8 +34,8 @@
 
 .hero-default__glass {
   background: rgb(250 249 245 / 35%);
-  backdrop-filter: blur(8px) saturate(88%);
   -webkit-backdrop-filter: blur(8px) saturate(88%);
+  backdrop-filter: blur(8px) saturate(88%);
 }
 
 .hero-default__content {

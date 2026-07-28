@@ -8,6 +8,30 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.0.1 — 2026-07-28
+
+### Sections
+
+- `header-default`, `hero-default`: the frosted-glass blur was missing in production builds.
+  Nothing a page config needs to change — upgrade and rebuild.
+
+The source declared `backdrop-filter` before `-webkit-backdrop-filter`. The CSS minifier treats
+the two as duplicate declarations of one property and keeps the **last**, so every production
+build shipped only the `-webkit-` version and dropped the standard one. Firefox does not
+support `-webkit-backdrop-filter`, so the header pill and hero glass rendered as flat
+translucent panels there instead of frosted — the page behind stayed sharp.
+
+It survived review because the dev server does not minify: both declarations are present under
+`npm run dev`, so the effect looks correct locally in every browser and only breaks in a built
+deploy. Reordering the pairs so the prefixed property comes first fixes it; verified by
+counting both properties in the built CSS (5 of each, previously 0 unprefixed).
+
+`-webkit-font-smoothing` and `-moz-osx-font-smoothing` in `reset.css` have no unprefixed
+counterpart and are unaffected. Any future prefixed property must be declared **before** its
+standard form.
+
+---
+
 ## v1.0.0 — 2026-07-28
 
 The section contract is declared stable. **No runtime change from v0.1.0** — every section,
