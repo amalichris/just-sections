@@ -168,11 +168,15 @@ file just stops being true.
    not a functioning skill. Now that it is docs-only at family level, does it stay a passive
    doc repo, or get a real `SKILL.md` that maintains itself the way `product-docs` does?
 
-3. **Versioning discipline.** Git tags give real pinning, but nothing forces a bump. Worth a
-   `CHANGELOG.md` here and a rule that any section prop change is a minor version.
+3. ~~**Versioning discipline.**~~ **Answered (2026-07-28):** the `publish-just-sections` skill
+   owns the release workflow, the version policy, and the per-consumer checklist;
+   `CHANGELOG.md` exists with `v0.1.0` recorded. Any section prop change is at minimum a minor
+   version, because `requireProps` turns a drifted page config into a silently absent section
+   in a production build.
 
-   This is no longer hypothetical: `justejari/web` pins `v0.1.0`, and the next section change
-   has no defined path to reaching it.
+   Still true: **nothing enforces it.** The skill is a procedure, not a gate — no CI check
+   fails if someone tags without a CHANGELOG entry, or edits a prop and ships a patch. Worth
+   revisiting if that starts happening.
 
 4. **`just-ios-kit` — when?** `surfaces/ios.md` documents the shared iOS conventions, but the
    code still lives in `justconvert/ios/…/DesignSystem/`. The symmetric move is a Swift

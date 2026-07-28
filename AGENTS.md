@@ -96,6 +96,15 @@ A published section library built with React 19 and Vite, consumed by each produ
 
 There is no automated test suite at present. For code changes, run `npm run lint` and `npm run build`. For visible UI changes, also inspect the affected route in a browser at appropriate viewport sizes.
 
+## Releasing
+
+Consumers install this package from a **git tag**, so a commit on `main` reaches no live page until a version is cut and each consumer is moved onto it. That is deliberate — a consumer cannot break because someone edited a section — but it means a section fix is a release, not a push.
+
+Use the `publish-just-sections` skill. It owns the version policy, the `CHANGELOG.md` format, and the per-consumer checklist in its `references/consumers.md`. Two rules worth knowing without opening it:
+
+- A change to a section's public props is **at minimum a minor version**. `requireProps` makes a section with a missing required prop render nothing and log in development — in a consumer's production build that is a silently absent section, with no error and no fallback.
+- Changes confined to `src/dev/`, `docs/`, or the dossier Markdown are **not** in the published surface and need no release.
+
 ## Implementation conventions
 
 - Use React function components and the existing client-side React Router setup.
