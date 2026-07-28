@@ -100,10 +100,12 @@ There is no automated test suite at present. For code changes, run `npm run lint
 
 Consumers install this package from a **git tag**, so a commit on `main` reaches no live page until a version is cut and each consumer is moved onto it. That is deliberate — a consumer cannot break because someone edited a section — but it means a section fix is a release, not a push.
 
-Use the `publish-just-sections` skill. It owns the version policy, the `CHANGELOG.md` format, and the per-consumer checklist in its `references/consumers.md`. Two rules worth knowing without opening it:
+Use the `publish-just-sections` skill. It owns the release type logic, the `CHANGELOG.md` format, and the per-consumer checklist in its `references/consumers.md`. Release types mirror the App Store skill's shape:
 
-- A change to a section's public props is **at minimum a minor version**. `requireProps` makes a section with a missing required prop render nothing and log in development — in a consumer's production build that is a silently absent section, with no error and no fallback.
-- Changes confined to `src/dev/`, `docs/`, or the dossier Markdown are **not** in the published surface and need no release.
+- **No release** — changes confined to `src/dev/`, `docs/`, or the dossier Markdown. Not in the published surface, so a version would ship nothing.
+- **Patch** (`x.y.Z`) — a fix inside a section with **no prop change of any kind**. If a consumer's page config needs editing, it is not a patch.
+- **Feature** (`x.Y.0`) — a prop change, a new section, or a token change. Prop changes can never be patches: `requireProps` makes a section with a missing required prop render nothing and log in development, which in a consumer's production build is a silently absent section — no error, no fallback.
+- **Major** (`X.0.0`) — not in use. Reserved for declaring the section contract stable.
 
 ## Implementation conventions
 

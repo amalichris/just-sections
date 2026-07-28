@@ -170,9 +170,10 @@ file just stops being true.
 
 3. ~~**Versioning discipline.**~~ **Answered (2026-07-28):** the `publish-just-sections` skill
    owns the release workflow, the version policy, and the per-consumer checklist;
-   `CHANGELOG.md` exists with `v0.1.0` recorded. Any section prop change is at minimum a minor
-   version, because `requireProps` turns a drifted page config into a silently absent section
-   in a production build.
+   `CHANGELOG.md` exists with `v0.1.0` recorded. Release types mirror the App Store skill's
+   shape — no release / patch / feature / major — and a section prop change is always at least
+   a **feature** release, because `requireProps` turns a drifted page config into a silently
+   absent section in a production build.
 
    Still true: **nothing enforces it.** The skill is a procedure, not a gate — no CI check
    fails if someone tags without a CHANGELOG entry, or edits a prop and ships a patch. Worth
