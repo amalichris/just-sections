@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `0.8`
+- **Revision:** `0.9`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition
 
@@ -68,7 +68,7 @@ The background image is decorative and has empty alternative text. The phone moc
 
 ## Implementation notes
 
-The immediate following section in `/justejari` demonstrates the intrinsic-flow contract with a solid parchment surface. “Real size” is visual rather than physical because browser zoom and display density vary.
+The section following the hero on `/` — the gallery's fixture-built demo page — demonstrates the intrinsic-flow contract with a solid parchment surface. “Real size” is visual rather than physical because browser zoom and display density vary.
 
 **Revision 0.8:** replaced the fixed-height hero and implied next-section reserve with an intrinsic flow box whose minimum is one viewport. The backdrop remains viewport-bound while the hero expands to contain the configured phone, keeping every following section independent.
 

@@ -1,7 +1,7 @@
 # Default benefits implementation prompt
 
 - **Section ID:** `benefits-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -21,13 +21,13 @@ Build the configurable benefits section described in `plan.md`.
 - Cards are non-interactive `article` elements: Ring elevation, 20pt radius, `ivory`. No hover, press scale, focus ring, transition, or drop shadow.
 - Render the proof line unconditionally when supplied, as `blockquote` + `cite` beneath a `borderCream` rule.
 - Do not add a CTA, icons, variants, a carousel, animation, or dependencies.
-- Register the section in `src/sections/registry.js` and compose it in `src/pages/justejari/page.config.js` under id `benefits`, keeping the header nav label and `targetId` in sync.
-- Supply non-production preview copy and placeholder media only for visual verification. Page-owned assets live in `src/pages/justejari/assets/`, never in this folder.
+- Register the section in `src/sections/registry.js` and cover it in `fixtures.js`, keeping the header nav label and `targetId` in sync with any page that composes it under id `benefits`.
+- Supply non-production preview copy and placeholder media only for visual verification. This library ships no imagery: fixtures use `src/sections/fixtureMedia.js`, and a consuming page supplies real assets from its own department.
 
 ## Verify and synchronize
 
 1. Run `npm run lint` and `npm run build`.
-2. Inspect `/justejari` at 375px, 768px, 1024px, and 1440px, and confirm text reflows at 320px.
+2. Inspect `/gallery/benefits-default` at 375px, 430px, 768px, 1024px, and 1440px, and confirm text reflows at 320px.
 3. Confirm the proof line is readable without hover, images reserve their space before loading, and no benefit is hidden at any breakpoint.
 4. Check the plan's acceptance criteria.
 5. If implementation changes a decision, update `plan.md` and this file together and increment the shared Revision.

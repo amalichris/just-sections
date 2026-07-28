@@ -1,7 +1,7 @@
 # Pricing banner default implementation prompt
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -24,6 +24,6 @@ Build the centered, full-width Just acquisition banner exactly as described in `
 ## Verify and synchronize
 
 1. Run the relevant lint and build checks.
-2. Inspect `/justejari` at 375px, 430px, 768px, and 1440px.
+2. Inspect `/gallery/pricing-banner-default` at 375px, 430px, 768px, 1024px, and 1440px.
 3. Check the plan's acceptance criteria.
 4. If implementation changes a decision, update both `plan.md` and this file, then increment the shared Revision before completion.

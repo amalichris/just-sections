@@ -1,7 +1,7 @@
 # Default how-it-works implementation prompt
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `0.9`
+- **Revision:** `1.0`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -31,13 +31,13 @@ Build the configurable process section described in `plan.md`.
 - Render all step images stacked in the frame and explicitly size them to the frame's 24px inset, cross-fading opacity with only the current image visible and the rest `aria-hidden`. Keep the visible-state selector strong enough to override the base hidden state. Keep the media change working under `prefers-reduced-motion`; remove only the transition and the rise.
 - Mobile: single-open accordion with step 1 open on first render, using the FAQ's row, `Plus`, focus, press, and transition treatment. Keep open-step state internal.
 - Do not add tabs, a variant enum, autoplay, a progress scrubber, page-level fixed CTAs, or dependencies.
-- Register the section in `src/sections/registry.js` and compose it in `src/pages/justejari/page.config.js` under id `how-it-works`, keeping the header nav `targetId` in sync.
-- Supply non-production preview copy and placeholder media only for visual verification. Page-owned assets live in `src/pages/justejari/assets/`, never in this folder.
+- Register the section in `src/sections/registry.js` and cover it in `fixtures.js`, keeping the header nav `targetId` in sync with any page that composes it under id `how-it-works`.
+- Supply non-production preview copy and placeholder media only for visual verification. This library ships no imagery: fixtures use `src/sections/fixtureMedia.js`, and a consuming page supplies real assets from its own department.
 
 ## Verify and synchronize
 
 1. Run `npm run lint` and `npm run build`.
-2. Inspect `/justejari` at 375px, 768px, 1024px, and 1440px, and confirm text reflows at 320px.
+2. Inspect `/gallery/how-it-works-default` at 375px, 430px, 768px, 1024px, and 1440px, and confirm text reflows at 320px. The sticky desktop behavior needs a real viewport — the gallery renders each fixture in an iframe for exactly this reason.
 3. Verify: the panel pins and tracks the centred step on desktop; the accordion opens step 1 by default and keeps one step open; keyboard activation, focus visibility, and 44px targets on every trigger; reduced motion drops transitions and press scale while media still switches.
 4. Check the plan's acceptance criteria.
 5. If implementation changes a decision, update `plan.md` and this file together and increment the shared Revision.

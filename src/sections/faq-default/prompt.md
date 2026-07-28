@@ -1,7 +1,7 @@
 # Default FAQ implementation prompt
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -24,6 +24,6 @@ Build the configurable FAQ section described in `plan.md`.
 ## Verify and synchronize
 
 1. Run lint and build checks.
-2. Inspect `/justejari` at 375px, 768px, 1024px, and 1440px.
+2. Inspect `/gallery/faq-default` at 375px, 430px, 768px, 1024px, and 1440px.
 3. Verify exclusive expansion, Plus rotation, keyboard behavior, focus visibility, 44px targets, and reduced motion.
 4. Update this file and `plan.md` together, incrementing Revision if implementation changes a decision.

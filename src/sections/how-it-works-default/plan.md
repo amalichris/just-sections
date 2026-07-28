@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `0.9`
+- **Revision:** `1.0`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -177,4 +177,4 @@ Composed into `src/pages/justejari/page.config.js` under id `how-it-works`, repl
 
 The desktop `IntersectionObserver` uses a `-45% 0px -45% 0px` `rootMargin`, so the active step is whichever text block crosses the middle 10% of the viewport. Between steps no entry intersects and the previous step stays active, which is the intended behaviour rather than a gap. Where `IntersectionObserver` is unavailable, step 1 stays active and the section degrades to a static split.
 
-Page config supplies placeholder SVG step screens from `src/pages/justejari/assets/`; step copy in the fixture is preview copy.
+Step screens are page-owned: this library ships no imagery. `fixtures.js` uses generated placeholders from `src/sections/fixtureMedia.js`; step copy in the fixture is preview copy.

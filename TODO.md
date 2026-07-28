@@ -725,23 +725,28 @@ redirects there.
 
 Per the restructuring skill's Phase 3: these break silently. Nothing warns you.
 
-### T3.1 — Update the JustEjari source map
+**T3.1, T3.2, T3.3, and T3.5 are complete (2026-07-28).** T3.4 remains, gated — see below.
 
-**Do:** `skills/product-docs/references/justejari.md` states "the single department `app/`"
-(line 11) and maps every path under `app/`. Add the `web/` department, add
-`just-design-system` as the design authority, correct the design-system entry (line 15)
-which currently sends readers to the now-split `docs/design-system/design.md`, and bump the
-"verified against the local repo on" date.
+### T3.1 — Update the JustEjari source map ✅
 
-### T3.2 — Update the JustEjari root AGENTS.md
+**Done.** `skills/product-docs/references/justejari.md` now describes two departments, points
+the design-system entry at `just-design-system` (`foundations.md` plus the relevant surface
+doc) with `docs/design-system/` holding only JustEjari-specific component anatomy, records
+that the legal pages are now page configs in `web/`, and states that `web/` implements no
+components so nobody goes looking for section markup there. Verified date bumped.
 
-**Do:** Add `web/` to the structure block with its stack and deploy target. Add rows to the
-"Read Depending on Task" table for landing work and for the design system split.
+### T3.2 — Update the JustEjari root AGENTS.md ✅
 
-### T3.3 — Regenerate the tree snapshot
+**Done.** `web/` added to the structure block and the department table with its deploy target,
+plus the boundary rule. The "Read Depending on Task" table gained rows for landing work, for
+"a section renders wrong" (pointing out of the repo), and for token values, and its
+frontend row now leads with the family design system.
 
-**Do:** `python3 ~/Programming/skills/tools/project-tree.py . --save archive` in
-`justejari/`.
+### T3.3 — Regenerate the tree snapshot ✅
+
+**Done.** `skills/tools/project-trees/2026-07-28_justejari_project-tree.md`. Confirmed it
+captures `web/` in full and that the deleted trees (`components/landing/**`, the legal pages)
+are absent.
 
 ### T3.4 — Migrate JustConvert's web department
 
@@ -760,32 +765,40 @@ page configs drop their `internalLinks` override and match JustEjari's exactly.
 **Outcome:** One palette definition across both products, and one legal-document filename
 convention. This is the payoff — until it lands, the family design system is still theoretical.
 
+**Gate status (2026-07-28): not ready.** This task opens "only after JustEjari has run in
+production for a while." JustEjari's landing page has never served a request on a real
+domain — `justejari.ae` is not yet attached to the web project. The gate is not close to
+open, and forcing it would migrate JustConvert onto a library whose only consumer has never
+been exercised by real traffic.
+
+Reopen this once JustEjari has been live on `justejari.ae` long enough to have found the
+things local verification cannot: real fonts over real latency, real devices, real
+Lighthouse numbers.
+
 ### T3.5 — Re-sync the section dossiers with the moved page
 
-**Why this exists:** Phase 2 deleted `src/pages/justejari/` and the `/justejari` route from
-this repo. Seven dossiers still reference both. Four `prompt.md` files carry a verification
-step that now cannot be followed — "Inspect `/justejari` at 375px, 768px, 1024px, and
-1440px" — in `benefits-default`, `faq-default`, `how-it-works-default`, and
-`pricing-banner-default`. Two also instruct composing into
-`src/pages/justejari/page.config.js`.
+**Why this existed:** Phase 2 deleted `src/pages/justejari/` and the `/justejari` route from
+this repo, leaving dossiers that still referenced both — including verification steps that
+could no longer be followed.
 
-**Deliberately deferred, not overlooked.** `AGENTS.md` requires `plan.md` and `prompt.md` to
-carry the same Revision and to be updated together. Fixing the four `prompt.md` files alone
-would break that invariant; doing it correctly means revising seven dossiers and bumping
-each shared revision. That is its own task, and burying it inside the Phase 2 commits would
-have made an already-large change unreviewable.
+**Done (2026-07-28).** Five dossiers, not the seven estimated when this task was written:
+`benefits-default`, `faq-default`, `hero-default`, `how-it-works-default`, and
+`pricing-banner-default`. Each had both documents updated and its shared revision bumped
+(0.4→0.5, 0.4→0.5, 0.8→0.9, 0.9→1.0, 0.3→0.4).
 
-**Do:** For each affected dossier, repoint the verification step at `/gallery` (already the
-documented review surface in `AGENTS.md`), update composition references to name
-`justejari/web/src/pages/justejari/page.config.js`, and bump the shared revision in both
-documents.
+The split was not cleanly plan-vs-prompt, which is why the estimate was off. Some `plan.md`
+lines were present-tense claims that had become false — "Page config supplies placeholder SVG
+UI skeletons from `src/pages/justejari/assets/`" — and those were corrected to describe
+`fixtureMedia.js` and page-owned media. Verification steps now name
+`/gallery/<section-id>` and include 430px, which the gallery has and the old preview did not.
 
-**Leave alone:** narrative in `plan.md` recording what *was* done at the time — e.g.
-"Composed into `src/pages/justejari/page.config.js` under id `benefits`". That is a dated
-decision record, not an instruction, and rewriting it would falsify history. Only
-present-tense instructions need to change.
+**Left alone, deliberately:** past-tense narrative recording what *was* done — "Composed into
+`src/pages/justejari/page.config.js` under id `benefits` … were deleted". Two such lines
+remain, in `benefits-default/plan.md` and `how-it-works-default/plan.md`. They are dated
+decision records; rewriting them would falsify history.
 
-**Verify:** `grep -rn '/justejari' src/sections/*/prompt.md` returns nothing.
+**Verified:** `grep -rn '/justejari' src/sections --include=prompt.md` returns nothing, and
+every dossier's `plan.md` and `prompt.md` revisions match.
 
 ---
 
@@ -803,15 +816,31 @@ The migration is done when all of these hold:
 - [x] `find just-sections/src/sections -name '*.png' -o -name '*.svg'` → empty
 - [x] `localhost:5173/gallery` renders every registered section — 8 of 8
 - [ ] `justejari/web` builds and **deploys**, rendering identically to the pre-split preview
-      — builds and renders locally at 375 / 768 / 1280; the deploy half waits on T2.5
+      — builds and deploys on Vercel (2026-07-27); still on its `*.vercel.app` URL, so the
+      apex half waits on T2.5's DNS steps
 - [ ] Both products serve `/terms` and `/privacy` from their `web/` department, rendering their
       own `docs/legal/` markdown, with cross-links between the two documents working
       — **JustEjari done**, verified at the DOM: one `h1` per page from the document, zero
       `mailto:` links, cross-links resolving to `/terms` and `/privacy`, no stray `.md` hrefs.
       JustConvert waits on T3.4
 - [x] No legal page component remains in `justejari/app/`
-- [ ] `justejari.md` source map lists both departments, dated today
+- [x] `justejari.md` source map lists both departments, dated today
 - [ ] Neither product's design doc contains a color hex value
+
+## Closing task — retire this file
+
+**Do this last, once the gate above is green.** Delete `TODO.md` and replace it with a real
+`README.md` for this repo, written for us rather than for a public audience — what the
+library is, how to add a section, how the gallery works, how a consumer pins and upgrades it.
+
+Carry forward only what stays true: the durable decisions and their reasoning. Everything in
+here that is migration bookkeeping — phase status, task checklists, deviation logs — dies
+with the file. `docs/learnings.md` already holds the reusable insights, and each section's
+`plan.md` already holds its own decision record, so the README should point at those rather
+than restate them.
+
+The repo is public, but write the README for the two of us; it does not need to sell
+anything. It is a landing-page section library, not a product.
 
 ## Open questions
 

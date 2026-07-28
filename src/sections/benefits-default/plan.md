@@ -1,7 +1,7 @@
 # Default benefits plan
 
 - **Section ID:** `benefits-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page value/benefit section; first consumer is the JustEjari page
 
@@ -112,6 +112,6 @@ Composed into `src/pages/justejari/page.config.js` under id `benefits`, replacin
 
 **Revision 0.2:** initially treated the section as a composition of existing values. Revision 0.4 supersedes that decision by documenting the anchor-plus-two layout itself as an approved landing pattern, not merely its tokens.
 
-Page config supplies placeholder SVG UI skeletons from `src/pages/justejari/assets/`. They are page-owned, so real captures swap in without touching this section. Card copy in the fixture is preview copy, not final product wording.
+Media is page-owned: this library ships no imagery, so a consuming page supplies real captures without touching this section. `fixtures.js` uses generated placeholders from `src/sections/fixtureMedia.js`, and its card copy is preview copy, not final product wording.
 
 Invalid item counts and incomplete nested fields are render guards. The section does not silently drop content or render an odd grid; page authors must cut or move additional benefits explicitly.

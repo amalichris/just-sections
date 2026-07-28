@@ -1,7 +1,7 @@
 # Default FAQ plan
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page FAQ; initial JustEjari preview fixture
 
@@ -62,4 +62,4 @@ Use a labelled `section` and `h2`, then an `h3` and native button for every ques
 
 ## Implementation notes
 
-The `/justejari` fixture is deliberately non-production content for visual review. A consuming page supplies final FAQ copy.
+The `fixtures.js` content is deliberately non-production, for visual review in the gallery. A consuming page supplies final FAQ copy.

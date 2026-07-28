@@ -1,7 +1,7 @@
 # Pricing banner default plan
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition
 
@@ -54,4 +54,4 @@ The section is labelled by its `h2`. Its CTA is a native link with a 44px minimu
 
 ## Implementation notes
 
-The current `/justejari` preview uses `#pricing` as a safe placeholder CTA href because the live Mini App URL is not present in the repository. Replace that value when the production URL is available.
+The CTA href is page-supplied and this library has no opinion about its value. JustEjari's page config, now in that product's `web/` department, still carries `#pricing` as a preview-safe placeholder because the live Mini App URL was not available when the page was written — replacing it is a change there, not here.
