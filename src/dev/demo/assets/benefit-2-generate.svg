@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 925" width="1480" height="925" role="img">
+  <title>Placeholder: document generation UI fragment</title>
+  <rect width="1480" height="925" fill="#F5F4ED"/>
+  <rect x="64" y="64" width="1352" height="620" rx="48" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+  <rect x="128" y="140" width="640" height="36" rx="18" fill="#87867F"/>
+  <rect x="128" y="216" width="1160" height="20" rx="10" fill="#E8E6DC"/>
+  <rect x="128" y="272" width="1160" height="20" rx="10" fill="#E8E6DC"/>
+  <rect x="128" y="328" width="880" height="20" rx="10" fill="#E8E6DC"/>
+  <rect x="128" y="404" width="1160" height="20" rx="10" fill="#E8E6DC"/>
+  <rect x="128" y="460" width="720" height="20" rx="10" fill="#E8E6DC"/>
+  <rect x="128" y="548" width="380" height="24" rx="12" fill="#D1CFC5"/>
+  <rect x="128" y="756" width="1352" height="0" fill="none"/>
+  <rect x="64" y="736" width="620" height="88" rx="44" fill="#CF4F3E"/>
+  <rect x="160" y="770" width="428" height="20" rx="10" fill="#FAF9F5"/>
+</svg>

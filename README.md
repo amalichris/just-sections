@@ -43,12 +43,21 @@ npm run dev
 | Route | What it is |
 | ----- | ---------- |
 | `/gallery` | Every registered section against its fixtures, at 375 / 430 / 768 / 1024 / 1440 |
-| `/` | A whole-page composition built from those same fixtures |
+| `/` | A full demo page, rendered the way a consumer renders one |
 
 The gallery checks sections in isolation; `/` checks what `ProductPage` does around them —
-landmark slots, section order, and the spacing declared on adjacent-sibling pairs. Neither
-carries product content: fixture imagery is generated inline by `src/sections/fixtureMedia.js`,
-so the library ships no assets.
+landmark slots, section order, and the spacing declared on adjacent-sibling pairs.
+
+The demo page runs on real content: `src/dev/demo/` holds a snapshot of JustEjari's page
+config and its imagery. That is deliberate. Fixtures are written to exercise a prop contract,
+so they run short and generic — a hero looks fine with a six-word headline and a grey
+rectangle, and quite different with a real one and a photograph. Refining a section against
+production-like copy catches what neither the fixtures nor the build will.
+
+It is dev-only. `src/dev/` is excluded from the published package, so the **library itself
+ships no imagery and no product content** — `fixtures.js` uses inline placeholders generated
+by `src/sections/fixtureMedia.js`. The snapshot will drift from the live JustEjari page, which
+is fine: it is a rig for looking at sections, not a source of truth for anyone's copy.
 
 Previews render in an **iframe**, because a width-constrained `div` does not trigger media
 queries. The gallery shows the iframe's measured width beside the width chips — if that
@@ -82,6 +91,7 @@ src/
     reset.css             # Global reset — standalone sites only
     fonts.css             # Outfit + Inter
   dev/                    # Gallery + demo page. Not published
+    demo/                 # Snapshot of a real page config + its assets
   main.jsx, App.jsx       # Dev harness entry. Not published
 docs/
   learnings.md            # Durable, non-obvious insights
