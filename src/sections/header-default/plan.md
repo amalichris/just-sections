@@ -1,7 +1,7 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -53,6 +53,7 @@ Use semantic `header`, `nav`, and list markup. Every link is at least 44px high.
 - [x] Supports stable desktop/tablet pill morph, mobile glass-rail morph without flashing, fragment navigation, keyboard focus, and reduced motion.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 - [x] A `cta.badge` renders as an unstyled image link at every header state (resting, hover, scrolled, mobile) with no pill chrome or recoloring.
+- [x] In the scrolled glass-pill state, a badge CTA sits as far from the pill's right edge as the wordmark sits from its left edge.
 
 ## Implementation notes
 

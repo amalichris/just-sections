@@ -8,6 +8,18 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.1.1 — 2026-08-26
+
+### Sections
+
+- `header-default`: in the scrolled glass-pill state, a `cta.badge` now sits 20px from the
+  pill's right edge — matching the wordmark's left inset — instead of the bare 6px the nav's
+  own padding left it with. A text-label CTA supplies that spacing itself via its pill padding;
+  a badge has none of its own, so it needed the difference made up separately. No prop change,
+  nothing for a page config to do.
+
+---
+
 ## v1.1.0 — 2026-08-26
 
 ### Sections
