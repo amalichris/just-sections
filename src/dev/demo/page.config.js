@@ -1,6 +1,6 @@
 // Every asset a section renders is page-owned content. Sections ship no imagery,
 // so swapping any of these never touches the section library.
-import heroBackground from "./assets/hero-bg-1.png";
+import heroBackground from "../../../docs/media-backgrounds/hero-dubai-2.webp";
 import appMockup from "./assets/justejari-home-screen-mockup.png";
 
 // Placeholder UI fragments. Swap each one for a real product capture.
@@ -71,45 +71,48 @@ export default {
       type: "benefits-default",
       id: "benefits",
       props: {
-        eyebrow: "What you get",
+        eyebrow: "",
         title: "A rental contract you can hand over today.",
         subtitle:
           "Preview copy. Final wording states one outcome per card, in the tenant's or landlord's own words.",
         items: [
           {
             id: "contracts",
-            title: "A finished contract in minutes, not an evening",
+            title: "Draft your contracts right from your phone",
             description:
-              "Answer a short set of questions and get a complete rental contract, ready to print or send.",
+              "Input core property details, rent amounts, and cheque schedules through clean, structured forms. No desktop needed, no broken Word templates.",
             media: {
               src: benefitContracts,
               alt: "Placeholder for a capture of the JustEjari contract list",
             },
+            mediaBackdrop: "chianti",
             proof: {
               quote:
-                "Preview quote. A real customer line belongs here, making the same claim as this card.",
-              attribution: "Preview attribution",
+                "Custom Addendum Builder",
+              attribution: "Coming Soon",
             },
           },
           {
             id: "generate",
-            title: "Export a PDF that looks official",
+            title: "Formatted to official DLD standards",
             description:
               "One tap turns your answers into a formatted document with every clause in place.",
             media: {
               src: benefitGenerate,
               alt: "Placeholder for a capture of a generated contract PDF",
             },
+            mediaBackdrop: "sky",
           },
           {
             id: "fields",
-            title: "Details you enter once",
+            title: "Send a link, skip the manual data entry",
             description:
-              "Your property and party details carry across contracts, so the second one is faster than the first.",
+              "Generate a secure web link for tenants or landlords to enter their own personal details and upload IDs directly—no copy-pasting required.",
             media: {
               src: benefitFields,
               alt: "Placeholder for a capture of the contract detail fields",
             },
+            mediaBackdrop: "cypress",
           },
         ],
       },
@@ -118,14 +121,14 @@ export default {
       type: "how-it-works-default",
       id: "how-it-works",
       props: {
-        eyebrow: "How it works",
+        eyebrow: "",
         title: "Three steps, start to signature.",
         subtitle:
           "Preview copy. Each step names what the visitor does and what they get back.",
         steps: [
           {
             id: "open",
-            title: "Open it inside Telegram",
+            title: "Start directly inside Telegram",
             description:
               "No new app, no separate account. JustEjari runs in the chat app you already have open.",
             media: {
@@ -135,9 +138,9 @@ export default {
           },
           {
             id: "fill",
-            title: "Fill in the details once",
+            title: "Send links to collect party details",
             description:
-              "Property, parties, dates, and rent. Short questions in plain language, in the order you would say them out loud.",
+              "Share a secure link via WhatsApp or Telegram with one tap. The landlord and tenant submit their own legal names and IDs directly into the web form.",
             media: {
               src: stepFill,
               alt: "Placeholder for the contract detail form",
@@ -145,9 +148,9 @@ export default {
           },
           {
             id: "pdf",
-            title: "Generate the PDF",
+            title: "Complete vault with shared access",
             description:
-              "Your contract is formatted and ready to send, print, or sign.",
+              "Download your DLD-compliant PDF contract alongside all attached Emirates IDs, Title Deeds, and passports in one tidy package, then generate a shared link for both parties.",
             media: {
               src: stepPdf,
               alt: "Placeholder for the finished contract PDF",
@@ -161,7 +164,7 @@ export default {
       type: "pricing-banner-default",
       id: "pricing",
       props: {
-        eyebrow: "Simple from the start",
+        eyebrow: "",
         title: "Start with 3 PDF generations free.",
         subtitle:
           "Create real contracts and see the full workflow before deciding what comes next.",

@@ -1,7 +1,7 @@
 # Pricing banner default implementation prompt
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -20,6 +20,7 @@ Build the centered, full-width Just acquisition banner exactly as described in `
 - Use the approved dark CTA Banner pattern and Sienna Brand Pill CTA; do not add cards, billing controls, assets, or variants.
 - Apply the documented deeper-Sienna hover state while preserving focus and press behavior.
 - Preserve normal anchor behavior, focus visibility, a 44px target, and reduced-motion handling.
+- When `cta.badge` is supplied, render that image (44px height, auto width) in place of the label and strip the pill chrome — no background, border, or hover recoloring. Keep focusBlue outline and the 0.97 press scale.
 
 ## Verify and synchronize
 

@@ -1,7 +1,7 @@
 # Default benefits plan
 
 - **Section ID:** `benefits-default`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page value/benefit section; first consumer is the JustEjari page
 
@@ -45,7 +45,7 @@ The one interaction that would have conflicted with the system — a hover treat
 | Title | Outfit 500, 1.10; 36/40/48/64px at 375/430/768/1440px | `nearBlack` | Section heading |
 | Subtitle | Inter 400, 1.60; 16/16/18/20px at 375/430/768/1440px | `oliveGray` | Supporting section copy |
 | Card surface | — | `ivory`, Ring (`0 0 0 1px ringWarm`) | 20pt radius, 24px padding (20px below 768px) |
-| Card media frame | — | `parchment` behind the image | 12pt radius, `overflow: hidden`, 16:10 aspect, `object-fit: cover`, `object-position: top left`. 12pt (§5 "Generous") rather than the 16pt card value, which sits nearly flush inside a 20pt card and reads as a mistake. |
+| Card media frame | — | `parchment` by default; optional `chianti` (`#8E2441`), `sky` (`#2E74B5`), or `cypress` (`#2D6B48`) page-supplied media backdrop | 12pt radius, `overflow: hidden`, 16:10 aspect. A configured backdrop gives an opaque image a 12% inset with `object-fit: contain`; default media keeps the tight `cover` crop. The backdrop is media presentation only, not a UI token or card surface. |
 | Card title | Outfit 20px w500, 1.20 (anchor card: 25px at ≥1024px) | `nearBlack` | Card Headline / Sheet Title, both existing scale steps |
 | Card body | Inter 16px w400, 1.60 | `oliveGray` | Body Standard |
 | Proof quote | Inter 14px w400, 1.43 | `charcoalWarm` | Caption; preceded by a 1px `borderCream` rule with 16px above and below |
@@ -58,9 +58,10 @@ Grid: `1120px` maximum container, 96px block padding (128px at ≥768px), `clamp
 **Required.** Missing either renders nothing and reports the omission in development.
 
 - `title`: section heading string.
-- `items`: array of **exactly three** `{ id, title, description, media, proof? }` objects with unique, non-empty ids. Fewer than three cannot fill the anchor-plus-two grid; more than three cannot be shown on mobile without hiding a benefit from the majority of traffic, which the section will not do. A fourth benefit is a signal to cut copy or to add a distinct section, not to extend this grid.
+- `items`: array of **exactly three** `{ id, title, description, media, proof?, mediaBackdrop? }` objects with unique, non-empty ids. Fewer than three cannot fill the anchor-plus-two grid; more than three cannot be shown on mobile without hiding a benefit from the majority of traffic, which the section will not do. A fourth benefit is a signal to cut copy or to add a distinct section, not to extend this grid.
   - `media` is the shared `Media` shape and is **required per item** — the section's whole argument is that the visitor sees the real product before signing up. A card with no image is not this section.
   - `proof` is optional per item: `{ quote, attribution }`. When supplied, both values are required.
+  - `mediaBackdrop` is optional per item. Omit it for the documented tight `parchment` frame, or choose `chianti`, `sky`, or `cypress` for a page-supplied media backdrop. It introduces no overlay, glass, texture, or new card treatment.
 
 **Optional.** Absence is the only signal; no `show`-style boolean.
 
@@ -68,7 +69,7 @@ Grid: `1120px` maximum container, 96px block padding (128px at ≥768px), `clamp
 - `subtitle`: supporting copy string.
 - `id`: section id, defaults to `benefits`.
 
-**Variants:** none. The anchor is always `items[0]`; ordering is the only layout control the page has, which keeps the config JSON-like and the layout decision editorial.
+**Variants:** `mediaBackdrop` on an item is one of `chianti`, `sky`, or `cypress`; omitted is the default `parchment` frame. The anchor is always `items[0]`; ordering is the only layout control the page has, which keeps the config JSON-like and the layout decision editorial.
 
 Spacing above the title belongs to the eyebrow-to-title pair and spacing above the subtitle to the title-to-subtitle pair, so an omitted eyebrow leaves no residual margin. The section exposes no CTA, no `className`, no `style`, and no column overrides. `aria-labelledby` ids derive from `useId()` so the section can appear twice on one page.
 
@@ -101,12 +102,15 @@ A labelled `section` with an `h2` intro title; each card is an `article` with an
 - [x] Every image has `alt` text and no baked-in text.
 - [x] Reviewed in a browser at 375px, 768px, 1024px, and 1440px.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
+- [x] Keeps configured media tones behind the page-supplied image only, with no new card surface or decorative overlay.
 
 ## Implementation notes
 
 Composed into `src/pages/justejari/page.config.js` under id `benefits`, replacing the `features` `preview-placeholder` entry; the header nav item was renamed from "Features" to "Benefits" and repointed so label, target, and section agree. `preview-placeholder` and its registry entry were deleted once `how-it-works-default` landed alongside this section, and the `AGENTS.md` project-map line describing it was removed.
 
 **Revision 0.4:** recorded the approved Marketing Benefits Bento pattern in `docs/design-system/design.md` and made the public contract executable. The section now renders nothing and reports the issue in development unless it receives exactly three complete items with unique ids, valid shared media, and complete proof when proof is supplied.
+
+**Revision 0.6:** added the approved optional per-item `mediaBackdrop` treatment. The JustEjari preview assigns `chianti`, `sky`, and `cypress` to its three benefit media frames in order; the default remains a tight `parchment` crop.
 
 **Revision 0.3:** the section fills the desktop viewport (`min-block-size: 100dvh`, content centred at ≥1024px), matching the hero's full-height treatment so the page reads as a sequence of screens rather than a continuous scroll.
 

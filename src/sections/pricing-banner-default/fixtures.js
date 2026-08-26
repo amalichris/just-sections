@@ -1,3 +1,5 @@
+import fixtureMedia from '../fixtureMedia'
+
 /**
  * Gallery fixtures for `pricing-banner-default`.
  *
@@ -35,6 +37,25 @@ export default [
       subtitle:
         'Create real contracts and see the full workflow end to end before you pay for anything. No card, no trial timer, and nothing expires while you are still deciding.',
       cta: { label: 'Start your first contract', href: '#top' },
+    },
+  },
+  {
+    id: 'badge-cta',
+    label: 'Badge CTA',
+    note: 'cta.badge replaces the Sienna Brand Pill with a page-supplied image (e.g. an App Store badge). No pill chrome or hover recoloring.',
+    props: {
+      eyebrow: 'Available now',
+      title: 'One app for currency, time, and units.',
+      subtitle: 'No ads. No account. No tracking.',
+      cta: {
+        label: 'Download on the App Store',
+        href: '#top',
+        badge: fixtureMedia('App Store badge', {
+          width: 135,
+          height: 40,
+          alt: 'Download on the App Store',
+        }),
+      },
     },
   },
   {

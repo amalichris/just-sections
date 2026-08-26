@@ -1,9 +1,9 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Status:** Implemented
-- **Products / variants:** Configurable Just landing-page header; initial JustEjari composition
+- **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
 ## Conversion goal
 
@@ -21,12 +21,14 @@ Keep the primary JustEjari action reachable while giving visitors direct, smooth
 
 The header follows the approved Marketing Landing Typography extension: 20px wordmark at mobile/tablet, 24px at desktop, and 16px for links and CTA labels. It uses 44px interaction targets, focusBlue keyboard outlines, and a 0.97 press scale. Desktop/tablet starts with the approved Landing Header Glass Pill CTA; hovering it changes it to Sienna, and after a deliberate scroll it becomes the Sienna Brand Pill with a deeper-Sienna hover state. Mobile uses the Sienna Brand Pill from page load; its dedicated glass rail appears only when content begins scrolling behind the header. State changes use the documented 200ms web curve and are disabled for reduced motion.
 
+**Proposed exception, agreed for JustConvert:** a CTA may supply `badge` instead of relying on the pill treatment, so the header can render a fixed external asset — Apple's official App Store badge — unmodified. A badge CTA drops the glass-pill/Sienna-pill chrome entirely (no background, border, backdrop-filter, or hover/scroll recoloring) at every header state; only the 44px minimum target, focusBlue outline, and 0.97 press scale still apply. This does not invent a new button style — it is the documented case where the system defers to a brand-owned external asset it cannot restyle. Worth recording upstream in `just-design-system/surfaces/web.md` §8–9 the next time that repo is touched, since any future product linking to the App Store needs the same allowance.
+
 ## Public configuration
 
 **Required.** Missing either of these renders nothing and reports the omission in development.
 
 - `brand`: `Brand` — `{ label, href }`. Supplies the wordmark text and its link target, so the header carries no product-specific copy.
-- `cta`: `Cta` — `{ label, href }`.
+- `cta`: `Cta` — `{ label, href, badge? }`. When `cta.badge` (a `Media`) is supplied, the header renders that image in place of the pill — this is the documented exception for a fixed external asset such as Apple's official App Store badge (see § Just design-system translation). `label` still supplies the accessible name when no badge is given.
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
@@ -50,6 +52,7 @@ Use semantic `header`, `nav`, and list markup. Every link is at least 44px high.
 - [x] Keeps the wordmark and CTA visible at desktop and mobile widths.
 - [x] Supports stable desktop/tablet pill morph, mobile glass-rail morph without flashing, fragment navigation, keyboard focus, and reduced motion.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
+- [x] A `cta.badge` renders as an unstyled image link at every header state (resting, hover, scrolled, mobile) with no pill chrome or recoloring.
 
 ## Implementation notes
 

@@ -128,6 +128,28 @@
   transform: scale(0.97);
 }
 
+/* A page-supplied badge (e.g. Apple's official App Store badge) is a fixed
+   external asset: it keeps its own artwork at every state instead of taking
+   the glass-pill chrome or Sienna recoloring. */
+.header-default__cta--badge,
+.header-default__cta--badge:hover,
+.header-default--scrolled .header-default__cta--badge,
+.header-default--scrolled .header-default__cta--badge:hover {
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.header-default__cta--badge img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
 @media (min-width: 768px) {
   .header-default--scrolled {
     padding-top: 16px;
@@ -201,6 +223,13 @@
     color: var(--just-color-ivory);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+
+  .header-default__cta--badge {
+    padding: 0;
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
   }
 }
 

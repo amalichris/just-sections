@@ -8,6 +8,31 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.1.0 — 2026-08-26
+
+### Sections
+
+- `header-default`, `hero-default`, `pricing-banner-default`: `cta` accepts an optional
+  `badge` (a `Media`). When supplied, the section renders that image in place of the Sienna
+  Brand Pill / glass pill — the documented exception for a fixed external asset a page cannot
+  restyle, such as Apple's official App Store badge. No pill background, border, backdrop
+  filter, or hover/scroll recoloring applies to a badge CTA at any section state; the 44px
+  minimum target, `focusBlue` focus outline, and 0.97 press scale still do. Existing configs
+  are unaffected — omit `badge` and the pill renders exactly as before.
+- `hero-default`: gains an entirely new optional `cta` prop (`{ label, href, badge? }`),
+  rendered directly below the subtitle as a Sienna Brand Pill (or a badge, per above). JustEjari's
+  composition omits it and is unaffected — the hero's primary action stays in the header there.
+- `benefits-default`: each item accepts an optional `mediaBackdrop` — `chianti`, `sky`, or
+  `cypress` — giving that card's media frame a page-supplied color behind a contained image
+  instead of the default tight `parchment` crop. Omitted, a card renders exactly as before.
+
+### Internal
+
+- `src/dev/`: added `BackdropLab.jsx` at `/backdrops`, an exploration surface for candidate
+  media backdrop colors. Not a section variant and not published.
+
+---
+
 ## v1.0.1 — 2026-07-28
 
 ### Sections

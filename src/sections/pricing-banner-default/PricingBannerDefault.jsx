@@ -30,8 +30,11 @@ export default function PricingBannerDefault({
         {eyebrow ? <p className="pricing-banner-default__eyebrow">{eyebrow}</p> : null}
         <h2 id={titleId}>{title}</h2>
         {subtitle ? <p className="pricing-banner-default__subtitle">{subtitle}</p> : null}
-        <a className="pricing-banner-default__cta" href={cta.href}>
-          {cta.label}
+        <a
+          className={`pricing-banner-default__cta${cta.badge ? ' pricing-banner-default__cta--badge' : ''}`}
+          href={cta.href}
+        >
+          {cta.badge ? <img src={cta.badge.src} alt={cta.badge.alt} /> : cta.label}
         </a>
       </div>
     </section>

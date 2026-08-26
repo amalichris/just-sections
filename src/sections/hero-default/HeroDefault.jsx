@@ -9,17 +9,18 @@ const DEVICE_RATE = 0.06
 const DEVICE_OFFSET_MAX = 56
 
 /**
- * @import { Media } from '../types'
+ * @import { Cta, Media } from '../types'
  *
  * @param {object} props
  * @param {string} props.title Required hero headline.
  * @param {string} [props.subtitle] Supporting copy below the headline.
+ * @param {Cta} [props.cta] Optional primary action below the copy.
  * @param {Media} [props.background] Full-bleed artwork beneath the warm glass
  *   overlay. Omitted, the hero keeps its parchment backdrop.
  * @param {Media} [props.media] Product image following the copy in normal flow.
  * @param {string} [props.id] Section id, defaults to `top`.
  */
-export default function HeroDefault({ title, subtitle, background, media, id = 'top' }) {
+export default function HeroDefault({ title, subtitle, cta, background, media, id = 'top' }) {
   const heroRef = useRef(null)
   const instanceId = useId().replaceAll(':', '')
   const titleId = `${id}-${instanceId}-title`
@@ -91,6 +92,14 @@ export default function HeroDefault({ title, subtitle, background, media, id = '
       <div className="hero-default__content">
         <h1 id={titleId}>{title}</h1>
         {subtitle ? <p>{subtitle}</p> : null}
+        {cta ? (
+          <a
+            className={`hero-default__cta${cta.badge ? ' hero-default__cta--badge' : ''}`}
+            href={cta.href}
+          >
+            {cta.badge ? <img src={cta.badge.src} alt={cta.badge.alt} /> : cta.label}
+          </a>
+        ) : null}
         {media ? <img className="hero-default__device" src={media.src} alt={media.alt} /> : null}
       </div>
     </section>

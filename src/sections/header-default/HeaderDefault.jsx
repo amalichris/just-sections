@@ -65,8 +65,11 @@ export default function HeaderDefault({ brand, cta, navigation, id }) {
           </ul>
         ) : null}
 
-        <a className="header-default__cta" href={cta.href}>
-          {cta.label}
+        <a
+          className={`header-default__cta${cta.badge ? ' header-default__cta--badge' : ''}`}
+          href={cta.href}
+        >
+          {cta.badge ? <img src={cta.badge.src} alt={cta.badge.alt} /> : cta.label}
         </a>
       </nav>
     </header>

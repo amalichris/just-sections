@@ -3,6 +3,7 @@ import requireProps from '../requireProps'
 import './BenefitsDefault.css'
 
 const REQUIRED_ITEM_COUNT = 3
+const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress'])
 
 function isNonEmptyString(value) {
   return typeof value === 'string' && value.length > 0
@@ -27,6 +28,10 @@ function hasValidProof(proof) {
   )
 }
 
+function hasValidMediaBackdrop(mediaBackdrop) {
+  return mediaBackdrop === undefined || MEDIA_BACKDROPS.has(mediaBackdrop)
+}
+
 function hasValidItems(items) {
   if (!Array.isArray(items) || items.length !== REQUIRED_ITEM_COUNT) return false
 
@@ -41,7 +46,8 @@ function hasValidItems(items) {
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
       !hasValidMedia(item.media) ||
-      !hasValidProof(item.proof)
+      !hasValidProof(item.proof) ||
+      !hasValidMediaBackdrop(item.mediaBackdrop)
     ) {
       return false
     }
@@ -58,7 +64,7 @@ function hasValidItems(items) {
  *
  * @param {object} props
  * @param {string} props.title Required section heading.
- * @param {{ id: string, title: string, description: string, media: Media, proof?: Proof }[]} props.items
+ * @param {{ id: string, title: string, description: string, media: Media, proof?: Proof, mediaBackdrop?: 'chianti' | 'sky' | 'cypress' }[]} props.items
  *   Required benefit cards, exactly three. `items[0]` is the anchor and takes
  *   two thirds of the grid; the other two flank it. Every card carries media:
  *   the section's argument is that the visitor sees the real product.
@@ -101,7 +107,9 @@ export default function BenefitsDefault({
               key={item.id}
               className={`benefits-default__card${index === 0 ? ' benefits-default__card--anchor' : ''}`}
             >
-              <div className="benefits-default__media">
+              <div
+                className={`benefits-default__media${item.mediaBackdrop ? ` benefits-default__media--${item.mediaBackdrop}` : ''}`}
+              >
                 <img
                   src={item.media.src}
                   alt={item.media.alt}

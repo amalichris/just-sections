@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -24,6 +24,7 @@ Build the fixed landing header described in `plan.md`.
 - At 16px mobile scroll, fade in the approved full-width glass rail behind the controls and clear it at 4px or less. Do not reuse or reset desktop pill styles on mobile.
 - Apply the approved marketing type scale: 20/24px wordmark and 16px header controls.
 - Preserve 44px targets, focusBlue focus treatment, press scale, and reduced-motion behavior.
+- When `cta.badge` is supplied, render that image (44px height, auto width) in place of the label and strip the pill chrome — no background, border, backdrop-filter, or hover/scroll recoloring — at every header state. Keep focusBlue outline and the 0.97 press scale.
 
 ## Verify and synchronize
 

@@ -1,8 +1,10 @@
 # TODO — Graduate the section library into the product repos
 
-**Status (2026-07-28): Phases 0–3 complete except T3.4.** What remains is deployment
-configuration in dashboards we do not control from here, one gated migration, and this
-file's own retirement.
+**Status (2026-08-26): Phases 0–3 complete except T3.4.** Priorities changed: JustConvert is
+now the first live site on this shared foundation, not JustEjari (see T3.4 below — its old
+"wait for JustEjari to prove itself in production" gate is retired). What remains is T3.4 itself,
+deployment configuration for JustEjari in dashboards we do not control from here, one motion
+cleanup blocked upstream (T4.1, outside the gate), and this file's own retirement.
 
 The goal was to turn a personal landing-page trial into a shared, versioned section library
 consumed by each product's `web/` department, and to collapse four diverging `design.md`
@@ -93,30 +95,85 @@ downtime window, and no ordering constraint.
 party links expire after 3 days, vault invitations after 30, so 31 days clears every one.
 See `web/AGENTS.md` § Domains.
 
-### T3.4 — Migrate JustConvert's web department
+### T3.4 — Build JustConvert's web department on just-sections
 
-**Gate status: closed, and not close to opening.** This task begins "only after JustEjari has
-run in production for a while." JustEjari's landing page has never served a request on a real
-domain. Migrating JustConvert onto a library whose only consumer is untested by real traffic
-would defeat the point of the gate.
+**Status: open, in progress — JustConvert is now the first live consumer.** The original gate
+("wait until JustEjari has run in production for a while") is retired: priorities changed, and
+JustConvert goes live on this foundation first. JustEjari's `web/` department is left exactly as
+it is — a working, decoupled page config pinned to a git tag — and stays ready to deploy
+whenever T2.5's DNS work lands. Going second does not mean it is at risk; nothing here touches it.
 
-Reopen once JustEjari has been live on `justejari.ae` long enough to surface what local
-verification cannot: real fonts over real latency, real devices, real Lighthouse numbers.
+Unlike the original framing, this is not a migration of a hand-rolled landing page — JustConvert's
+`web/` currently has **no landing page**; `/` redirects to `/support`
+(`docs/architecture/web-architecture.md` documents that redirect as the intended target, which
+this work supersedes and must update in the same change).
+
+Legal filenames are already converged — `docs/legal/privacy-policy.md` and
+`terms-of-service.md` already match JustEjari's convention. That part of this task is done; the
+line above describing `20260520_..._v2-1.md` names was stale.
 
 **Then do:**
 
 - `justconvert/web/src/styles/web-public.css` declares the same palette under
   `--public-color-*` (verified identical hex values, lines 24–39). Point it at
   `just-sections/styles/tokens.css` and delete the local palette.
-- Migrate its hand-rolled sections to library sections.
-- Converge its legal documents onto the consultant skill's convention. It currently has
-  `docs/legal/20260520_privacy-policy_v2-1.md` and `20260520_terms-of-service_v2-1.md`; the
-  skill writes `privacy-policy.md` and `terms-of-service.md` with the version and date inside
-  the document. Renaming lets JustConvert's legal page configs drop their `internalLinks`
-  override and match JustEjari's exactly.
+- Add `just-sections` as a pinned dependency and build
+  `src/pages/justconvert/page.config.js` composing header/hero/benefits/how-it-works/
+  pricing-banner/faq/footer from real product-brief content, mirroring JustEjari's pattern.
+- Resolve the CTA contract gap: sections render every `Cta` as the Sienna Brand Pill text
+  button; JustConvert needs its primary CTA to be Apple's official App Store badge image
+  instead. Needs a design decision before implementation (see conversation/plan.md once
+  agreed) — do not invent a one-off button style for it.
+- Wire `/` to the composed page, replacing the redirect to `/support`, and update
+  `web-architecture.md` accordingly.
 
-**Outcome:** one palette definition across both products, and one legal-document filename
-convention. This is the payoff — until it lands, the family design system is still theoretical.
+**Outcome:** one palette definition across both products, one legal-document filename
+convention, and a real JustConvert landing page. This is the payoff — until it lands, the
+family design system is still theoretical.
+
+### T4.1 — Tokenize motion in `tokens.css`
+
+**Gate status: blocked on `just-design-system`.** `tokens.css` may not originate a value — its
+own header says to propose to foundations first — and `surfaces/web.md` §7 publishes motion as a
+table of CSS strings rather than named tokens. Until that table becomes tokens, there is nothing
+here to bind to.
+
+**The problem.** `tokens.css` tokenizes every color and every font, and no motion value. The
+family curve and its durations are pasted as literals through the section stylesheets instead:
+
+| Literal | Count | Where |
+|---|---|---|
+| `cubic-bezier(0.32, 0.72, 0, 1)` | 21 | `header-default` 10, `how-it-works-default` 6, `pricing-banner-default` 3, `faq-default` 2 |
+| `200ms ease-out` | 14 | across the same section stylesheets |
+| `100ms ease-out` | 7 | across the same section stylesheets |
+
+42 motion literals. Changing the family curve means editing every one of them here, and the same
+again in every other consumer. That is precisely the drift `--just-*` was adopted to stop; it
+just was never applied to motion.
+
+**Then do:**
+
+- Add `--just-ease-spatial`, `--just-duration-spatial`, and `--just-duration-disclosure` to
+  `tokens.css`, transcribed with their `surfaces/web.md` §7 source, next to the existing
+  `--just-transition-*` values.
+- Replace all 42 literals with those tokens. Behaviour must not change — the values are
+  identical. This is a naming change, and a diff that alters a single rendered frame is wrong.
+- Leave the per-section `prefers-reduced-motion` blocks alone. They are already correct.
+
+**Outcome:** the family curve becomes changeable in one place, and motion stops being the one
+part of the design system this repo still hard-codes.
+
+**Worth knowing:** this repo's motion is otherwise fully compliant — correct curve, correct
+durations, per-section reduced-motion handling, and no scripted animation at all. This task is
+about where the values live, not what they are.
+
+**Raised by** AmaliLabs PRD-001 (terminal holding page), which hit the same gap from the other
+side and had to transcribe the values into its own `index.css`. It filed seven motion proposals
+to `just-design-system` — see `amalilabs/docs/design-system/design.md` § Proposals; this is #7,
+and it is the prerequisite for this task.
+
+**Not part of the verification gate below** — it does not block retiring this file. If `TODO.md`
+is retired first, move this task to `docs/learnings.md`.
 
 ### Verification gate
 

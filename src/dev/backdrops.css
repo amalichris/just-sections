@@ -1,0 +1,153 @@
+/**
+ * Candidate media backdrops — exploration only.
+ *
+ * Four techniques on JustConvert's App Store palette. Nothing here is a
+ * section variant: these live in `src/dev/`, are excluded from the published
+ * package, and commit the design system to nothing.
+ *
+ * The palette is deliberately NOT declared as `--just-*`. These are one
+ * product's brand colours, not family tokens — promoting them would be a
+ * foundations decision, and naming them as though it had already happened is
+ * how a palette drifts. `--lab-*` says plainly that this is a proposal.
+ *
+ * Every variant is pure CSS: no asset files, no per-viewport exports.
+ */
+
+.lab__frame {
+  /* JustConvert — App Store screenshot palette */
+  --lab-sunflower: #e8b314;
+  --lab-chianti: #8e2441;
+  --lab-poppy: #d94030;
+  --lab-cypress: #2d6b48;
+  --lab-sky: #2e74b5;
+  --lab-wisteria: #8b6cc1;
+  /* The bridge: poppy is a near neighbour of sienna, so the brand colour is
+     already inside this palette rather than sitting against it. */
+  --lab-sienna: var(--just-color-sienna);
+}
+
+.bd {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Technique 1 — Paper garden
+   Low-contrast paper grounds with colour pushed to the edges. The middle stays
+   calm, so the product image is framed by the composition rather than treated
+   as another layer of texture.
+   --------------------------------------------------------------------------- */
+
+.bd--citrus {
+  background:
+    radial-gradient(ellipse 58% 90% at -7% 12%, var(--lab-sunflower) 0 48%, transparent 49%),
+    radial-gradient(ellipse 46% 74% at 104% 88%, var(--lab-poppy) 0 48%, transparent 49%),
+    linear-gradient(130deg, transparent 43%, rgb(207 79 62 / 13%) 43% 44%, transparent 44%),
+    var(--just-color-parchment);
+}
+
+.bd--mulberry {
+  background:
+    radial-gradient(ellipse 56% 86% at 104% 4%, var(--lab-chianti) 0 45%, transparent 46%),
+    radial-gradient(ellipse 44% 70% at -2% 104%, var(--lab-coral, #d97757) 0 46%, transparent 47%),
+    linear-gradient(48deg, transparent 46%, rgb(142 36 65 / 12%) 46% 47%, transparent 47%),
+    var(--just-color-ivory);
+}
+
+.bd--herbarium {
+  background:
+    radial-gradient(ellipse 58% 90% at -8% 82%, var(--lab-cypress) 0 46%, transparent 47%),
+    radial-gradient(ellipse 42% 72% at 106% 8%, color-mix(in oklab, var(--lab-sunflower) 78%, var(--just-color-ivory)) 0 46%, transparent 47%),
+    linear-gradient(135deg, transparent 42%, rgb(45 107 72 / 13%) 42% 43%, transparent 43%),
+    var(--just-color-parchment);
+}
+
+/* ---------------------------------------------------------------------------
+   Technique 2 — Sunroom
+   Large, softly transparent panes make a room for the product without the
+   familiar generic 'aurora' effect. The broad shadows are colour, not UI
+   elevation.
+   --------------------------------------------------------------------------- */
+
+.bd--apricot-window {
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 36%) 1px, transparent 1px) 0 0 / 31% 100%,
+    linear-gradient(0deg, rgb(255 255 255 / 28%) 1px, transparent 1px) 0 0 / 100% 48%,
+    linear-gradient(126deg, transparent 0 46%, rgb(207 79 62 / 25%) 46% 61%, transparent 61%),
+    radial-gradient(80% 110% at 4% 12%, color-mix(in oklab, var(--lab-coral, #d97757) 68%, transparent), transparent 66%),
+    var(--lab-sienna);
+}
+
+.bd--blue-hour {
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 28%) 1px, transparent 1px) 0 0 / 28% 100%,
+    linear-gradient(0deg, rgb(255 255 255 / 24%) 1px, transparent 1px) 0 0 / 100% 44%,
+    linear-gradient(42deg, transparent 0 42%, rgb(139 108 193 / 42%) 42% 62%, transparent 62%),
+    radial-gradient(76% 100% at 96% 0%, rgb(250 249 245 / 28%), transparent 62%),
+    var(--lab-sky);
+}
+
+.bd--olive-light {
+  background:
+    linear-gradient(90deg, rgb(250 249 245 / 28%) 1px, transparent 1px) 0 0 / 30% 100%,
+    linear-gradient(0deg, rgb(250 249 245 / 24%) 1px, transparent 1px) 0 0 / 100% 47%,
+    linear-gradient(132deg, transparent 0 48%, rgb(232 179 20 / 34%) 48% 66%, transparent 66%),
+    radial-gradient(70% 90% at 8% 0%, rgb(250 249 245 / 30%), transparent 63%),
+    var(--lab-cypress);
+}
+
+/* ---------------------------------------------------------------------------
+   Technique 3 — Marquetry
+   A few deliberately inlaid forms. They have the visual precision of a made
+   object, without the hard full-frame geometry that turns a UI image into a
+   tiny sticker.
+   --------------------------------------------------------------------------- */
+
+.bd--ribbon {
+  background:
+    radial-gradient(ellipse 72% 32% at 14% 18%, transparent 58%, var(--lab-wisteria) 59% 75%, transparent 76%),
+    radial-gradient(ellipse 74% 34% at 90% 90%, transparent 57%, var(--lab-sky) 58% 74%, transparent 75%),
+    linear-gradient(140deg, var(--just-color-ivory) 0 44%, color-mix(in oklab, var(--lab-wisteria) 22%, var(--just-color-ivory)) 44% 46%, var(--just-color-ivory) 46% 100%);
+}
+
+.bd--terracotta {
+  background:
+    conic-gradient(from 90deg at 0 100%, var(--lab-poppy) 0 25%, transparent 25% 100%),
+    conic-gradient(from 270deg at 100% 0, var(--lab-chianti) 0 25%, transparent 25% 100%),
+    linear-gradient(135deg, transparent 42%, rgb(217 119 87 / 30%) 42% 58%, transparent 58%),
+    var(--just-color-warm-sand);
+}
+
+.bd--night-garden {
+  background:
+    radial-gradient(circle at 9% 18%, var(--lab-sunflower) 0 6%, transparent 6.4%),
+    radial-gradient(circle at 88% 78%, var(--lab-sunflower) 0 8%, transparent 8.4%),
+    radial-gradient(ellipse 58% 84% at -5% 94%, var(--lab-cypress) 0 42%, transparent 43%),
+    radial-gradient(ellipse 48% 72% at 106% -4%, color-mix(in oklab, var(--lab-cypress) 60%, var(--lab-wisteria)) 0 43%, transparent 44%),
+    var(--just-color-near-black);
+}
+
+/* ---------------------------------------------------------------------------
+   Technique 4 — Ivory rhythm
+   A plain colour field with just enough ivory structure to make it memorable.
+   The marks are intentionally graphic, not faux tile or product material.
+   --------------------------------------------------------------------------- */
+
+.bd--sienna-stripes {
+  background:
+    linear-gradient(90deg, transparent 0 13%, var(--just-color-ivory) 13% 16%, transparent 16% 38%, var(--just-color-ivory) 38% 41%, transparent 41% 63%, var(--just-color-ivory) 63% 66%, transparent 66% 88%, var(--just-color-ivory) 88% 91%, transparent 91%),
+    var(--lab-sienna);
+}
+
+.bd--marine-arches {
+  background:
+    radial-gradient(ellipse 34% 86% at 0 100%, transparent 56%, var(--just-color-ivory) 57% 62%, transparent 63%),
+    radial-gradient(ellipse 34% 86% at 100% 0, transparent 56%, var(--just-color-ivory) 57% 62%, transparent 63%),
+    var(--lab-sky);
+}
+
+.bd--cypress-bands {
+  background:
+    linear-gradient(126deg, transparent 0 28%, var(--just-color-ivory) 28% 33%, transparent 33% 60%, var(--just-color-ivory) 60% 65%, transparent 65%),
+    var(--lab-cypress);
+}

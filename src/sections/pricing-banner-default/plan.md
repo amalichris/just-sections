@@ -1,9 +1,9 @@
 # Pricing banner default plan
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
-- **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition
+- **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition, extended for JustConvert's App Store CTA
 
 ## Conversion goal
 
@@ -21,12 +21,14 @@ Give JustEjari landing visitors a clear, low-friction reason to open the Mini Ap
 
 The approved Marketing CTA Banner extension defines the full-width `darkSurface` field, `coral` Inter eyebrow, `ivory` Outfit title, `warmSilver` Inter subtitle, and Sienna Brand Pill CTA. The CTA is 44px high with 24px intrinsic horizontal padding, `focusBlue` focus treatment, Whisper elevation, a deeper-Sienna hover state, and 0.97 press feedback. No imagery, custom button treatment, or decoration is used.
 
+**Proposed exception, agreed for JustConvert:** as in `header-default`, a CTA may supply `badge` to render a fixed external asset — Apple's official App Store badge — unmodified in place of the pill: no dark-surface pill background, border, or hover recoloring, only the 44px target, focusBlue outline, and 0.97 press scale remain. Same rationale as `header-default`'s § Just design-system translation; not a new button style.
+
 ## Public configuration
 
 **Required.** Missing either of these renders nothing and reports the omission in development.
 
 - `title`: conversion heading string.
-- `cta`: `Cta` — `{ label, href }`.
+- `cta`: `Cta` — `{ label, href, badge? }`. When `cta.badge` (a `Media`) is supplied, the banner renders that image in place of the pill.
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
@@ -51,6 +53,7 @@ The section is labelled by its `h2`. Its CTA is a native link with a 44px minimu
 - [x] Centers and reflows at 375px, 430px, 768px, and 1440px without viewport-height sizing.
 - [x] Uses a 44px CTA link with keyboard focus and reduced-motion handling.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
+- [x] A `cta.badge` renders as an unstyled image link with no pill chrome or hover recoloring.
 
 ## Implementation notes
 

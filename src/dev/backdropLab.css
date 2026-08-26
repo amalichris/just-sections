@@ -1,0 +1,192 @@
+/**
+ * Backdrop lab chrome.
+ *
+ * Same rule as `gallery.css`: the tooling around a preview uses cool neutrals
+ * and system fonts so it can never be mistaken for the warm output it frames.
+ * The frame contents below are the exception — those are candidate output and
+ * use the `--just-*` tokens on purpose.
+ */
+
+.lab__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  background: #f6f8fa;
+}
+
+.lab__control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lab__control-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #57606a;
+}
+
+.lab__chips {
+  display: flex;
+  gap: 6px;
+}
+
+.lab__chip {
+  padding: 6px 10px;
+  border: 1px solid #d8dee4;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1f2328;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.lab__chip--on {
+  border-color: #0969da;
+  background: #0969da;
+  color: #ffffff;
+}
+
+.lab__range {
+  width: 160px;
+}
+
+.lab__group {
+  margin-bottom: 40px;
+}
+
+.lab__group-title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2328;
+  margin: 0;
+}
+
+.lab__group-lede {
+  max-width: 68ch;
+  margin: 4px 0 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #57606a;
+}
+
+.lab__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.lab__item {
+  margin: 0;
+}
+
+/* --- Candidate output. Tokens from here down. --- */
+
+.lab__frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--lab-frame-ratio, 16 / 10);
+  border-radius: 12px;
+  background: var(--just-color-parchment);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+}
+
+.lab__product {
+  position: absolute;
+  inset: 11%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 200ms ease-out;
+}
+
+.lab__frame--mounted .lab__product {
+  padding: 12px;
+  border: 1px solid rgb(250 249 245 / 84%);
+  border-radius: 4px;
+  background: rgb(250 249 245 / 92%);
+  box-shadow: 0 10px 30px rgb(20 20 19 / 12%), 0 0 0 1px rgb(20 20 19 / 7%);
+}
+
+.lab__product img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab__product {
+    transition: none;
+  }
+}
+
+/* --- Back to chrome. --- */
+
+.lab__caption {
+  padding-top: 10px;
+}
+
+.lab__caption-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab__name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+}
+
+.lab__tag {
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lab__tag--paper {
+  background: #dafbe1;
+  color: #0a5228;
+}
+
+.lab__tag--sunroom {
+  background: #ddf4ff;
+  color: #0550ae;
+}
+
+.lab__tag--marquetry {
+  background: #fff1e5;
+  color: #953800;
+}
+
+.lab__tag--rhythm {
+  background: #fbe6e2;
+  color: #943328;
+}
+
+.lab__spot {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #57606a;
+}
+
+.lab__note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #57606a;
+}

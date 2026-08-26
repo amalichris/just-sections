@@ -42,6 +42,30 @@ export default [
     },
   },
   {
+    id: 'badge-cta',
+    label: 'Badge CTA',
+    note: 'cta.badge replaces the Sienna Brand Pill with a page-supplied image (e.g. an App Store badge), placed directly below the subtitle.',
+    props: {
+      title: 'One app for currency, time, and units',
+      subtitle: 'No ads. No account. No tracking.',
+      cta: {
+        label: 'Download on the App Store',
+        href: '#top',
+        badge: fixtureMedia('App Store badge', {
+          width: 135,
+          height: 40,
+          alt: 'Download on the App Store',
+        }),
+      },
+      background: fixtureMedia('Backdrop', { width: 1440, height: 900 }),
+      media: fixtureMedia('Device', {
+        width: 640,
+        height: 1300,
+        alt: 'Placeholder for a product screen capture',
+      }),
+    },
+  },
+  {
     id: 'long-title',
     label: 'Long title',
     note: 'Stress test for the fluid clamp: the hero must expand rather than clip, and text must reflow at 320px.',

@@ -15,8 +15,14 @@
  */
 
 /**
- * A link styled as one of the design system's button variants.
- * @typedef {{ label: string, href: string }} Cta
+ * A link styled as one of the design system's button variants, or an
+ * external badge image supplied by the page — e.g. Apple's official App
+ * Store badge — rendered in place of the pill. `label` supplies the
+ * accessible name when no badge is given; `badge`, when present, replaces
+ * the button's visual entirely and carries its own `alt`, and the button
+ * receives no hover/press recoloring so a fixed external asset is never
+ * restyled.
+ * @typedef {{ label: string, href: string, badge?: Media }} Cta
  */
 
 /**

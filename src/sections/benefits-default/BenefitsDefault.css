@@ -85,6 +85,29 @@
   object-position: top left;
 }
 
+/* The page-selected tone is a backdrop, not a new card treatment. Product
+   media sits inside it with breathing room, while the default continues to
+   use the tight crop documented for the standard Benefits Bento. */
+.benefits-default__media--chianti {
+  background: #8e2441;
+}
+
+.benefits-default__media--sky {
+  background: #2e74b5;
+}
+
+.benefits-default__media--cypress {
+  background: #2d6b48;
+}
+
+.benefits-default__media--chianti img,
+.benefits-default__media--sky img,
+.benefits-default__media--cypress img {
+  box-sizing: border-box;
+  padding: 12%;
+  object-fit: contain;
+}
+
 .benefits-default__card h3 {
   color: var(--just-color-near-black);
   font-family: var(--just-font-heading);

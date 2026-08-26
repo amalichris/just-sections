@@ -1,7 +1,7 @@
 # Default benefits implementation prompt
 
 - **Section ID:** `benefits-default`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -17,6 +17,7 @@ Build the configurable benefits section described in `plan.md`.
 - Keep the component and local CSS in this folder. There are no section-local assets; page config supplies every image.
 - Require `title` and exactly three complete items with unique ids via `requireProps`. Each item requires non-empty title and description plus shared `media` with a non-empty `src` and string `alt`; a supplied proof requires both quote and attribution. Invalid configuration renders nothing and reports the omission in development. Treat `eyebrow` and `subtitle` as optional and render each only when supplied, declaring their spacing on the adjacent-sibling pair.
 - Use the shared `Media` typedef from `../types.js` for item media. Add a `proof` shape only if it is genuinely reusable; otherwise document it inline in this section's JSDoc.
+- Treat `mediaBackdrop` as an optional per-item enum: `chianti`, `sky`, or `cypress`. Omitted media keeps the tight `parchment` crop; a configured tone sits behind a 12% inset, contained image. Do not add glass, gradient, texture, or a new card surface.
 - Build the grid with CSS Grid: three columns × two rows at ≥1024px with `items[0]` spanning columns 1–2 and both rows; two columns at 768–1023px with the anchor spanning both; one column below 768px.
 - Cards are non-interactive `article` elements: Ring elevation, 20pt radius, `ivory`. No hover, press scale, focus ring, transition, or drop shadow.
 - Render the proof line unconditionally when supplied, as `blockquote` + `cite` beneath a `borderCream` rule.

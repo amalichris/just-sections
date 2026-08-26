@@ -1,11 +1,12 @@
 import fixtureMedia from '../fixtureMedia'
 
-const item = (id, title, description, proof) => ({
+const item = (id, title, description, proof, mediaBackdrop) => ({
   id,
   title,
   description,
   media: fixtureMedia(title.split(' ').slice(0, 2).join(' '), { width: 800, height: 500 }),
   ...(proof ? { proof } : {}),
+  ...(mediaBackdrop ? { mediaBackdrop } : {}),
 })
 
 /**
@@ -32,16 +33,21 @@ export default [
             quote: 'It took me four minutes for a contract that used to eat a whole evening.',
             attribution: 'Preview attribution',
           },
+          'chianti',
         ),
         item(
           'generate',
           'Export a PDF that looks official',
           'One tap turns your answers into a formatted document with every clause in place.',
+          undefined,
+          'sky',
         ),
         item(
           'fields',
           'Details you enter once',
           'Property and party details carry across contracts, so the second one is faster than the first.',
+          undefined,
+          'cypress',
         ),
       ],
     },
@@ -79,6 +85,20 @@ export default [
           quote: 'The second contract took half the time of the first.',
           attribution: 'Broker, Marina',
         }),
+      ],
+    },
+  },
+  {
+    id: 'invalid-media-backdrop',
+    label: 'Invalid media backdrop',
+    note: 'A backdrop outside the documented enum must render nothing and report it.',
+    expectsNothing: true,
+    props: {
+      title: 'A rental contract you can hand over today.',
+      items: [
+        item('contracts', 'A finished contract in minutes', 'Answer a short set of questions.', undefined, 'violet'),
+        item('generate', 'Export a PDF that looks official', 'One tap formats every clause.'),
+        item('fields', 'Details you enter once', 'Details carry across contracts.'),
       ],
     },
   },

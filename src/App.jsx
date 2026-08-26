@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import DemoPage from './dev/DemoPage'
+import BackdropLab from './dev/BackdropLab'
 import { GalleryIndex, GallerySection } from './dev/Gallery'
 import SectionFrame from './dev/SectionFrame'
 
@@ -20,6 +21,10 @@ export default function App() {
       <Route path="/gallery" element={<GalleryIndex />} />
       <Route path="/gallery/frame/:sectionId/:fixtureId" element={<SectionFrame />} />
       <Route path="/gallery/:sectionId" element={<GallerySection />} />
+
+      {/* Exploration surface for candidate media backdrops. Nothing here is a
+          section variant yet — see `BackdropLab.jsx` for why that is deliberate. */}
+      <Route path="/backdrops" element={<BackdropLab />} />
     </Routes>
   )
 }

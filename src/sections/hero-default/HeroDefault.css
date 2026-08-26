@@ -33,9 +33,9 @@
 }
 
 .hero-default__glass {
-  background: rgb(250 249 245 / 35%);
-  -webkit-backdrop-filter: blur(8px) saturate(88%);
-  backdrop-filter: blur(8px) saturate(88%);
+  background: rgb(250 249 245 / 30%);
+  -webkit-backdrop-filter: blur(4px) saturate(100%);
+  backdrop-filter: blur(4px) saturate(100%);
 }
 
 .hero-default__content {
@@ -70,6 +70,61 @@
   line-height: 1.6;
 }
 
+.hero-default__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 32px;
+  padding: 0 24px;
+  border: 1px solid var(--just-color-sienna);
+  border-radius: 99px;
+  background: var(--just-color-sienna);
+  box-shadow: 0 0 0 1px var(--just-color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 100ms ease-out;
+}
+
+.hero-default__cta:hover {
+  border-color: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  background: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+}
+
+.hero-default__cta:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 3px;
+}
+
+.hero-default__cta:active {
+  transform: scale(0.97);
+}
+
+/* A page-supplied badge (e.g. Apple's official App Store badge) is a fixed
+   external asset: it keeps its own artwork instead of taking the Sienna
+   Brand Pill chrome or hover recoloring. */
+.hero-default__cta--badge,
+.hero-default__cta--badge:hover {
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+}
+
+.hero-default__cta--badge img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
 .hero-default__device {
   position: relative;
   z-index: 1;
@@ -90,6 +145,12 @@
   .hero-default[data-parallax='active'] .hero-default__device {
     transform: translate3d(0, var(--hero-device-offset), 0);
     will-change: transform;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-default__device {
+    width: clamp(360px, 42vw, 420px);
   }
 }
 
@@ -129,5 +190,15 @@
   .hero-default__device {
     width: min(calc(100% - 40px), 360px);
     margin-top: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-default__cta {
+    transition: none;
+  }
+
+  .hero-default__cta:active {
+    transform: none;
   }
 }

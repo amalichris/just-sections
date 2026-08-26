@@ -1,3 +1,5 @@
+import fixtureMedia from '../fixtureMedia'
+
 /**
  * Gallery fixtures for `header-default`.
  *
@@ -40,6 +42,27 @@ export default [
         { label: 'Pricing and plans', targetId: 'pricing' },
       ],
       cta: { label: 'Start your first contract', href: '#pricing' },
+    },
+  },
+  {
+    id: 'badge-cta',
+    label: 'Badge CTA',
+    note: 'cta.badge replaces the pill with a page-supplied image (e.g. an App Store badge). No chrome, background, or recoloring at any header state.',
+    props: {
+      brand: { label: 'Acme', href: '#top' },
+      navigation: [
+        { label: 'Benefits', targetId: 'benefits' },
+        { label: 'How it works', targetId: 'how-it-works' },
+      ],
+      cta: {
+        label: 'Download on the App Store',
+        href: '#top',
+        badge: fixtureMedia('App Store badge', {
+          width: 120,
+          height: 40,
+          alt: 'Download on the App Store',
+        }),
+      },
     },
   },
   {
