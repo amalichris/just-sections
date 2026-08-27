@@ -1,7 +1,7 @@
 # Legal document implementation prompt
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.2`
+- **Revision:** `1.3`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -31,7 +31,8 @@ Build the section exactly as described in `plan.md`.
   the document.
 - Wrap tables so they scroll inside their own container. The page body must never scroll
   horizontally.
-- Use the shared legal table treatment: square corners, `warmSand` header cells, `ivory` body
+- Use the shared legal table treatment: a 16px radius on the outer scroll container with square
+  cell corners, `warmSand` header cells, `ivory` body
   cells, 1px `borderWarm` grid lines, 14px Inter text, and 10px vertical / 12px horizontal cell
   padding. Keep the table surface on the cells so the grid remains visible inside the focusable
   horizontal-scroll container.

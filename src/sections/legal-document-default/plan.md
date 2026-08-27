@@ -1,7 +1,7 @@
 # Legal document plan
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.2`
+- **Revision:** `1.3`
 - **Status:** Implemented
 - **Products / variants:** JustEjari and JustConvert, both surfaces (`parchment` default, `ivory`)
 
@@ -43,13 +43,13 @@ and §4; tokens from `foundations.md` §2 and §3.
 | `h2` / `h3` / `h4`+ | Outfit 500 at 32 / 25 / 20px |
 | Body | Inter 400, 16px, 1.60, `oliveGray` |
 | Links | `sienna`, `nearBlack` on hover, 2px `focusBlue` focus ring |
-| Tables | Square grid with `warmSand` header cells, `ivory` body cells, 1px `borderWarm` lines, 14px Inter text, and 10px vertical / 12px horizontal cell padding |
+| Tables | 16px outer container radius with square cells, `warmSand` header cells, `ivory` body cells, 1px `borderWarm` lines, 14px Inter text, and 10px vertical / 12px horizontal cell padding |
 | Page padding | 96px block on mobile, 128px from 768px; 20 / 24 / 64px inline |
 
 The table treatment is a shared legal-page pattern rather than a consumer override. It reuses the
 same warm grid, `warmSand` header, and `ivory` body language used by the public Just pages while
-keeping the section’s existing focusable horizontal-scroll wrapper. It intentionally has square
-corners and no outer card elevation, matching the established legal-page table treatment.
+keeping the section’s existing focusable horizontal-scroll wrapper. The wrapper uses the shared
+16px section-container radius to round the overall shape; individual cells remain square.
 
 ## Public configuration
 
@@ -109,7 +109,7 @@ therefore no reduced-motion behavior to accommodate.
 - [x] Works at the required desktop and mobile viewports.
 - [x] Cross-links resolve to routes; mailto links render as plain text; external links open in a
       new tab.
-- [x] GFM tables render with the square warm grid and scroll within their container at 375px.
+- [x] GFM tables render with the warm grid and rounded 16px outer container, and scroll within it at 375px.
 - [x] Empty `content` renders nothing and reports the omission.
 - [x] Has been visually reviewed in the gallery.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.

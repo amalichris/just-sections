@@ -128,8 +128,10 @@
    focusable so a keyboard user can scroll a wide table without a pointer. */
 .legal-document-default__table-wrap {
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   margin-block-end: 16px;
+  border-radius: 16px;
 }
 
 .legal-document-default__table-wrap:focus-visible {

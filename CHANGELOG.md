@@ -8,6 +8,17 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.3 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: the table scroll container now uses the shared 16px section-container
+  radius while retaining square cells, the warm grid, and internal horizontal scrolling.
+
+### Breaking
+
+### Internal
+
 ## v1.2.2 — 2026-08-27
 
 ### Sections
