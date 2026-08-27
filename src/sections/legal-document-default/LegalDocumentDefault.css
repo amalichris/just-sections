@@ -129,6 +129,7 @@
 .legal-document-default__table-wrap {
   overflow-x: auto;
   overscroll-behavior-x: contain;
+  margin-block-end: 16px;
 }
 
 .legal-document-default__table-wrap:focus-visible {
@@ -137,49 +138,29 @@
 }
 
 .legal-document-default__container table {
+  display: block;
   width: 100%;
-  margin: 24px 0;
+  overflow-x: auto;
   border-collapse: collapse;
-  overflow: hidden;
-  border-radius: 16px;
-  background: var(--just-color-ivory);
-  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
-}
-
-.legal-document-default__container thead {
-  background: var(--just-color-parchment);
-}
-
-/* Without a floor the table compresses to the container instead of scrolling,
-   and cell text wraps one character per line. */
-.legal-document-default__container th {
-  min-width: 7rem;
+  font-size: 14px;
 }
 
 .legal-document-default__container th,
 .legal-document-default__container td {
-  padding: 14px 16px;
+  padding: 10px 12px;
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid var(--just-color-border-warm);
+  border: 1px solid var(--just-color-border-warm);
 }
 
 .legal-document-default__container th {
-  font-family: var(--just-font-body);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.43;
+  background: var(--just-color-warm-sand);
   color: var(--just-color-near-black);
+  font-weight: 500;
 }
 
 .legal-document-default__container td {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--just-color-dark-warm);
-}
-
-.legal-document-default__container tr:last-child td {
-  border-bottom: 0;
+  background: var(--just-color-ivory);
 }
 
 .legal-document-default__container :is(code, pre) {
@@ -191,13 +172,6 @@
   background: var(--just-color-warm-sand);
   border-radius: 4px;
   padding: 1px 5px;
-}
-
-@media (max-width: 767px) {
-  .legal-document-default__container th,
-  .legal-document-default__container td {
-    padding: 12px;
-  }
 }
 
 @media (min-width: 768px) {

@@ -8,6 +8,17 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.2 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: legal tables now match the established square warm grid: `warmSand`
+  header cells, `ivory` body cells, 1px `borderWarm` lines, and compact 10px/12px cell padding.
+
+### Breaking
+
+### Internal
+
 ## v1.2.1 — 2026-08-27
 
 ### Sections
