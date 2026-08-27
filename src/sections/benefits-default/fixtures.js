@@ -9,6 +9,12 @@ const item = (id, title, description, proof, mediaBackdrop) => ({
   ...(mediaBackdrop ? { mediaBackdrop } : {}),
 })
 
+const responsiveSources = {
+  mobile: fixtureMedia('Mobile zoom', { width: 800, height: 500 }).src,
+  tablet: fixtureMedia('Tablet zoom', { width: 800, height: 500 }).src,
+  desktop: fixtureMedia('Desktop zoom', { width: 800, height: 500 }).src,
+}
+
 /**
  * Gallery fixtures for `benefits-default`.
  *
@@ -25,16 +31,19 @@ export default [
       title: 'A rental contract you can hand over today.',
       subtitle: 'One outcome per card, in the reader’s own words.',
       items: [
-        item(
-          'contracts',
-          'A finished contract in minutes, not an evening',
-          'Answer a short set of questions and get a complete rental contract, ready to print or send.',
-          {
-            quote: 'It took me four minutes for a contract that used to eat a whole evening.',
-            attribution: 'Preview attribution',
-          },
-          'chianti',
-        ),
+        {
+          ...item(
+            'contracts',
+            'A finished contract in minutes, not an evening',
+            'Answer a short set of questions and get a complete rental contract, ready to print or send.',
+            {
+              quote: 'It took me four minutes for a contract that used to eat a whole evening.',
+              attribution: 'Preview attribution',
+            },
+            'chianti',
+          ),
+          mediaSources: responsiveSources,
+        },
         item(
           'generate',
           'Export a PDF that looks official',

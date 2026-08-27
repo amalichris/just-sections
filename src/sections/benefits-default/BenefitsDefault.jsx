@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { Fragment, useId } from 'react'
 import requireProps from '../requireProps'
 import './BenefitsDefault.css'
 
@@ -18,6 +18,18 @@ function hasValidMedia(media) {
   )
 }
 
+function hasValidMediaSources(mediaSources) {
+  return (
+    mediaSources === undefined ||
+    (mediaSources !== null &&
+      typeof mediaSources === 'object' &&
+      ['mobile', 'tablet', 'desktop'].every(
+        (viewport) =>
+          mediaSources[viewport] === undefined || isNonEmptyString(mediaSources[viewport]),
+      ))
+  )
+}
+
 function hasValidProof(proof) {
   return (
     proof === undefined ||
@@ -30,6 +42,15 @@ function hasValidProof(proof) {
 
 function hasValidMediaBackdrop(mediaBackdrop) {
   return mediaBackdrop === undefined || MEDIA_BACKDROPS.has(mediaBackdrop)
+}
+
+function renderTitle(title) {
+  return title.split(/\/n|\\n|\n/).map((line, index) => (
+    <Fragment key={`${index}-${line}`}>
+      {index > 0 ? <br /> : null}
+      {line.trim()}
+    </Fragment>
+  ))
 }
 
 function hasValidItems(items) {
@@ -46,6 +67,7 @@ function hasValidItems(items) {
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
       !hasValidMedia(item.media) ||
+      !hasValidMediaSources(item.mediaSources) ||
       !hasValidProof(item.proof) ||
       !hasValidMediaBackdrop(item.mediaBackdrop)
     ) {
@@ -62,12 +84,16 @@ function hasValidItems(items) {
  *
  * @typedef {{ quote: string, attribution: string }} Proof
  *
+ * @typedef {{ mobile?: string, tablet?: string, desktop?: string }} MediaSources
+ *
  * @param {object} props
  * @param {string} props.title Required section heading.
- * @param {{ id: string, title: string, description: string, media: Media, proof?: Proof, mediaBackdrop?: 'chianti' | 'sky' | 'cypress' }[]} props.items
+ * @param {{ id: string, title: string, description: string, media: Media, mediaSources?: MediaSources, proof?: Proof, mediaBackdrop?: 'chianti' | 'sky' | 'cypress' }[]} props.items
  *   Required benefit cards, exactly three. `items[0]` is the anchor and takes
  *   two thirds of the grid; the other two flank it. Every card carries media:
- *   the section's argument is that the visitor sees the real product.
+ *   the section's argument is that the visitor sees the real product. Optional
+ *   media sources art-direct the zoom for the mobile, tablet, and desktop bands;
+ *   `media` remains the fallback and supplies the accessible alternative text.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {string} [props.id] Section id, defaults to `benefits`.
@@ -110,15 +136,31 @@ export default function BenefitsDefault({
               <div
                 className={`benefits-default__media${item.mediaBackdrop ? ` benefits-default__media--${item.mediaBackdrop}` : ''}`}
               >
-                <img
-                  src={item.media.src}
-                  alt={item.media.alt}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <picture>
+                  {item.mediaSources?.mobile ? (
+                    <source media="(max-width: 767px)" srcSet={item.mediaSources.mobile} />
+                  ) : null}
+                  {item.mediaSources?.tablet ? (
+                    <source
+                      media="(min-width: 768px) and (max-width: 1023px)"
+                      srcSet={item.mediaSources.tablet}
+                    />
+                  ) : null}
+                  {item.mediaSources?.desktop ? (
+                    <source media="(min-width: 1024px)" srcSet={item.mediaSources.desktop} />
+                  ) : null}
+                  <img
+                    src={item.media.src}
+                    alt={item.media.alt}
+                    width={item.media.width}
+                    height={item.media.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
 
-              <h3>{item.title}</h3>
+              <h3>{renderTitle(item.title)}</h3>
               <p className="benefits-default__description">{item.description}</p>
 
               {item.proof ? (

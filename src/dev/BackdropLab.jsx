@@ -4,12 +4,12 @@ import './gallery.css'
 import './backdropLab.css'
 import './backdrops.css'
 
-import benefitContracts from './demo/assets/benefit-1-contracts.svg'
-import benefitGenerate from './demo/assets/benefit-2-generate.svg'
-import benefitFields from './demo/assets/benefit-3-fields.svg'
-import stepOpen from './demo/assets/step-1-open.svg'
-import stepFill from './demo/assets/step-2-fill.svg'
-import stepPdf from './demo/assets/step-3-pdf.svg'
+import benefitContracts from './demo/justejari/assets/benefit-1-contracts.svg'
+import benefitGenerate from './demo/justejari/assets/benefit-2-generate.svg'
+import benefitFields from './demo/justejari/assets/benefit-3-fields.svg'
+import stepOpen from './demo/justejari/assets/step-1-open.svg'
+import stepFill from './demo/justejari/assets/step-2-fill.svg'
+import stepPdf from './demo/justejari/assets/step-3-pdf.svg'
 
 /**
  * Candidate backdrops for the six media spots.

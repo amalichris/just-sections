@@ -33,5 +33,5 @@ export default function fixtureMedia(label, options = {}) {
     ` fill="#87867F">${label}</text></svg>`,
   ].join('')
 
-  return { src: `data:image/svg+xml,${encodeURIComponent(svg)}`, alt }
+  return { src: `data:image/svg+xml,${encodeURIComponent(svg)}`, alt, width, height }
 }

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 925" width="1480" height="925" role="img">
+  <title>Placeholder: instant answer UI fragment</title>
+  <rect width="1480" height="925" fill="#F5F4ED"/>
+  <g>
+    <rect x="64" y="64" width="1352" height="260" rx="40" fill="#3D3D3A"/>
+    <rect x="112" y="120" width="200" height="28" rx="14" fill="#B0AEA5"/>
+    <rect x="112" y="172" width="620" height="80" rx="16" fill="#FAF9F5"/>
+    <circle cx="1300" cy="180" r="10" fill="#CF4F3E"/>
+    <rect x="1080" y="164" width="188" height="28" rx="14" fill="#B0AEA5"/>
+  </g>
+  <g fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2">
+    <rect x="64" y="360" width="1352" height="120" rx="30"/>
+    <rect x="64" y="500" width="1352" height="120" rx="30"/>
+    <rect x="64" y="640" width="1352" height="120" rx="30"/>
+  </g>
+  <rect x="112" y="392" width="120" height="56" rx="28" fill="#E8E6DC"/>
+  <rect x="1140" y="404" width="228" height="32" rx="16" fill="#3D3D3A"/>
+  <rect x="112" y="532" width="120" height="56" rx="28" fill="#E8E6DC"/>
+  <rect x="1140" y="544" width="228" height="32" rx="16" fill="#3D3D3A"/>
+  <rect x="112" y="672" width="120" height="56" rx="28" fill="#E8E6DC"/>
+  <rect x="1140" y="684" width="228" height="32" rx="16" fill="#3D3D3A"/>
+</svg>

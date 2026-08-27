@@ -22,14 +22,14 @@
  * the button's visual entirely and carries its own `alt`, and the button
  * receives no hover/press recoloring so a fixed external asset is never
  * restyled.
- * @typedef {{ label: string, href: string, badge?: Media }} Cta
+ * @typedef {{ label: string, href: string, badge?: Media, target?: '_blank' }} Cta
  */
 
 /**
  * An image supplied by the page rather than the section. `alt` is required:
  * pass descriptive text for informative imagery and `''` for decorative
  * imagery so it is hidden from assistive technology.
- * @typedef {{ src: string, alt: string }} Media
+ * @typedef {{ src: string, alt: string, width?: number, height?: number }} Media
  */
 
 /**

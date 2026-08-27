@@ -141,6 +141,22 @@
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
+  white-space: pre-line;
+}
+
+.faq-default__answer a {
+  color: var(--just-color-sienna);
+  text-underline-offset: 3px;
+}
+
+.faq-default__answer a:hover {
+  color: var(--just-color-near-black);
+}
+
+.faq-default__answer a:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .faq-default__item--open .faq-default__answer {

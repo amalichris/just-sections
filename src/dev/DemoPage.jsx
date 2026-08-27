@@ -1,5 +1,4 @@
 import ProductPage from '../ProductPage'
-import demoConfig from './demo/page.config'
 
 /**
  * A whole page, rendered the way a consumer renders one.
@@ -16,11 +15,14 @@ import demoConfig from './demo/page.config'
  * with a real one and a photograph. Refining a section against production-like
  * copy and imagery catches what neither the fixtures nor the build will.
  *
- * `demo/` holds that content — a snapshot of JustEjari's page config and its
- * assets. It is dev-only: `src/dev/` is excluded from the published package, so
- * the library stays product-agnostic and ships no imagery. Nothing here is a
- * source of truth; the live page lives in that product's own `web/` department.
+ * `demo/<product>/` holds that content — a snapshot of a real page config and
+ * its assets, one per product currently building against this library. It is
+ * dev-only: `src/dev/` is excluded from the published package, so the library
+ * stays product-agnostic and ships no imagery. Nothing here is a source of
+ * truth; each product's live page lives in its own `web/` department.
+ *
+ * @param {{ config: object }} props
  */
-export default function DemoPage() {
-  return <ProductPage config={demoConfig} />
+export default function DemoPage({ config }) {
+  return <ProductPage config={config} />
 }

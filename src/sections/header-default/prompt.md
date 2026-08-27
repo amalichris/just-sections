@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.7`
+- **Revision:** `0.8`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -25,6 +25,7 @@ Build the fixed landing header described in `plan.md`.
 - Apply the approved marketing type scale: 20/24px wordmark and 16px header controls.
 - Preserve 44px targets, focusBlue focus treatment, press scale, and reduced-motion behavior.
 - When `cta.badge` is supplied, render that image (44px height, auto width) in place of the label and strip the pill chrome — no background, border, backdrop-filter, or hover/scroll recoloring — at every header state. Keep focusBlue outline and the 0.97 press scale.
+- When `cta.target` is `_blank`, pass it through to the link and pair it with `rel="noreferrer noopener"`.
 - In the scrolled glass-pill state, give a badge CTA 14px extra right margin (the difference between the nav's 6px padding and the wordmark's 20px left inset) so it doesn't sit flush against the pill edge the way a self-padded text pill wouldn't.
 
 ## Verify and synchronize

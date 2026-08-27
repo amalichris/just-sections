@@ -43,16 +43,18 @@ npm run dev
 | Route | What it is |
 | ----- | ---------- |
 | `/gallery` | Every registered section against its fixtures, at 375 / 430 / 768 / 1024 / 1440 |
-| `/` | A full demo page, rendered the way a consumer renders one |
+| `/` | JustEjari's full demo page, rendered the way a consumer renders one |
+| `/demo/justconvert` | JustConvert's full demo page, same purpose |
 
-The gallery checks sections in isolation; `/` checks what `ProductPage` does around them —
-landmark slots, section order, and the spacing declared on adjacent-sibling pairs.
+The gallery checks sections in isolation; the demo pages check what `ProductPage` does around
+them — landmark slots, section order, and the spacing declared on adjacent-sibling pairs.
 
-The demo page runs on real content: `src/dev/demo/` holds a snapshot of JustEjari's page
-config and its imagery. That is deliberate. Fixtures are written to exercise a prop contract,
-so they run short and generic — a hero looks fine with a six-word headline and a grey
-rectangle, and quite different with a real one and a photograph. Refining a section against
-production-like copy catches what neither the fixtures nor the build will.
+The demo pages run on real content: `src/dev/demo/<product>/` holds a snapshot of that
+product's page config and its imagery, one per product currently building against this
+library. That is deliberate. Fixtures are written to exercise a prop contract, so they run
+short and generic — a hero looks fine with a six-word headline and a grey rectangle, and quite
+different with a real one and a photograph. Refining a section against production-like copy
+catches what neither the fixtures nor the build will.
 
 It is dev-only. `src/dev/` is excluded from the published package, so the **library itself
 ships no imagery and no product content** — `fixtures.js` uses inline placeholders generated
@@ -90,8 +92,8 @@ src/
     tokens.css            # --just-* design tokens, nothing else
     reset.css             # Global reset — standalone sites only
     fonts.css             # Outfit + Inter
-  dev/                    # Gallery + demo page. Not published
-    demo/                 # Snapshot of a real page config + its assets
+  dev/                    # Gallery + demo pages. Not published
+    demo/                 # One folder per product: snapshot of its page config + assets
   main.jsx, App.jsx       # Dev harness entry. Not published
 docs/
   learnings.md            # Durable, non-obvious insights

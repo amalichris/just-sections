@@ -85,7 +85,14 @@ export default function HeroDefault({ title, subtitle, cta, background, media, i
   return (
     <section ref={heroRef} id={id} className="hero-default" aria-labelledby={titleId}>
       <div className="hero-default__backdrop" aria-hidden="true">
-        {background ? <img src={background.src} alt={background.alt} /> : null}
+        {background ? (
+          <img
+            src={background.src}
+            alt={background.alt}
+            width={background.width}
+            height={background.height}
+          />
+        ) : null}
         <div className="hero-default__glass" />
       </div>
 
@@ -96,11 +103,33 @@ export default function HeroDefault({ title, subtitle, cta, background, media, i
           <a
             className={`hero-default__cta${cta.badge ? ' hero-default__cta--badge' : ''}`}
             href={cta.href}
+            target={cta.target}
+            rel={cta.target === '_blank' ? 'noreferrer noopener' : undefined}
           >
-            {cta.badge ? <img src={cta.badge.src} alt={cta.badge.alt} /> : cta.label}
+            {cta.badge ? (
+              <img
+                src={cta.badge.src}
+                alt={cta.badge.alt}
+                width={cta.badge.width}
+                height={cta.badge.height}
+              />
+            ) : (
+              cta.label
+            )}
           </a>
         ) : null}
-        {media ? <img className="hero-default__device" src={media.src} alt={media.alt} /> : null}
+        {media ? (
+          <img
+            className="hero-default__device"
+            src={media.src}
+            alt={media.alt}
+            width={media.width}
+            height={media.height}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        ) : null}
       </div>
     </section>
   )

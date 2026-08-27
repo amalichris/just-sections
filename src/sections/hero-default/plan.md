@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.1`
+- **Revision:** `1.5`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -32,16 +32,16 @@ The optional CTA reuses `pricing-banner-default`'s Sienna Brand Pill treatment e
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
 - `subtitle`: supporting copy below the headline.
-- `cta`: `Cta` — `{ label, href, badge? }`. Renders a single Sienna Brand Pill action directly below the subtitle. When `cta.badge` (a `Media`) is supplied, the hero renders that image in place of the pill — see § Just design-system translation. Omitted, the hero has no CTA, as JustEjari's composition uses.
-- `background`: `Media` — `{ src, alt }` for the full-bleed artwork beneath the warm glass treatment. Omitted, the hero keeps its parchment backdrop. Decorative artwork passes `alt: ''`.
-- `media`: `Media` for the product image following the copy in normal flow.
+- `cta`: `Cta` — `{ label, href, badge?, target? }`. Renders a single Sienna Brand Pill action directly below the subtitle. When `cta.badge` (a `Media`) is supplied, the hero renders that image in place of the pill — see § Just design-system translation. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`. Omitted, the hero has no CTA, as JustEjari's composition uses.
+- `background`: `Media` — `{ src, alt, width?, height? }` for the full-bleed artwork beneath the warm glass treatment. Omitted, the hero keeps its parchment backdrop. Decorative artwork passes `alt: ''`.
+- `media`: `Media` for the product image following the copy in normal flow. Supply intrinsic `width` and `height` when available so the browser can reserve its aspect ratio before the image loads; the hero image is eagerly fetched with high priority because it is the likely LCP element.
 - `id`: section id, defaults to `top`.
 
 Both images are supplied by the page, so the section carries no product-specific asset or alternative text. The two approved JustEjari assets remain in this dossier as the initial composition's source. There is no eyebrow, navigation, or layout variant, and never more than one CTA.
 
 ## Behavior and responsive design
 
-The artwork field is exactly one viewport high: `100dvh` on desktop/tablet and `100svh` on mobile. The hero and its content use that height as a minimum rather than a fixed height, so copy wrapping and the configured phone determine any additional flow height. The phone is a normal flex item directly after the subtitle, with a 64px desktop/tablet gap or 48px mobile gap; its width is `clamp(360px, 42vw, 420px)` at tablet widths (768–1023px), `clamp(320px, 24vw, 340px)` on desktop, and `min(calc(100% - 40px), 360px)` on mobile.
+The artwork field is exactly one viewport high: `100dvh` on desktop/tablet and `100svh` on mobile. The hero and its content use that height as a minimum rather than a fixed height, so copy wrapping and the configured phone determine any additional flow height. The phone is a normal flex item directly after the subtitle, with a 64px desktop/tablet gap and a 24px mobile gap; its width is `clamp(540px, 72vw, 640px)` at tablet widths (768–1023px), `clamp(480px, 40vw, 600px)` on desktop, and `min(calc(100% - 40px), 360px)` on mobile.
 
 When the phone extends below the artwork field, the hero grows intrinsically until its untransformed media box is contained. The next composed section therefore begins after the phone and needs only its standard section padding—no fixed reserve, viewport formula, JavaScript measurement, or knowledge of the hero. Parallax transforms do not participate in layout; because the phone only moves upward, the untransformed flow box remains the safe maximum extent.
 
@@ -63,12 +63,22 @@ The background image is decorative and has empty alternative text. The phone moc
 - [x] Requires only documented title; subtitle, cta, background, and media are all optional.
 - [x] Has no eyebrow and never renders more than one CTA.
 - [x] A `cta.badge` renders as an unstyled image link with no pill chrome or hover recoloring.
+- [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
+
+**Revision 1.2:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
 - [x] Keeps the artwork at one viewport height while the hero grows intrinsically to contain its configured phone.
 - [x] Keeps the following section clear without fixed reserves, runtime measurement, or cross-section coupling.
 - [x] Keeps parallax decorative, bounded, and limited to backdrop/phone layers at 768px and above.
 - [x] Leaves mobile, reduced-motion, copy, header, layout, and native scrolling unchanged.
 - [x] Uses documented alternative text and composition clearance.
+- [x] Emits supplied intrinsic image dimensions and marks the in-flow device image eager/high-priority for LCP discovery.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
+
+**Revision 1.3:** added optional intrinsic media dimensions and eager/high-priority loading for the in-flow device image so page-supplied hero media can reserve space and receive LCP priority.
+
+**Revision 1.4:** enlarged the device presentation at tablet and desktop widths and removed the mobile device's additional 48px top gap at the user's direction.
+
+**Revision 1.5:** restored a 24px mobile gap between the supporting copy and device media at the user's direction.
 
 ## Implementation notes
 

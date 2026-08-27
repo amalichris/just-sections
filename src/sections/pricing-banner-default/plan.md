@@ -1,7 +1,7 @@
 # Pricing banner default plan
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -28,7 +28,7 @@ The approved Marketing CTA Banner extension defines the full-width `darkSurface`
 **Required.** Missing either of these renders nothing and reports the omission in development.
 
 - `title`: conversion heading string.
-- `cta`: `Cta` — `{ label, href, badge? }`. When `cta.badge` (a `Media`) is supplied, the banner renders that image in place of the pill.
+- `cta`: `Cta` — `{ label, href, badge?, target? }`. When `cta.badge` (a `Media`) is supplied, the banner renders that image in place of the pill. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`.
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
@@ -54,6 +54,9 @@ The section is labelled by its `h2`. Its CTA is a native link with a 44px minimu
 - [x] Uses a 44px CTA link with keyboard focus and reduced-motion handling.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 - [x] A `cta.badge` renders as an unstyled image link with no pill chrome or hover recoloring.
+- [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
+
+**Revision 0.6:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
 
 ## Implementation notes
 

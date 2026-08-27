@@ -8,6 +8,26 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.0 — 2026-08-27
+
+### Sections
+
+- `benefits-default`: benefit media accepts optional mobile, tablet, and desktop source URLs,
+  and item titles can request intentional line breaks with `/n`, `\\n`, or a newline. Existing
+  configs continue to use `media.src` as the fallback.
+- `faq-default`: answer strings preserve newlines and support safe root-relative, HTTPS, and
+  `mailto:` Markdown-style links that open in a new tab.
+- `header-default`, `hero-default`, `how-it-works-default`, `pricing-banner-default`: CTA
+  links accept optional `target: '_blank'` and emit safe opener isolation. Supplied media can
+  also carry intrinsic `width` and `height` values so the browser can reserve image space.
+
+### Internal
+
+- The dev harness now includes a JustConvert composition snapshot for reviewing the shared
+  sections against real copy and responsive product media.
+
+---
+
 ## v1.1.1 — 2026-08-26
 
 ### Sections

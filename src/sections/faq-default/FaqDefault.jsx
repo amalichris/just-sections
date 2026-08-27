@@ -3,11 +3,36 @@ import { Plus } from 'lucide-react'
 import requireProps from '../requireProps'
 import './FaqDefault.css'
 
+const ANSWER_LINK_PATTERN = /\[([^\]]+)\]\(((?:\/|https:\/\/|mailto:)[^)]+)\)/g
+
+function renderAnswer(answer) {
+  const content = []
+  let lastIndex = 0
+
+  for (const match of answer.matchAll(ANSWER_LINK_PATTERN)) {
+    const [source, label, href] = match
+    const start = match.index ?? 0
+
+    if (start > lastIndex) content.push(answer.slice(lastIndex, start))
+    content.push(
+      <a key={`answer-link-${start}`} href={href} target="_blank" rel="noreferrer">
+        {label}
+      </a>,
+    )
+    lastIndex = start + source.length
+  }
+
+  content.push(answer.slice(lastIndex))
+  return content
+}
+
 /**
  * @param {object} props
  * @param {string} props.title Required section heading.
  * @param {{ id: string, question: string, answer: string }[]} props.items
- *   Required accordion entries, one or more, each with a unique `id`.
+ *   Required accordion entries, one or more, each with a unique `id`. Newline
+ *   characters in an answer are rendered as line breaks. Markdown-style links
+ *   with root-relative, HTTPS, or mailto destinations are rendered as anchors.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {'parchment' | 'ivory'} [props.surface='parchment'] Section surface.
@@ -73,7 +98,7 @@ export default function FaqDefault({
                   aria-hidden={!isOpen}
                 >
                   <div>
-                    <p>{item.answer}</p>
+                    <p>{renderAnswer(item.answer)}</p>
                   </div>
                 </div>
               </article>

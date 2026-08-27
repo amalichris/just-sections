@@ -224,7 +224,12 @@ export default function HowItWorksDefault({
   )
 
   const callToAction = cta ? (
-    <a className="how-it-works-default__cta" href={cta.href}>
+    <a
+      className="how-it-works-default__cta"
+      href={cta.href}
+      target={cta.target}
+      rel={cta.target === '_blank' ? 'noreferrer noopener' : undefined}
+    >
       {cta.label}
     </a>
   ) : null
@@ -286,6 +291,8 @@ export default function HowItWorksDefault({
                       }
                       src={step.media.src}
                       alt={step.media.alt}
+                      width={step.media.width}
+                      height={step.media.height}
                       aria-hidden={index !== activeIndex}
                       loading={index === 0 ? 'eager' : 'lazy'}
                       decoding="async"
@@ -364,6 +371,8 @@ export default function HowItWorksDefault({
                           <img
                             src={step.media.src}
                             alt={step.media.alt}
+                            width={step.media.width}
+                            height={step.media.height}
                             loading="lazy"
                             decoding="async"
                           />

@@ -1,7 +1,7 @@
 # Default FAQ plan
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.5`
+- **Revision:** `0.8`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page FAQ; initial JustEjari preview fixture
 
@@ -26,7 +26,7 @@ The approved Marketing FAQ extension defines a flat parchment treatment by defau
 **Required.** Missing either of these renders nothing and reports the omission in development.
 
 - `title`: section heading string.
-- `items`: array of one or more unique `{ id, question, answer }` objects. An empty array counts as missing.
+- `items`: array of one or more unique `{ id, question, answer }` objects. An empty array counts as missing. Newline characters in `answer` render as line breaks; a blank line creates a visible gap within the answer. Markdown-style links with root-relative, HTTPS, or `mailto:` destinations render as anchors that open in a new tab.
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
@@ -38,7 +38,7 @@ The approved Marketing FAQ extension defines a flat parchment treatment by defau
 
 - `surface`: `parchment` or `ivory`; defaults to `parchment`.
 
-The 12px space above the title belongs to the eyebrow-to-title pair, so omitting the eyebrow leaves no residual margin. The component owns the current open item; it exposes no variants, initial-open state, CTA, search, categories, image, or rich-answer content.
+The 12px space above the title belongs to the eyebrow-to-title pair, so omitting the eyebrow leaves no residual margin. The component owns the current open item; it exposes no variants, initial-open state, CTA, search, categories, image, or rich-answer content. Answers remain plain strings; newline characters and the documented Markdown-style links are the only supported formatting. Answer links open in a new tab.
 
 ## Behavior and responsive design
 
@@ -58,6 +58,7 @@ Use a labelled `section` and `h2`, then an `h3` and native button for every ques
 - [x] Uses documented question/answer type, colors, dividers, focus, press, motion, and reduced-motion behavior.
 - [x] Centers the one-column introduction while keeping its 624px accordion content left-aligned and constrained.
 - [x] Uses the two-column layout at desktop widths, with left-aligned intro text and a 624px maximum accordion column.
+- [x] Preserves configured newline characters as plain-text answer line breaks and renders safe new-tab Markdown-style answer links without adding general rich-answer formatting.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 
 ## Implementation notes

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 925" width="1480" height="925" role="img">
+  <title>Placeholder: add currencies, cities, and units UI fragment</title>
+  <rect width="1480" height="925" fill="#F5F4ED"/>
+  <rect x="64" y="64" width="480" height="44" rx="22" fill="#87867F"/>
+  <g>
+    <rect x="64" y="148" width="1352" height="140" rx="32" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <circle cx="128" cy="218" r="28" fill="#CF4F3E"/>
+    <rect x="192" y="196" width="380" height="44" rx="22" fill="#3D3D3A"/>
+  </g>
+  <g>
+    <rect x="64" y="312" width="1352" height="140" rx="32" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <circle cx="128" cy="382" r="28" fill="#CF4F3E"/>
+    <rect x="192" y="360" width="440" height="44" rx="22" fill="#3D3D3A"/>
+  </g>
+  <g>
+    <rect x="64" y="476" width="1352" height="140" rx="32" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <circle cx="128" cy="546" r="28" fill="#E8E6DC" stroke="#D1CFC5" stroke-width="2"/>
+    <rect x="192" y="524" width="320" height="44" rx="22" fill="#87867F"/>
+  </g>
+  <g>
+    <rect x="64" y="640" width="1352" height="140" rx="32" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <circle cx="128" cy="710" r="28" fill="#E8E6DC" stroke="#D1CFC5" stroke-width="2"/>
+    <rect x="192" y="688" width="360" height="44" rx="22" fill="#87867F"/>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -67,7 +67,7 @@ Section rhythm matches the existing sections: 96px block padding (128px at ≥76
 
 - `eyebrow`: short label string.
 - `subtitle`: supporting copy string.
-- `cta`: shared `Cta` shape, rendered as a Sienna Brand Pill after the final step.
+- `cta`: shared `Cta` shape (`{ label, href, target? }`), rendered as a Sienna Brand Pill after the final step. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`.
 - `id`: section id, defaults to `how-it-works`.
 
 **Variants:** none. Desktop-sticky and mobile-accordion are two responsive expressions of one section, not a configurable choice — letting a page pick would let it pick the arrangement the PDF documents as failing on that device.
@@ -149,6 +149,9 @@ Text reflows at 320px; browser text zoom is not blocked.
 - [x] Below 1024px the accordion opens step 1 by default and keeps at most one step open.
 - [x] Reduced motion removes transitions and press scale while still switching step media.
 - [x] `aria-expanded`/`aria-controls`, labelled regions, native button activation, and 44px targets in place on the accordion.
+- [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
+
+**Revision 1.1:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
 - [x] Keyboard operation and focus visibility exercised by hand.
 - [x] Reviewed in a browser at 375px, 768px, 1024px, and 1440px, including the sticky hand-off at the 1024px boundary.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.

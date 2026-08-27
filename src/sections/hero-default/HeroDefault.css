@@ -130,7 +130,7 @@
   z-index: 1;
   display: block;
   flex: 0 0 auto;
-  width: clamp(320px, 24vw, 340px);
+  width: clamp(480px, 40vw, 600px);
   height: auto;
   margin: 64px auto 0;
   filter: drop-shadow(0 4px 24px rgb(0 0 0 / 5%));
@@ -150,7 +150,7 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-default__device {
-    width: clamp(360px, 42vw, 420px);
+    width: clamp(540px, 72vw, 640px);
   }
 }
 
@@ -189,7 +189,7 @@
 
   .hero-default__device {
     width: min(calc(100% - 40px), 360px);
-    margin-top: 48px;
+    margin-top: 24px;
   }
 }
 

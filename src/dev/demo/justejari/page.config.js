@@ -1,6 +1,6 @@
 // Every asset a section renders is page-owned content. Sections ship no imagery,
 // so swapping any of these never touches the section library.
-import heroBackground from "../../../docs/media-backgrounds/hero-dubai-2.webp";
+import heroBackground from "../../../../docs/media-backgrounds/hero-dubai-2.webp";
 import appMockup from "./assets/justejari-home-screen-mockup.png";
 
 // Placeholder UI fragments. Swap each one for a real product capture.

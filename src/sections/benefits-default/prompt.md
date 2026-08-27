@@ -1,7 +1,7 @@
 # Default benefits implementation prompt
 
 - **Section ID:** `benefits-default`
-- **Revision:** `0.6`
+- **Revision:** `1.1`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -19,8 +19,11 @@ Build the configurable benefits section described in `plan.md`.
 - Use the shared `Media` typedef from `../types.js` for item media. Add a `proof` shape only if it is genuinely reusable; otherwise document it inline in this section's JSDoc.
 - Treat `mediaBackdrop` as an optional per-item enum: `chianti`, `sky`, or `cypress`. Omitted media keeps the tight `parchment` crop; a configured tone sits behind a 12% inset, contained image. Do not add glass, gradient, texture, or a new card surface.
 - Build the grid with CSS Grid: three columns × two rows at ≥1024px with `items[0]` spanning columns 1–2 and both rows; two columns at 768–1023px with the anchor spanning both; one column below 768px.
+- Keep mobile, tablet, and desktop secondary media frames at exactly `16:10`. On desktop, let the anchor media use fluid height to fill its two-row card and keep the copy near the card bottom; this is the documented desktop-anchor exception.
+- Support optional `mediaSources.mobile`, `mediaSources.tablet`, and `mediaSources.desktop` URLs using `<picture>` media queries for art-directed interface zooms. Use `media.src` as the fallback and `media.alt` for the image's accessible name; each supplied source must represent the same benefit in a 16:10 composition.
 - Cards are non-interactive `article` elements: Ring elevation, 20pt radius, `ivory`. No hover, press scale, focus ring, transition, or drop shadow.
 - Render the proof line unconditionally when supplied, as `blockquote` + `cite` beneath a `borderCream` rule.
+- Render `/n`, escaped-newline, and newline separators in benefit card titles as visible line breaks; trim only the whitespace introduced around the separator.
 - Do not add a CTA, icons, variants, a carousel, animation, or dependencies.
 - Register the section in `src/sections/registry.js` and cover it in `fixtures.js`, keeping the header nav label and `targetId` in sync with any page that composes it under id `benefits`.
 - Supply non-production preview copy and placeholder media only for visual verification. This library ships no imagery: fixtures use `src/sections/fixtureMedia.js`, and a consuming page supplies real assets from its own department.

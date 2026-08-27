@@ -1,7 +1,7 @@
 # Default FAQ implementation prompt
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.5`
+- **Revision:** `0.8`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -18,6 +18,7 @@ Build the configurable FAQ section described in `plan.md`.
 - Require title and a non-empty item list; keep open-item state internal.
 - Treat eyebrow and subtitle as optional and render each only when supplied. Declare the spacing above the title on the eyebrow-to-title pair so an omitted eyebrow leaves no residual margin.
 - Use the approved Marketing FAQ pattern: flat configurable parchment/ivory surface (default parchment), typography, divider, Lucide Plus, native semantic controls, and motion behavior. Center the one-column introduction and constrain both it and the left-aligned accordion to 624px; restore left-aligned introduction text in the desktop split.
+- Preserve newline characters in answer strings as visible line breaks. Render only Markdown-style links with root-relative, HTTPS, or `mailto:` destinations, opening them in new tabs; keep answers otherwise plain text and do not add general rich-answer formatting.
 - Do not add a CTA, search, categories, assets, rich-answer formatting, variants, or dependencies.
 - Add only non-production sample content to the JustEjari preview for responsive visual verification.
 

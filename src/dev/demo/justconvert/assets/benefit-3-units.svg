@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 925" width="1480" height="925" role="img">
+  <title>Placeholder: unit converter UI fragment</title>
+  <rect width="1480" height="925" fill="#F5F4ED"/>
+  <g>
+    <rect x="64" y="64" width="320" height="64" rx="32" fill="#3D3D3A"/>
+    <rect x="404" y="64" width="240" height="64" rx="32" fill="#E8E6DC"/>
+    <rect x="664" y="64" width="240" height="64" rx="32" fill="#E8E6DC"/>
+  </g>
+  <g>
+    <rect x="64" y="180" width="1352" height="180" rx="36" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <rect x="112" y="228" width="220" height="28" rx="14" fill="#87867F"/>
+    <rect x="112" y="272" width="680" height="52" rx="16" fill="#3D3D3A"/>
+  </g>
+  <g>
+    <rect x="672" y="392" width="136" height="136" rx="68" fill="#CF4F3E"/>
+  </g>
+  <g>
+    <rect x="64" y="560" width="1352" height="180" rx="36" fill="#FAF9F5" stroke="#D1CFC5" stroke-width="2"/>
+    <rect x="112" y="608" width="220" height="28" rx="14" fill="#87867F"/>
+    <rect x="112" y="652" width="500" height="52" rx="16" fill="#3D3D3A"/>
+  </g>
+</svg>

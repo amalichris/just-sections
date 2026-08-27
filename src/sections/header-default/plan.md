@@ -1,7 +1,7 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.7`
+- **Revision:** `0.8`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -28,7 +28,7 @@ The header follows the approved Marketing Landing Typography extension: 20px wor
 **Required.** Missing either of these renders nothing and reports the omission in development.
 
 - `brand`: `Brand` — `{ label, href }`. Supplies the wordmark text and its link target, so the header carries no product-specific copy.
-- `cta`: `Cta` — `{ label, href, badge? }`. When `cta.badge` (a `Media`) is supplied, the header renders that image in place of the pill — this is the documented exception for a fixed external asset such as Apple's official App Store badge (see § Just design-system translation). `label` still supplies the accessible name when no badge is given.
+- `cta`: `Cta` — `{ label, href, badge?, target? }`. When `cta.badge` (a `Media`) is supplied, the header renders that image in place of the pill — this is the documented exception for a fixed external asset such as Apple's official App Store badge (see § Just design-system translation). `label` still supplies the accessible name when no badge is given. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`.
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
@@ -53,6 +53,9 @@ Use semantic `header`, `nav`, and list markup. Every link is at least 44px high.
 - [x] Supports stable desktop/tablet pill morph, mobile glass-rail morph without flashing, fragment navigation, keyboard focus, and reduced motion.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 - [x] A `cta.badge` renders as an unstyled image link at every header state (resting, hover, scrolled, mobile) with no pill chrome or recoloring.
+- [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
+
+**Revision 0.8:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
 - [x] In the scrolled glass-pill state, a badge CTA sits as far from the pill's right edge as the wordmark sits from its left edge.
 
 ## Implementation notes
