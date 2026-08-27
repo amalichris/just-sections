@@ -6,16 +6,10 @@ import heroImage from './assets/hero-image.webp'
 import heroBackground from './assets/hero-bg-airplane-window-warm.webp'
 import appStoreBadge from './assets/appstore-badge.svg'
 
-// Responsive UI fragments: the main benefit has all three art-directed
-// viewport crops; each secondary reuses its mobile crop at tablet width because
-// no tablet-specific source was supplied.
-import benefitCurrencyDesktop from './assets/main-desktop.webp'
-import benefitCurrencyMobile from './assets/main-mobile.webp'
-import benefitCurrencyTablet from './assets/main-tablet.webp'
-import benefitTimeDesktop from './assets/secondary-1-desktop.webp'
-import benefitTimeMobile from './assets/secondary-1-mobile.webp'
-import benefitUnitsDesktop from './assets/secondary-2-desktop.webp'
-import benefitUnitsMobile from './assets/secondary-2-mobile.webp'
+// Process-story media, supplied by the dev-only JustConvert snapshot.
+import currencyMedia from './assets/currency-media.webp'
+import worldClockMedia from './assets/world-clock-media.webp'
+import allConvertersMedia from './assets/all-converters-media.webp'
 import { PRODUCT_NAME, APP_STORE_URL, APP_STORE_BADGE_ALT } from './chrome'
 
 const appStoreCta = {
@@ -55,30 +49,27 @@ export default {
       },
     },
     {
-      type: 'benefits-default',
+      type: 'how-it-works-default',
       id: 'app-features',
       props: {
         eyebrow: '',
         title: 'Everything you need to convert.',
         subtitle:
           '',
-        items: [
+        stepNumberStyle: 'hidden',
+        steps: [
           {
             id: 'currency',
             title: 'Currency conversion /n 120 currencies. One amount, all your currencies.',
             description:
               'Add the currencies you use daily and see every conversion at once. Rates refresh daily and stay available offline.',
             media: {
-              src: benefitCurrencyDesktop,
+              src: currencyMedia,
               alt: 'JustConvert currency conversion interface',
-              width: 2085,
-              height: 1935,
+              width: 1080,
+              height: 1440,
             },
-            mediaSources: {
-              mobile: benefitCurrencyMobile,
-              tablet: benefitCurrencyTablet,
-              desktop: benefitCurrencyDesktop,
-            },
+            mediaBackdrop: 'chianti',
           },
           {
             id: 'time',
@@ -86,33 +77,26 @@ export default {
             description:
               'Add the cities that matter to you, compare local times, and move through the day to find the right time across time zones.',
             media: {
-              src: benefitTimeDesktop,
+              src: worldClockMedia,
               alt: 'JustConvert world time interface',
-              width: 951,
-              height: 594,
+              width: 1080,
+              height: 1440,
             },
-            mediaSources: {
-              mobile: benefitTimeMobile,
-              tablet: benefitTimeMobile,
-              desktop: benefitTimeDesktop,
-            },
+            mediaBackdrop: 'sky',
           },
           {
             id: 'units',
-            title: "Everyday units /n The conversions you actually use.",
+            title: 'Everyday units /n The conversions you actually use.',
             description:
               'Convert weight, distance, temperature, area, and speed - instantly and entirely on-device.',
             media: {
-              src: benefitUnitsDesktop,
+              src: allConvertersMedia,
               alt: 'JustConvert everyday units interface',
-              width: 951,
-              height: 594,
+              width: 1080,
+              height: 1440,
             },
-            mediaSources: {
-              mobile: benefitUnitsMobile,
-              tablet: benefitUnitsMobile,
-              desktop: benefitUnitsDesktop,
-            },
+            mediaBackdrop: 'cypress',
+            mediaVerticalAlignment: 'top',
           },
         ],
       },

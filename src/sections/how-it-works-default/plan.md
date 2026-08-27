@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.1`
+- **Revision:** `1.10`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -18,7 +18,7 @@ Remove the "how much work is this going to be for me?" objection by showing the 
 
 - **Desktop scroll-paced storytelling:** the visitor advances the story with the scroll they were already doing — no clicks, no navigation away (PDF, "Sticky Split-Screen / Scroll-Storytelling"). Taken further than the source: rather than scrolling text past a pinned panel, the whole composition pins and only the current step changes, so the reader never chases moving copy.
 - **Mobile progressive disclosure:** an accordion where only step 1 is open, each step's media inline beneath its text, with tap targets sized for a thumb. The PDF is explicit that scroll-storytelling *fails* on mobile — erratic scroll speeds make it stutter and it hijacks touch — and that is the reason for the split behavior, not a shortcut.
-- **Numbered, sequential framing** with short outcome-shaped step copy ("Connect your accounts in a single click"), not instructions.
+- **Sequential framing** with short outcome-shaped step copy ("Connect your accounts in a single click"), not instructions. Derived number labels remain available where they aid wayfinding, but a product may omit them when the copy already reads as a set of capabilities.
 
 **Adapt:**
 
@@ -42,11 +42,11 @@ The section is governed by the approved **Marketing Process Story** landing exte
 | Eyebrow | Inter 12px w500, 1.60, uppercase, 0.12px tracking | `sienna` | Matches the Marketing FAQ eyebrow |
 | Title | Outfit 500, 1.10; 36/40/48/64px at 375/430/768/1440px | `nearBlack` | Section heading |
 | Subtitle | Inter 400, 1.60; 16/16/18/20px at 375/430/768/1440px | `oliveGray` | Supporting section copy |
-| Step number | Inter 12px w500, 1.60, uppercase, 0.12px tracking | `stoneGray`; `sienna` when active | `01`, `02`, `03` |
+| Step number | Inter 12px w500, 1.60, uppercase, 0.12px tracking | `stoneGray`; `sienna` when active | Optional derived `01`, `02`, `03` labels. The desktop rail remains when labels are hidden. |
 | Step title | Outfit 20px w500, 1.20 | `nearBlack` | Card Headline |
 | Step description | Inter 16px w400, 1.60 | `oliveGray` | Body Standard |
 | Progress rail (≥1024px) | 2px wide track + 2px fill | Track `borderCream`, fill `sienna` | Left of the step column; the only chromatic accent in the section body. Marks the current step only and cross-fades between segments. |
-| Media panel | — | `ivory`, Ring (`0 0 0 1px ringWarm`) | 20pt radius, 24px padding, `object-fit: contain` so portrait Mini App captures are not cropped |
+| Media panel | — | 8px `ivory` frame, Ring (`0 0 0 1px ringWarm`); optional inner `chianti` (`#8E2441`), `sky` (`#2E74B5`), or `cypress` (`#2D6B48`) backdrop | 20pt outer / 12pt inner radius. Screenshots are horizontally centred and bottom-aligned so the backdrop remains visible above and to both sides. |
 | CTA | Inter 16px w500, 44px height | `ivory` on `sienna` | Existing intrinsic Sienna Brand Pill |
 
 Mobile disclosure **reuses the approved Marketing FAQ accordion treatment verbatim** — `borderCream` row dividers, 24px Lucide `Plus` in a 44px hit area, `stoneGray` closed and rotated 45° when open, 200ms `cubic-bezier(0.32, 0.72, 0, 1)` on height and icon rotation, 200ms `ease-out` on opacity, 2px `focusBlue` keyboard outline, 0.97 press scale. The pattern is scoped in `design.md` as "a landing-only control pattern", which is what this is; reusing it beats inventing a second, near-identical control. One deliberate difference: **step 1 is open on first render**, because a process section with everything collapsed shows the visitor nothing.
@@ -60,8 +60,10 @@ Section rhythm matches the existing sections: 96px block padding (128px at ≥76
 **Required.** Missing either renders nothing and reports the omission in development.
 
 - `title`: section heading string.
-- `steps`: array of **three or four** `{ id, title, description, media }` objects with unique, non-empty ids, in order. Two steps is a sentence, not a process; five is the effort story this section exists to disprove.
+- `steps`: array of **three or four** `{ id, title, description, media }` objects with unique, non-empty ids, in order. Two steps is a sentence, not a process; five is the effort story this section exists to disprove. A title may contain `/n`, `\\n`, or newline characters to request a line break.
   - `media` is the shared `Media` shape and is required per step. Images only for v1 — a step with no visual is a step the visitor has to take on faith.
+  - `mediaBackdrop` is optional per step. Omit it for the default `ivory` panel, or choose `chianti`, `sky`, or `cypress` to stage a screenshot against the named page-supplied backdrop.
+  - `mediaVerticalAlignment` is optional per step. Omit it or use `bottom` to align the screenshot to the stage bottom; use `top` when the screenshot should meet the stage top. Top alignment preserves the capture’s contained dimensions and exposes the configured backdrop to its left, right, and below.
 
 **Optional.** Absence is the only signal; no `show`-style boolean.
 
@@ -70,9 +72,9 @@ Section rhythm matches the existing sections: 96px block padding (128px at ≥76
 - `cta`: shared `Cta` shape (`{ label, href, target? }`), rendered as a Sienna Brand Pill after the final step. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`.
 - `id`: section id, defaults to `how-it-works`.
 
-**Variants:** none. Desktop-sticky and mobile-accordion are two responsive expressions of one section, not a configurable choice — letting a page pick would let it pick the arrangement the PDF documents as failing on that device.
+**Variants:** `stepNumberStyle` is `visible` (default) or `hidden`. `visible` derives `01`, `02`, and so on from the step order; `hidden` removes the labels while retaining the desktop rail. `mediaBackdrop` on a step is `chianti`, `sky`, or `cypress`; omitted is the default `ivory` panel. `mediaVerticalAlignment` on a step is `bottom` (default) or `top`. Desktop-sticky and mobile-accordion are two responsive expressions of one section, not a configurable choice — letting a page pick would let it pick the arrangement the PDF documents as failing on that device.
 
-Step numbers are derived from array order, never supplied. Panel and accordion DOM ids derive from `useId()` plus the step `id`, so the section can appear twice on one page. No `className`, `style`, layout-ratio, or initial-step overrides.
+When visible, step numbers are derived from array order, never supplied. Panel and accordion DOM ids derive from `useId()` plus the step `id`, so the section can appear twice on one page. No `className`, `style`, layout-ratio, or initial-step overrides.
 
 **Deferred (not v1):** a `media.kind: 'image' | 'video'` extension for the short looping step videos the PDF recommends. There are no video assets yet, and `docs/learnings.md` records that video must be served from Bunny.net rather than Vercel — that hosting decision has to land before the shared `Media` shape commits to video.
 
@@ -96,7 +98,7 @@ The whole composition is held still and the reader's scroll changes one thing: w
 
 **The media frame takes its height from the step list.** Both columns stretch to the taller one, and the step images are positioned out of flow inside the frame — otherwise a tall portrait capture would size the grid row and drive the frame past the viewport. The frame therefore starts and ends level with the steps beside it, and the image fits inside with `object-fit: contain`.
 
-**All three descriptions are visible the whole time**, which is the point of the layout — the reader sees the shape of the whole process at a glance and watches their position move through it. Current position is carried by the `sienna` step number and a two-layer rail: a `borderCream` track running the full list, with the `sienna` fill on the current step only.
+**All three descriptions are visible the whole time**, which is the point of the layout — the reader sees the shape of the whole process at a glance and watches their position move through it. Current position is carried by the two-layer rail and, when labels are visible, the `sienna` step number: a `borderCream` track runs the full list, with the `sienna` fill on the current step only.
 
 Step text never dims. Dimming the other steps is the common treatment, but `design.md` defines no dim state, and with the whole list permanently on screen, dimming two thirds of it would work against the reason it is all shown at once.
 
@@ -112,7 +114,7 @@ The control is the approved Marketing FAQ accordion trigger treatment minus the 
 
 ### < 1024px — accordion
 
-The intro centres within a 624px measure. Steps become an accordion: full-width flat trigger rows carrying the step number and title, a 72px minimum row with a 44px icon hit area, and the description plus media revealed in the panel beneath. Step 1 is open on first render; opening a step closes the previously open one; activating the open step closes it. Media inside a panel uses `loading="lazy"` and reserves its space via intrinsic dimensions, so expanding a step does not shove the page.
+The intro centres within a 624px measure. Steps become an accordion: full-width flat trigger rows carrying the optional step number and title, a 72px minimum row with a 44px icon hit area, and the description plus media revealed in the panel beneath. Step 1 is open on first render; opening a step closes the previously open one; activating the open step closes it. Mobile and tablet media uses a 420px-tall stage wrapped in an 8px `ivory` frame with the warm ring and 20pt outer / 12pt inner radius; its screenshot is contained within 16px side and 44px top backdrop space, centred horizontally and aligned to the bottom. Media uses `loading="lazy"` and reserves its space before expansion, so opening a step does not shove the page.
 
 The optional CTA sits after the last step: intrinsic Sienna Brand Pill, left-aligned under the step column at ≥1024px, centred below 1024px.
 
@@ -149,6 +151,8 @@ Text reflows at 320px; browser text zoom is not blocked.
 - [x] Below 1024px the accordion opens step 1 by default and keeps at most one step open.
 - [x] Reduced motion removes transitions and press scale while still switching step media.
 - [x] `aria-expanded`/`aria-controls`, labelled regions, native button activation, and 44px targets in place on the accordion.
+- [x] Step titles render `/n`, `\\n`, and newline markers as line breaks; `stepNumberStyle: 'hidden'` removes number labels without removing the desktop rail.
+- [x] Optional per-step backdrops stage screenshots bottom-aligned with visible backdrop above and to either side at every breakpoint.
 - [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
 
 **Revision 1.1:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
@@ -157,6 +161,24 @@ Text reflows at 320px; browser text zoom is not blocked.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 
 ## Implementation notes
+
+**Revision 1.10:** corrected top alignment: keep the same contained image box as bottom-aligned media and move that box to the stage top. The backdrop therefore remains visible only to the left, right, and below the capture.
+
+**Revision 1.9:** corrected top alignment to preserve the same screenshot size as bottom-aligned media. The transparent canvas is shifted upward within the stage so the backdrop remains visible to the left, right, and below the capture.
+
+**Revision 1.8:** corrected top-aligned media placement. A top-aligned capture fills the stage with its transparent canvas so its visible screenshot begins at the intended top backdrop boundary rather than retaining the bottom-aligned inset.
+
+**Revision 1.7:** added the optional `mediaVerticalAlignment` step enum. Screenshots remain bottom-aligned by default; a `top` value keeps the capture at the top of its available stage.
+
+**Revision 1.6:** increased the media frame to the documented 20pt Card outer radius and 12pt Generous inner-stage radius, retaining the 8px `ivory` frame and warm ring.
+
+**Revision 1.5:** increased the outer media-frame radius from 12pt to 16pt while retaining the 8px `ivory` frame and warm ring.
+
+**Revision 1.4:** wrapped every media stage in an 8px `ivory` frame with the warm ring and 12pt outer radius. The screenshot top backdrop field is 44px at every viewport.
+
+**Revision 1.3:** added optional `mediaBackdrop` to Process Story steps. Mobile and tablet frames now reserve a 420px stage; desktop screenshots sit on the bottom of their copy-aligned panel. In every expression, 16px or 24px side space and 44px top space expose the configured backdrop.
+
+**Revision 1.2:** added title-line-break rendering and the `stepNumberStyle` variant. Number labels remain derived when visible; hiding them is a non-breaking configuration choice that leaves the desktop rail intact.
 
 Composed into `src/pages/justejari/page.config.js` under id `how-it-works`, replacing the `preview-placeholder` entry. `src/sections/preview-placeholder/`, its registry entry, and the `AGENTS.md` project-map line describing it were all removed once this section and `benefits-default` were both in place.
 

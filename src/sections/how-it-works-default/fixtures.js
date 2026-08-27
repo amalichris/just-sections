@@ -1,10 +1,12 @@
 import fixtureMedia from '../fixtureMedia'
 
-const step = (id, title, description) => ({
+const step = (id, title, description, mediaBackdrop, mediaVerticalAlignment) => ({
   id,
   title,
   description,
   media: fixtureMedia(title.split(' ').slice(0, 2).join(' '), { width: 640, height: 1000 }),
+  ...(mediaBackdrop ? { mediaBackdrop } : {}),
+  ...(mediaVerticalAlignment ? { mediaVerticalAlignment } : {}),
 })
 
 const THREE = [
@@ -57,6 +59,29 @@ export default [
     },
   },
   {
+    id: 'without-step-numbers',
+    label: 'Without step numbers',
+    note: 'The progress rail remains on desktop, but number labels are omitted at every viewport.',
+    props: {
+      title: 'Three steps, start to signature.',
+      stepNumberStyle: 'hidden',
+      steps: THREE,
+    },
+  },
+  {
+    id: 'media-backdrops',
+    label: 'Media backdrops',
+    note: 'Screenshots stay bottom-aligned by default; the final example opts into top alignment while each configured backdrop remains visible around the capture.',
+    props: {
+      title: 'Three steps, start to signature.',
+      steps: [
+        step('open', 'Open it inside Telegram', 'No new app, no separate account. It runs in the chat app you already have open.', 'chianti'),
+        step('fill', 'Fill in the details once', 'Property, parties, dates, and rent — short questions in plain language.', 'sky'),
+        step('pdf', 'Generate the PDF', 'Your contract is formatted and ready to send, print, or sign.', 'cypress', 'top'),
+      ],
+    },
+  },
+  {
     id: 'wrong-step-count',
     label: 'Wrong step count',
     note: 'Two steps. The section takes three or four, so this must render nothing and report it.',
@@ -64,6 +89,45 @@ export default [
     props: {
       title: 'Three steps, start to signature.',
       steps: THREE.slice(0, 2),
+    },
+  },
+  {
+    id: 'invalid-step-number-style',
+    label: 'Invalid step-number style',
+    note: 'Unsupported style. The section must render nothing and report it.',
+    expectsNothing: true,
+    props: {
+      title: 'Three steps, start to signature.',
+      stepNumberStyle: 'sometimes',
+      steps: THREE,
+    },
+  },
+  {
+    id: 'invalid-media-backdrop',
+    label: 'Invalid media backdrop',
+    note: 'Unsupported media backdrop. The section must render nothing and report it.',
+    expectsNothing: true,
+    props: {
+      title: 'Three steps, start to signature.',
+      steps: [
+        step('open', 'Open it inside Telegram', 'No new app, no separate account. It runs in the chat app you already have open.', 'red'),
+        THREE[1],
+        THREE[2],
+      ],
+    },
+  },
+  {
+    id: 'invalid-media-vertical-alignment',
+    label: 'Invalid media vertical alignment',
+    note: 'Unsupported media vertical alignment. The section must render nothing and report it.',
+    expectsNothing: true,
+    props: {
+      title: 'Three steps, start to signature.',
+      steps: [
+        step('open', 'Open it inside Telegram', 'No new app, no separate account. It runs in the chat app you already have open.', undefined, 'middle'),
+        THREE[1],
+        THREE[2],
+      ],
     },
   },
 ]

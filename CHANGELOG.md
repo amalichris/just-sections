@@ -8,6 +8,23 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.4.0 — 2026-08-27
+
+### Sections
+
+- `how-it-works-default`: titles may now request explicit line breaks; the optional
+  `stepNumberStyle: 'hidden'` variant omits derived number labels while preserving the desktop
+  rail. Steps may optionally select an `ivory`, `chianti`, `sky`, or `cypress` media backdrop
+  and choose bottom (default) or top media alignment. Existing configurations continue to
+  render unchanged.
+
+### Breaking
+
+### Internal
+
+- JustConvert demo snapshot now uses the Process Story composition and page-owned responsive
+  media frames. JustConvert is the rollout target; JustEjari remains explicitly deferred.
+
 ## v1.3.0 — 2026-08-27
 
 ### Sections

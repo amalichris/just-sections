@@ -117,6 +117,12 @@
   letter-spacing: -0.02em;
 }
 
+/* Without a number label, the title starts where the disclosure copy starts.
+   Keep the trailing inset so it never crowds the 44px icon target. */
+.how-it-works-default--without-step-numbers .how-it-works-default__step-title {
+  padding-left: 0;
+}
+
 .how-it-works-default__icon {
   display: grid;
   flex: 0 0 44px;
@@ -162,20 +168,56 @@
 }
 
 .how-it-works-default__inline-media {
-  display: grid;
+  position: relative;
+  block-size: 420px;
   margin: 16px 0 24px;
-  padding: 16px;
+  padding: 8px;
   border-radius: 20px;
   background: var(--just-color-ivory);
-  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
-  place-items: center;
+  /* The accordion disclosure clips during its height transition, so an
+     outward ring would lose its left and right edges. Keep the same ring
+     visually, but draw it inside the media frame. */
+  box-shadow: inset 0 0 0 1px var(--just-color-ring-warm);
 }
 
-.how-it-works-default__inline-media img {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  max-height: 420px;
+.how-it-works-default__inline-media-stage {
+  position: relative;
+  block-size: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--just-color-ivory);
+}
+
+.how-it-works-default__inline-media-stage img {
+  position: absolute;
+  inset: 44px 16px 0;
+  width: calc(100% - 32px);
+  height: calc(100% - 44px);
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.how-it-works-default__inline-media-stage
+  img.how-it-works-default__inline-media-image--top-aligned {
+  top: 0;
+  bottom: auto;
+  height: calc(100% - 44px);
+  object-position: center top;
+}
+
+.how-it-works-default__inline-media-stage.how-it-works-default__inline-media-stage--chianti,
+.how-it-works-default__panel-stage.how-it-works-default__panel-stage--chianti {
+  background: #8e2441;
+}
+
+.how-it-works-default__inline-media-stage.how-it-works-default__inline-media-stage--sky,
+.how-it-works-default__panel-stage.how-it-works-default__panel-stage--sky {
+  background: #2e74b5;
+}
+
+.how-it-works-default__inline-media-stage.how-it-works-default__inline-media-stage--cypress,
+.how-it-works-default__panel-stage.how-it-works-default__panel-stage--cypress {
+  background: #2d6b48;
 }
 
 .how-it-works-default__cta {
@@ -408,6 +450,10 @@
     letter-spacing: -0.02em;
   }
 
+  .how-it-works-default--without-step-numbers .how-it-works-default__step h3 {
+    margin-top: 0;
+  }
+
   .how-it-works-default__step h3 + .how-it-works-default__description {
     margin-top: 8px;
   }
@@ -415,24 +461,42 @@
   .how-it-works-default__panel {
     position: relative;
     min-block-size: 320px;
+    padding: 8px;
     border-radius: 20px;
     background: var(--just-color-ivory);
     box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+  }
+
+  .how-it-works-default__panel-stage {
+    position: relative;
+    block-size: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--just-color-ivory);
+    transition: background-color 200ms ease-out;
   }
 
   /* Taken out of flow so a tall portrait capture cannot size the row: the frame
      takes its height from the step list beside it and the image fits inside.
      Every step image occupies the same box, so the change is opacity plus a
      short rise — enough to give it a direction without moving the frame. */
-  .how-it-works-default__panel img {
+  .how-it-works-default__panel-stage img {
     position: absolute;
-    inset: 24px;
+    inset: 44px 24px 0;
     width: calc(100% - 48px);
-    height: calc(100% - 48px);
+    height: calc(100% - 44px);
     object-fit: contain;
+    object-position: center bottom;
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .how-it-works-default__panel-stage img.how-it-works-default__panel-image--top-aligned {
+    top: 0;
+    bottom: auto;
+    height: calc(100% - 44px);
+    object-position: center top;
   }
 
   .how-it-works-default__panel img.how-it-works-default__panel-image--visible {
@@ -466,7 +530,8 @@
   .how-it-works-default__step::before,
   .how-it-works-default__step::after,
   .how-it-works-default__step-content,
-  .how-it-works-default__panel img {
+  .how-it-works-default__panel-stage,
+  .how-it-works-default__panel-stage img {
     transition: none;
   }
 

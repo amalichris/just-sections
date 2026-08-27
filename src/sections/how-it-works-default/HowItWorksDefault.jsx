@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
 import { Plus } from 'lucide-react'
 import requireProps from '../requireProps'
 import './HowItWorksDefault.css'
@@ -6,6 +6,9 @@ import './HowItWorksDefault.css'
 const DESKTOP_QUERY = '(min-width: 1024px)'
 const MIN_STEP_COUNT = 3
 const MAX_STEP_COUNT = 4
+const STEP_NUMBER_STYLES = new Set(['visible', 'hidden'])
+const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress'])
+const MEDIA_VERTICAL_ALIGNMENTS = new Set(['top', 'bottom'])
 
 function isNonEmptyString(value) {
   return typeof value === 'string' && value.length > 0
@@ -38,7 +41,9 @@ function hasValidSteps(steps) {
       ids.has(step.id) ||
       !isNonEmptyString(step.title) ||
       !isNonEmptyString(step.description) ||
-      !hasValidMedia(step.media)
+      !hasValidMedia(step.media) ||
+      !hasValidMediaBackdrop(step.mediaBackdrop) ||
+      !hasValidMediaVerticalAlignment(step.mediaVerticalAlignment)
     ) {
       return false
     }
@@ -56,6 +61,29 @@ function hasValidCta(cta) {
       isNonEmptyString(cta.label) &&
       isNonEmptyString(cta.href))
   )
+}
+
+function hasValidStepNumberStyle(stepNumberStyle) {
+  return STEP_NUMBER_STYLES.has(stepNumberStyle)
+}
+
+function hasValidMediaBackdrop(mediaBackdrop) {
+  return mediaBackdrop === undefined || MEDIA_BACKDROPS.has(mediaBackdrop)
+}
+
+function hasValidMediaVerticalAlignment(mediaVerticalAlignment) {
+  return (
+    mediaVerticalAlignment === undefined || MEDIA_VERTICAL_ALIGNMENTS.has(mediaVerticalAlignment)
+  )
+}
+
+function renderTitle(title) {
+  return title.split(/\/n|\\n|\n/).map((line, index) => (
+    <Fragment key={`${index}-${line}`}>
+      {index > 0 ? <br /> : null}
+      {line.trim()}
+    </Fragment>
+  ))
 }
 
 /**
@@ -89,11 +117,14 @@ function useIsDesktop() {
  *
  * @param {object} props
  * @param {string} props.title Required section heading.
- * @param {{ id: string, title: string, description: string, media: Media }[]} props.steps
- *   Required ordered steps, three or four. Numbers derive from array order.
+ * @param {{ id: string, title: string, description: string, media: Media, mediaBackdrop?: 'chianti' | 'sky' | 'cypress', mediaVerticalAlignment?: 'top' | 'bottom' }[]} props.steps
+ *   Required ordered steps, three or four. Titles accept `/n`, `\\n`, or a
+ *   newline as an explicit line break.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {Cta} [props.cta] Call to action after the final step.
+ * @param {'visible' | 'hidden'} [props.stepNumberStyle='visible'] Whether to
+ *   show derived step numbers. The rail remains visible on desktop.
  * @param {string} [props.id] Section id, defaults to `how-it-works`.
  */
 export default function HowItWorksDefault({
@@ -102,10 +133,13 @@ export default function HowItWorksDefault({
   eyebrow,
   subtitle,
   cta,
+  stepNumberStyle = 'visible',
   id = 'how-it-works',
 }) {
   const stepsAreValid = hasValidSteps(steps)
   const ctaIsValid = hasValidCta(cta)
+  const stepNumberStyleIsValid = hasValidStepNumberStyle(stepNumberStyle)
+  const hasStepNumbers = stepNumberStyle === 'visible'
   const isDesktop = useIsDesktop()
   const firstStepId = stepsAreValid ? steps[0].id : null
   const [activeStepId, setActiveStepId] = useState(firstStepId)
@@ -206,6 +240,7 @@ export default function HowItWorksDefault({
       ...(cta === undefined
         ? {}
         : { 'cta.label and cta.href when cta is provided': ctaIsValid ? true : undefined }),
+      'stepNumberStyle must be visible or hidden': stepNumberStyleIsValid ? true : undefined,
     })
   )
     return null
@@ -214,6 +249,7 @@ export default function HowItWorksDefault({
     steps.findIndex((step) => step.id === activeStepId),
     0,
   )
+  const activeStep = steps[activeIndex]
 
   const intro = (
     <header className="how-it-works-default__intro">
@@ -240,7 +276,11 @@ export default function HowItWorksDefault({
 
   if (isDesktop) {
     return (
-      <section id={id} className="how-it-works-default" aria-labelledby={titleId}>
+      <section
+        id={id}
+        className={`how-it-works-default${hasStepNumbers ? '' : ' how-it-works-default--without-step-numbers'}`}
+        aria-labelledby={titleId}
+      >
         <div
           className="how-it-works-default__scroll-track"
           style={{ '--how-it-works-step-count': steps.length }}
@@ -262,7 +302,9 @@ export default function HowItWorksDefault({
                         }`}
                       >
                         <div className="how-it-works-default__step-content">
-                          <p className="how-it-works-default__number">{stepNumber(index)}</p>
+                          {hasStepNumbers ? (
+                            <p className="how-it-works-default__number">{stepNumber(index)}</p>
+                          ) : null}
                           <h3>
                             <button
                               type="button"
@@ -270,7 +312,7 @@ export default function HowItWorksDefault({
                               aria-current={index === activeIndex ? 'step' : undefined}
                               onClick={() => goToStep(step.id)}
                             >
-                              {step.title}
+                              {renderTitle(step.title)}
                             </button>
                           </h3>
                           <p className="how-it-works-default__description">{step.description}</p>
@@ -283,21 +325,34 @@ export default function HowItWorksDefault({
                 </div>
 
                 <div className="how-it-works-default__panel">
-                  {steps.map((step, index) => (
-                    <img
-                      key={step.id}
-                      className={
-                        index === activeIndex ? 'how-it-works-default__panel-image--visible' : ''
-                      }
-                      src={step.media.src}
-                      alt={step.media.alt}
-                      width={step.media.width}
-                      height={step.media.height}
-                      aria-hidden={index !== activeIndex}
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      decoding="async"
-                    />
-                  ))}
+                  <div
+                    className={`how-it-works-default__panel-stage${
+                      activeStep.mediaBackdrop
+                        ? ` how-it-works-default__panel-stage--${activeStep.mediaBackdrop}`
+                        : ''
+                    }`}
+                  >
+                    {steps.map((step, index) => (
+                      <img
+                        key={step.id}
+                        className={[
+                          index === activeIndex ? 'how-it-works-default__panel-image--visible' : '',
+                          step.mediaVerticalAlignment === 'top'
+                            ? 'how-it-works-default__panel-image--top-aligned'
+                            : '',
+                        ]
+                          .filter(Boolean)
+                          .join(' ')}
+                        src={step.media.src}
+                        alt={step.media.alt}
+                        width={step.media.width}
+                        height={step.media.height}
+                        aria-hidden={index !== activeIndex}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -322,7 +377,11 @@ export default function HowItWorksDefault({
   }
 
   return (
-    <section id={id} className="how-it-works-default" aria-labelledby={titleId}>
+    <section
+      id={id}
+      className={`how-it-works-default${hasStepNumbers ? '' : ' how-it-works-default--without-step-numbers'}`}
+      aria-labelledby={titleId}
+    >
       <div className="how-it-works-default__layout">
         {intro}
 
@@ -350,8 +409,10 @@ export default function HowItWorksDefault({
                         aria-controls={panelId}
                         onClick={() => toggleStep(step.id)}
                       >
-                        <span className="how-it-works-default__number">{stepNumber(index)}</span>
-                        <span className="how-it-works-default__step-title">{step.title}</span>
+                        {hasStepNumbers ? (
+                          <span className="how-it-works-default__number">{stepNumber(index)}</span>
+                        ) : null}
+                        <span className="how-it-works-default__step-title">{renderTitle(step.title)}</span>
                         <span className="how-it-works-default__icon" aria-hidden="true">
                           <Plus size={24} strokeWidth={1.75} />
                         </span>
@@ -368,14 +429,27 @@ export default function HowItWorksDefault({
                       <div>
                         <p className="how-it-works-default__description">{step.description}</p>
                         <div className="how-it-works-default__inline-media">
-                          <img
-                            src={step.media.src}
-                            alt={step.media.alt}
-                            width={step.media.width}
-                            height={step.media.height}
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          <div
+                            className={`how-it-works-default__inline-media-stage${
+                              step.mediaBackdrop
+                                ? ` how-it-works-default__inline-media-stage--${step.mediaBackdrop}`
+                                : ''
+                            }`}
+                          >
+                            <img
+                              className={
+                                step.mediaVerticalAlignment === 'top'
+                                  ? 'how-it-works-default__inline-media-image--top-aligned'
+                                  : undefined
+                              }
+                              src={step.media.src}
+                              alt={step.media.alt}
+                              width={step.media.width}
+                              height={step.media.height}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
