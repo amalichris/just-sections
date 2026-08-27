@@ -29,7 +29,7 @@
  * An image supplied by the page rather than the section. `alt` is required:
  * pass descriptive text for informative imagery and `''` for decorative
  * imagery so it is hidden from assistive technology.
- * @typedef {{ src: string, alt: string, width?: number, height?: number }} Media
+ * @typedef {{ src: string, alt: string, width?: number, height?: number, srcSet?: string, sizes?: string }} Media
  */
 
 /**

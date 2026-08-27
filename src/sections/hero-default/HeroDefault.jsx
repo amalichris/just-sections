@@ -88,6 +88,8 @@ export default function HeroDefault({ title, subtitle, cta, background, media, i
         {background ? (
           <img
             src={background.src}
+            srcSet={background.srcSet}
+            sizes={background.sizes}
             alt={background.alt}
             width={background.width}
             height={background.height}
@@ -122,6 +124,8 @@ export default function HeroDefault({ title, subtitle, cta, background, media, i
           <img
             className="hero-default__device"
             src={media.src}
+            srcSet={media.srcSet}
+            sizes={media.sizes}
             alt={media.alt}
             width={media.width}
             height={media.height}

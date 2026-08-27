@@ -1,7 +1,7 @@
 # Default hero implementation prompt
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.5`
+- **Revision:** `1.6`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -24,6 +24,7 @@ Build the default hero exactly as described in `plan.md`.
 - Give the transparent device mockup the approved Whisper elevation using a subtle silhouette shadow (`0 4px 24px` at 5% black); do not add a rectangular border around the transparent asset.
 - Keep the artwork at exactly one viewport height, but use that height only as the hero and content minimum. Place the device in normal flex flow directly after the subtitle, using a 64px desktop/tablet gap and a 24px mobile gap; use `clamp(540px, 72vw, 640px)` for the device at tablet widths (768–1023px), `clamp(480px, 40vw, 600px)` on desktop, and retain the documented mobile clamp; let the hero expand intrinsically until that media is contained.
 - Pass through optional `media.width` and `media.height` attributes for the background, CTA badge, and device image. The in-flow device image must use eager loading, `fetchPriority="high"`, and asynchronous decoding because it is the likely LCP element.
+- Forward optional `srcSet` and `sizes` from both `media` and `background` to their images. Keep `src` as fallback, retain intrinsic dimensions and device fetch priority, and do not add manual preloads.
 - Keep the following section independent: do not add fixed clearance, viewport formulas, JavaScript measurement, or adjacent-section selectors.
 - At 768px and above, when reduced motion is not requested, offset the backdrop downward at 10% of the hero's passed scroll distance (80px maximum) and the phone upward at 6% (56px maximum). Schedule the passive scroll update with `requestAnimationFrame`; do not move copy or header, change layout, pin, snap, smooth, or intercept scrolling.
 - Remove both offsets below 768px and under `prefers-reduced-motion`.

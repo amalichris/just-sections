@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.8`
+- **Revision:** `0.9`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -15,6 +15,7 @@
 Build the fixed landing header described in `plan.md`.
 
 - Keep the component and CSS in this folder.
+- Do not read `window` during rendering or state initialization. Start unscrolled on server and client; CSS owns mobile appearance, while the effect reads `matchMedia` for scroll thresholds.
 - Require `brand` and `cta`; do not add product copy defaults, a menu, or additional actions. The wordmark comes from `brand.label` — no product name is hardcoded.
 - Treat `navigation` as optional: omitted or empty, render no link list. The grid must keep the wordmark left and the CTA right without it.
 - Render standard fragment anchors from `targetId` values.

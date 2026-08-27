@@ -1,7 +1,7 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.8`
+- **Revision:** `0.9`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -38,6 +38,8 @@ The header follows the approved Marketing Landing Typography extension: 20px wor
 There are no variants and no production navigation, brand, or CTA defaults.
 
 ## Behavior and responsive design
+
+The header renders without browser globals and starts with the same unscrolled state on the server and client. CSS media queries own viewport appearance; the effect reads `matchMedia` only to choose the existing scroll thresholds.
 
 The header is fixed. On desktop/tablet it is capped at 1120px with 24–64px responsive gutters; at rest it is an unboxed row over the hero, with links centered between wordmark and CTA. Scrolling down to 64px morphs it into a floating, rounded-full glass pill; it returns to the unboxed state only at 32px or less, preventing flicker. Fragment links use document smooth scrolling and the global 96px header offset. Below 768px, the header has a 12px safe-area-aware top inset and 20px safe-area-aware side insets; links stay hidden and the unboxed wordmark/Sienna CTA row remains. At 16px scroll, a dedicated full-width ivory glass rail fades in behind it; at 4px or less it fades out. This rail is a stable header layer, separate from desktop pill styling, to prevent compositing flashes.
 

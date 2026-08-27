@@ -24,6 +24,19 @@ export default [
     },
   },
   {
+    id: 'responsive-media',
+    label: 'Responsive media',
+    note: 'Optional width-descriptor sources preserve the existing media layout and fallback.',
+    props: {
+      title: 'One app for currency, time, and units',
+      media: {
+        ...fixtureMedia('Device', { width: 720, height: 1440 }),
+        srcSet: `${fixtureMedia('Device', { width: 360, height: 720 }).src} 360w, ${fixtureMedia('Device', { width: 720, height: 1440 }).src} 720w`,
+        sizes: '(max-width: 767px) min(calc(100vw - 80px), 360px), (max-width: 1023px) clamp(540px, 72vw, 640px), clamp(480px, 40vw, 600px)',
+      },
+    },
+  },
+  {
     id: 'minimal',
     label: 'Minimal (required only)',
     note: 'Title alone. No subtitle, backdrop, or device — omitting them must leave no gaps.',

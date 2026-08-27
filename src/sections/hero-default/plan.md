@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.5`
+- **Revision:** `1.6`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -35,6 +35,7 @@ The optional CTA reuses `pricing-banner-default`'s Sienna Brand Pill treatment e
 - `cta`: `Cta` — `{ label, href, badge?, target? }`. Renders a single Sienna Brand Pill action directly below the subtitle. When `cta.badge` (a `Media`) is supplied, the hero renders that image in place of the pill — see § Just design-system translation. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`. Omitted, the hero has no CTA, as JustEjari's composition uses.
 - `background`: `Media` — `{ src, alt, width?, height? }` for the full-bleed artwork beneath the warm glass treatment. Omitted, the hero keeps its parchment backdrop. Decorative artwork passes `alt: ''`.
 - `media`: `Media` for the product image following the copy in normal flow. Supply intrinsic `width` and `height` when available so the browser can reserve its aspect ratio before the image loads; the hero image is eagerly fetched with high priority because it is the likely LCP element.
+- `media.srcSet` / `media.sizes`, and the same optional fields on `background`: native responsive image strings supplied by the page. Omitted, the original `src` behavior is unchanged. Width descriptors must match the actual image files and `sizes` must match the existing CSS layout.
 - `id`: section id, defaults to `top`.
 
 Both images are supplied by the page, so the section carries no product-specific asset or alternative text. The two approved JustEjari assets remain in this dossier as the initial composition's source. There is no eyebrow, navigation, or layout variant, and never more than one CTA.

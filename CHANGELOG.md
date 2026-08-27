@@ -8,6 +8,23 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.3.0 — 2026-08-27
+
+### Sections
+
+- `hero-default`: optional `media.srcSet` / `media.sizes` and the same fields on
+  `background` enable responsive image selection. Existing `src` configurations still work;
+  intrinsic dimensions and eager/high-priority device loading are unchanged.
+- `header-default`: server rendering no longer reads `window`. CSS still selects the mobile
+  presentation, and the existing scroll thresholds initialize after hydration.
+
+### Breaking
+
+### Internal
+
+- Hero and header dossiers synchronized; responsive-media gallery fixture added.
+- JustConvert is the rollout target. JustEjari stays on its existing pin, explicitly deferred.
+
 ## v1.2.6 — 2026-08-27
 
 ### Sections

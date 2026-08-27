@@ -14,7 +14,6 @@ import './HeaderDefault.css'
  */
 export default function HeaderDefault({ brand, cta, navigation, id }) {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches)
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 767px)')
@@ -24,7 +23,6 @@ export default function HeaderDefault({ brand, cta, navigation, id }) {
       const enterThreshold = mobile ? 16 : 64
       const exitThreshold = mobile ? 4 : 32
 
-      setIsMobile(mobile)
       setIsScrolled((wasScrolled) => {
         if (window.scrollY >= enterThreshold) return true
         if (window.scrollY <= exitThreshold) return false
@@ -48,7 +46,7 @@ export default function HeaderDefault({ brand, cta, navigation, id }) {
   return (
     <header
       id={id}
-      className={`header-default${isMobile ? ' header-default--mobile' : ''}${isScrolled ? ' header-default--scrolled' : ''}`}
+      className={`header-default${isScrolled ? ' header-default--scrolled' : ''}`}
     >
       <nav className="header-default__nav" aria-label="Primary navigation">
         <a className="header-default__wordmark" href={brand.href}>
