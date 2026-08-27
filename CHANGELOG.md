@@ -8,6 +8,18 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.4 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: the rounded table wrapper is now the sole horizontal scroll owner,
+  so the warm grid is clipped to one continuous 16px outer shape while wide tables remain
+  independently scrollable.
+
+### Breaking
+
+### Internal
+
 ## v1.2.3 — 2026-08-27
 
 ### Sections

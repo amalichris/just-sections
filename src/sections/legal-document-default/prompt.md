@@ -1,7 +1,7 @@
 # Legal document implementation prompt
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.3`
+- **Revision:** `1.4`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -29,8 +29,9 @@ Build the section exactly as described in `plan.md`.
 - Everything else is external — new tab, `rel="noreferrer noopener"`.
 - Do not add a `title` prop. All content, including the heading and version block, comes from
   the document.
-- Wrap tables so they scroll inside their own container. The page body must never scroll
-  horizontally.
+- Wrap tables so the rounded wrapper is the sole horizontal scroll owner. The page body must never
+  scroll horizontally, and the table must remain a real table so the wrapper clips one continuous
+  rounded surface.
 - Use the shared legal table treatment: a 16px radius on the outer scroll container with square
   cell corners, `warmSand` header cells, `ivory` body
   cells, 1px `borderWarm` grid lines, 14px Inter text, and 10px vertical / 12px horizontal cell

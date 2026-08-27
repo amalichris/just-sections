@@ -140,9 +140,10 @@
 }
 
 .legal-document-default__container table {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
+  display: table;
+  width: max-content;
+  min-width: 100%;
+  overflow: visible;
   border-collapse: collapse;
   font-size: 14px;
 }
