@@ -8,6 +8,19 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.1 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: legal-document tables now use the shared ivory surface, warm Ring
+  elevation, 16px radius, parchment header row, warm dividers, and the established responsive
+  table typography and cell spacing. The existing focusable horizontal-scroll behavior is
+  unchanged.
+
+### Breaking
+
+### Internal
+
 ## v1.2.0 — 2026-08-27
 
 ### Sections

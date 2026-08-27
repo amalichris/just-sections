@@ -138,9 +138,16 @@
 
 .legal-document-default__container table {
   width: 100%;
+  margin: 24px 0;
   border-collapse: collapse;
-  font-size: 14px;
-  line-height: 1.43;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+}
+
+.legal-document-default__container thead {
+  background: var(--just-color-parchment);
 }
 
 /* Without a floor the table compresses to the container instead of scrolling,
@@ -149,21 +156,30 @@
   min-width: 7rem;
 }
 
-.legal-document-default__container :is(th, td) {
-  border: 1px solid var(--just-color-border-cream);
-  padding: 10px 12px;
-  text-align: start;
+.legal-document-default__container th,
+.legal-document-default__container td {
+  padding: 14px 16px;
+  text-align: left;
   vertical-align: top;
+  border-bottom: 1px solid var(--just-color-border-warm);
 }
 
 .legal-document-default__container th {
-  font-weight: 500;
+  font-family: var(--just-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
   color: var(--just-color-near-black);
-  background: var(--just-color-warm-sand);
 }
 
 .legal-document-default__container td {
-  color: var(--just-color-olive-gray);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--just-color-dark-warm);
+}
+
+.legal-document-default__container tr:last-child td {
+  border-bottom: 0;
 }
 
 .legal-document-default__container :is(code, pre) {
@@ -175,6 +191,13 @@
   background: var(--just-color-warm-sand);
   border-radius: 4px;
   padding: 1px 5px;
+}
+
+@media (max-width: 767px) {
+  .legal-document-default__container th,
+  .legal-document-default__container td {
+    padding: 12px;
+  }
 }
 
 @media (min-width: 768px) {

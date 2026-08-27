@@ -1,7 +1,7 @@
 # Legal document implementation prompt
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -31,6 +31,9 @@ Build the section exactly as described in `plan.md`.
   the document.
 - Wrap tables so they scroll inside their own container. The page body must never scroll
   horizontally.
+- Use the shared legal table treatment: ivory background, warm Ring elevation, 16px radius,
+  parchment header row, warm divider, 14px Inter headers, 15px Inter body, and 14px desktop /
+  12px mobile cell padding.
 - Style the prose by targeting elements inside `.legal-document-default__container`. The section
   owns no markup class names beyond its container, because react-markdown produces the markup.
 

@@ -1,7 +1,7 @@
 # Legal document plan
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Status:** Implemented
 - **Products / variants:** JustEjari and JustConvert, both surfaces (`parchment` default, `ivory`)
 
@@ -43,11 +43,12 @@ and §4; tokens from `foundations.md` §2 and §3.
 | `h2` / `h3` / `h4`+ | Outfit 500 at 32 / 25 / 20px |
 | Body | Inter 400, 16px, 1.60, `oliveGray` |
 | Links | `sienna`, `nearBlack` on hover, 2px `focusBlue` focus ring |
-| Tables | 14px Inter, `borderCream` cell borders, `warmSand` header row |
+| Tables | Ivory surface with Ring elevation, 16px radius, parchment header row, warm divider, 14px Inter headers, 15px Inter body, 14px desktop / 12px mobile cell padding |
 | Page padding | 96px block on mobile, 128px from 768px; 20 / 24 / 64px inline |
 
-No exceptions or extensions proposed. Table styling is the first use of a GFM table in this
-library, but it composes existing tokens and introduces no new pattern.
+The table treatment is a shared legal-page pattern rather than a consumer override. It reuses the
+same ivory surface, warm ring, parchment surface, and warm divider language used by the public
+Just pages while keeping the section’s existing focusable horizontal-scroll wrapper.
 
 ## Public configuration
 
