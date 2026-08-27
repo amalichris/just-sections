@@ -8,6 +8,17 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.4.1 — 2026-08-27
+
+### Sections
+
+- `how-it-works-default`: the responsive desktop/mobile selection is now safe during server
+  rendering. Pages using the section no longer fail when the server has no `window` object.
+
+### Breaking
+
+### Internal
+
 ## v1.4.0 — 2026-08-27
 
 ### Sections

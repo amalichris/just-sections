@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.10`
+- **Revision:** `1.11`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -163,6 +163,8 @@ Text reflows at 320px; browser text zoom is not blocked.
 ## Implementation notes
 
 **Revision 1.10:** corrected top alignment: keep the same contained image box as bottom-aligned media and move that box to the stage top. The backdrop therefore remains visible only to the left, right, and below the capture.
+
+**Revision 1.11:** made responsive composition server-render safe. SSR starts with the accordion expression because no viewport exists on the server; the client selects the desktop sticky composition after hydration.
 
 **Revision 1.9:** corrected top alignment to preserve the same screenshot size as bottom-aligned media. The transparent canvas is shifted upward within the stage so the backdrop remains visible to the left, right, and below the capture.
 

@@ -94,7 +94,9 @@ function renderTitle(title) {
  * viewport ships the other's markup, duplicate headings, or duplicate images.
  */
 function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches)
+  // The viewport does not exist during SSR. Start with the server-safe accordion
+  // expression, then select the desktop composition after hydration.
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
     const query = window.matchMedia(DESKTOP_QUERY)

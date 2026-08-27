@@ -1,7 +1,7 @@
 # Default how-it-works implementation prompt
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.10`
+- **Revision:** `1.11`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -20,7 +20,7 @@ Build the configurable process section described in `plan.md`.
 - When `cta.target` is `_blank`, pass it through to the CTA link and pair it with `rel="noreferrer noopener"`.
 - When `stepNumberStyle` is `visible`, derive step numbers from array order; when it is `hidden`, omit only the labels and retain the desktop rail. Derive DOM ids from `useId()` plus each step's `id`.
 - Render `/n`, `\\n`, and newline markers in step titles as `<br>` elements; do not rewrite configured copy to work around line breaks.
-- Desktop: pin the whole composition with `position: sticky` inside a taller scroll track. Nothing inside the pinned area may move as the reader scrolls — the intro, every step description, and the media frame hold still, and only the current-step marking and the displayed image change.
+- Desktop: pin the whole composition with `position: sticky` inside a taller scroll track. Nothing inside the pinned area may move as the reader scrolls — the intro, every step description, and the media frame hold still, and only the current-step marking and the displayed image change. Keep responsive selection server-render safe: the server renders the accordion expression without reading `window`, then the client selects desktop after hydration.
 - Read scroll position from empty marker elements laid down the track, not from the content, which no longer moves. One `IntersectionObserver` with a centred `rootMargin` band, resolved by nearest-to-viewport-centre so entry order cannot decide it. No scroll listener, no scroll maths, no animation library — `motion` and `gsap` are installed but neither is warranted here.
 - Derive track length from `--how-it-works-step-scroll`; keep the trailing half-step plus half-viewport so the last step holds before the pin releases. That custom property is the only pacing knob — do not scatter magic viewport values.
 - Centre the composition in the pinned viewport as one content-sized block. Do not size the body to fill the leftover height — that strands the title and stretches the frame down the screen.
