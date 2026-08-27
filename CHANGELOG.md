@@ -8,6 +8,18 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.6 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: the rounded table wrapper now carries a continuous 1px `borderWarm`
+  perimeter around its corners, so the 16px-radius corners no longer read as bare where the
+  collapsed cell grid was clipped by the rounding. No page-config change.
+
+### Breaking
+
+### Internal
+
 ## v1.2.5 — 2026-08-27
 
 ### Sections

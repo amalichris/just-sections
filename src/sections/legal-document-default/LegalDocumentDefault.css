@@ -132,6 +132,12 @@
   overscroll-behavior-x: contain;
   margin-block-end: 16px;
   border-radius: 16px;
+  /* `border-collapse: collapse` draws the table's outer grid line on the edge
+     cells, which the 16px radius clips away near each corner and leaves the
+     corner bare. A `0 0 0 1px` ring on the wrapper follows the radius, so the
+     perimeter stays continuous around the curve. It matches the grid colour so
+     the straight edges read as one line, not an added elevation. */
+  box-shadow: 0 0 0 1px var(--just-color-border-warm);
 }
 
 .legal-document-default__table-wrap:focus-visible {
