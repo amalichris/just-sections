@@ -1,7 +1,7 @@
 # Legal document plan
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.4`
+- **Revision:** `1.5`
 - **Status:** Implemented
 - **Products / variants:** JustEjari and JustConvert, both surfaces (`parchment` default, `ivory`)
 
@@ -49,8 +49,8 @@ and §4; tokens from `foundations.md` §2 and §3.
 The table treatment is a shared legal-page pattern rather than a consumer override. It reuses the
 same warm grid, `warmSand` header, and `ivory` body language used by the public Just pages while
 keeping the section’s existing focusable horizontal-scroll wrapper. The wrapper is the sole scroll
-owner and uses the shared 16px section-container radius to clip the overall shape; individual
-cells remain square.
+owner and uses the shared 16px section-container radius to clip the overall shape; tables remain at
+the 680px measure when their content can shrink, and individual cells remain square.
 
 ## Public configuration
 

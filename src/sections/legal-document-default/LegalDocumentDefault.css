@@ -141,8 +141,7 @@
 
 .legal-document-default__container table {
   display: table;
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   overflow: visible;
   border-collapse: collapse;
   font-size: 14px;

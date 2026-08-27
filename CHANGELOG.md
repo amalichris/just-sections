@@ -8,13 +8,25 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.2.5 — 2026-08-27
+
+### Sections
+
+- `legal-document-default`: tables now stay at the 680px legal-document measure when their
+  content can shrink, while genuinely wide tables continue to scroll inside the rounded wrapper.
+
+### Breaking
+
+### Internal
+
 ## v1.2.4 — 2026-08-27
 
 ### Sections
 
 - `legal-document-default`: the rounded table wrapper is now the sole horizontal scroll owner,
   so the warm grid is clipped to one continuous 16px outer shape while wide tables remain
-  independently scrollable.
+  independently scrollable. Tables retain the legal document measure when their content can
+  shrink to fit.
 
 ### Breaking
 

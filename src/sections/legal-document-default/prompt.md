@@ -1,7 +1,7 @@
 # Legal document implementation prompt
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.4`
+- **Revision:** `1.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -31,7 +31,8 @@ Build the section exactly as described in `plan.md`.
   the document.
 - Wrap tables so the rounded wrapper is the sole horizontal scroll owner. The page body must never
   scroll horizontally, and the table must remain a real table so the wrapper clips one continuous
-  rounded surface.
+  rounded surface. Keep the table at `width: 100%` so normal three-column legal tables retain the
+  document measure; only genuinely wide content should overflow the wrapper.
 - Use the shared legal table treatment: a 16px radius on the outer scroll container with square
   cell corners, `warmSand` header cells, `ivory` body
   cells, 1px `borderWarm` grid lines, 14px Inter text, and 10px vertical / 12px horizontal cell
