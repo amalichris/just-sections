@@ -7,7 +7,7 @@ const DESKTOP_QUERY = '(min-width: 1024px)'
 const MIN_STEP_COUNT = 3
 const MAX_STEP_COUNT = 4
 const STEP_NUMBER_STYLES = new Set(['visible', 'hidden'])
-const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress'])
+const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress', 'sunflower'])
 const MEDIA_VERTICAL_ALIGNMENTS = new Set(['top', 'bottom'])
 
 function isNonEmptyString(value) {
@@ -119,7 +119,7 @@ function useIsDesktop() {
  *
  * @param {object} props
  * @param {string} props.title Required section heading.
- * @param {{ id: string, title: string, description: string, media: Media, mediaBackdrop?: 'chianti' | 'sky' | 'cypress', mediaVerticalAlignment?: 'top' | 'bottom' }[]} props.steps
+ * @param {{ id: string, title: string, description: string, media: Media, mediaBackdrop?: 'chianti' | 'sky' | 'cypress' | 'sunflower', mediaVerticalAlignment?: 'top' | 'bottom' }[]} props.steps
  *   Required ordered steps, three or four. Titles accept `/n`, `\\n`, or a
  *   newline as an explicit line break.
  * @param {string} [props.eyebrow] Uppercase label above the title.

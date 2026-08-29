@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.11`
+- **Revision:** `1.12`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -46,7 +46,7 @@ The section is governed by the approved **Marketing Process Story** landing exte
 | Step title | Outfit 20px w500, 1.20 | `nearBlack` | Card Headline |
 | Step description | Inter 16px w400, 1.60 | `oliveGray` | Body Standard |
 | Progress rail (≥1024px) | 2px wide track + 2px fill | Track `borderCream`, fill `sienna` | Left of the step column; the only chromatic accent in the section body. Marks the current step only and cross-fades between segments. |
-| Media panel | — | 8px `ivory` frame, Ring (`0 0 0 1px ringWarm`); optional inner `chianti` (`#8E2441`), `sky` (`#2E74B5`), or `cypress` (`#2D6B48`) backdrop | 20pt outer / 12pt inner radius. Screenshots are horizontally centred and bottom-aligned so the backdrop remains visible above and to both sides. |
+| Media panel | — | 8px `ivory` frame, Ring (`0 0 0 1px ringWarm`); optional inner `chianti` (`#8E2441`), `sky` (`#2E74B5`), `cypress` (`#2D6B48`), or `sunflower` (`#E8B314`) backdrop | 20pt outer / 12pt inner radius. Screenshots are horizontally centred and bottom-aligned so the backdrop remains visible above and to both sides. |
 | CTA | Inter 16px w500, 44px height | `ivory` on `sienna` | Existing intrinsic Sienna Brand Pill |
 
 Mobile disclosure **reuses the approved Marketing FAQ accordion treatment verbatim** — `borderCream` row dividers, 24px Lucide `Plus` in a 44px hit area, `stoneGray` closed and rotated 45° when open, 200ms `cubic-bezier(0.32, 0.72, 0, 1)` on height and icon rotation, 200ms `ease-out` on opacity, 2px `focusBlue` keyboard outline, 0.97 press scale. The pattern is scoped in `design.md` as "a landing-only control pattern", which is what this is; reusing it beats inventing a second, near-identical control. One deliberate difference: **step 1 is open on first render**, because a process section with everything collapsed shows the visitor nothing.
@@ -62,7 +62,7 @@ Section rhythm matches the existing sections: 96px block padding (128px at ≥76
 - `title`: section heading string.
 - `steps`: array of **three or four** `{ id, title, description, media }` objects with unique, non-empty ids, in order. Two steps is a sentence, not a process; five is the effort story this section exists to disprove. A title may contain `/n`, `\\n`, or newline characters to request a line break.
   - `media` is the shared `Media` shape and is required per step. Images only for v1 — a step with no visual is a step the visitor has to take on faith.
-  - `mediaBackdrop` is optional per step. Omit it for the default `ivory` panel, or choose `chianti`, `sky`, or `cypress` to stage a screenshot against the named page-supplied backdrop.
+  - `mediaBackdrop` is optional per step. Omit it for the default `ivory` panel, or choose `chianti`, `sky`, `cypress`, or `sunflower` to stage a screenshot against the named page-supplied backdrop.
   - `mediaVerticalAlignment` is optional per step. Omit it or use `bottom` to align the screenshot to the stage bottom; use `top` when the screenshot should meet the stage top. Top alignment preserves the capture’s contained dimensions and exposes the configured backdrop to its left, right, and below.
 
 **Optional.** Absence is the only signal; no `show`-style boolean.
@@ -72,7 +72,7 @@ Section rhythm matches the existing sections: 96px block padding (128px at ≥76
 - `cta`: shared `Cta` shape (`{ label, href, target? }`), rendered as a Sienna Brand Pill after the final step. When `target: '_blank'` is supplied, the link opens in a new tab with `rel="noreferrer noopener"`.
 - `id`: section id, defaults to `how-it-works`.
 
-**Variants:** `stepNumberStyle` is `visible` (default) or `hidden`. `visible` derives `01`, `02`, and so on from the step order; `hidden` removes the labels while retaining the desktop rail. `mediaBackdrop` on a step is `chianti`, `sky`, or `cypress`; omitted is the default `ivory` panel. `mediaVerticalAlignment` on a step is `bottom` (default) or `top`. Desktop-sticky and mobile-accordion are two responsive expressions of one section, not a configurable choice — letting a page pick would let it pick the arrangement the PDF documents as failing on that device.
+**Variants:** `stepNumberStyle` is `visible` (default) or `hidden`. `visible` derives `01`, `02`, and so on from the step order; `hidden` removes the labels while retaining the desktop rail. `mediaBackdrop` on a step is `chianti`, `sky`, `cypress`, or `sunflower`; omitted is the default `ivory` panel. `mediaVerticalAlignment` on a step is `bottom` (default) or `top`. Desktop-sticky and mobile-accordion are two responsive expressions of one section, not a configurable choice — letting a page pick would let it pick the arrangement the PDF documents as failing on that device.
 
 When visible, step numbers are derived from array order, never supplied. Panel and accordion DOM ids derive from `useId()` plus the step `id`, so the section can appear twice on one page. No `className`, `style`, layout-ratio, or initial-step overrides.
 
@@ -161,6 +161,8 @@ Text reflows at 320px; browser text zoom is not blocked.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 
 ## Implementation notes
+
+**Revision 1.12:** added `sunflower` (`#E8B314`) as a fourth optional `mediaBackdrop` value alongside `chianti`, `sky`, and `cypress`. Existing configurations are unaffected; the default remains the `ivory` panel.
 
 **Revision 1.10:** corrected top alignment: keep the same contained image box as bottom-aligned media and move that box to the stage top. The backdrop therefore remains visible only to the left, right, and below the capture.
 

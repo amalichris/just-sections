@@ -220,6 +220,11 @@
   background: #2d6b48;
 }
 
+.how-it-works-default__inline-media-stage.how-it-works-default__inline-media-stage--sunflower,
+.how-it-works-default__panel-stage.how-it-works-default__panel-stage--sunflower {
+  background: #e8b314;
+}
+
 .how-it-works-default__cta {
   display: inline-flex;
   align-items: center;

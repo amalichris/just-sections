@@ -1,7 +1,7 @@
 # Default how-it-works implementation prompt
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.11`
+- **Revision:** `1.12`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -15,7 +15,7 @@
 Build the configurable process section described in `plan.md`.
 
 - Keep the component and local CSS in this folder. There are no section-local assets; page config supplies every image.
-- Require `title` and three or four complete steps with unique ids via `requireProps`. Each step requires non-empty title and description plus shared `media` with a non-empty `src` and string `alt`; optional `mediaBackdrop` is `chianti`, `sky`, or `cypress`, and optional `mediaVerticalAlignment` is `bottom` (default) or `top`. A supplied CTA requires both label and href. `stepNumberStyle` is an optional `visible` (default) or `hidden` enum. Invalid configuration renders nothing and reports the omission in development. Treat `eyebrow`, `subtitle`, and `cta` as optional and render each only when supplied, declaring spacing on the adjacent-sibling pair.
+- Require `title` and three or four complete steps with unique ids via `requireProps`. Each step requires non-empty title and description plus shared `media` with a non-empty `src` and string `alt`; optional `mediaBackdrop` is `chianti`, `sky`, `cypress`, or `sunflower`, and optional `mediaVerticalAlignment` is `bottom` (default) or `top`. A supplied CTA requires both label and href. `stepNumberStyle` is an optional `visible` (default) or `hidden` enum. Invalid configuration renders nothing and reports the omission in development. Treat `eyebrow`, `subtitle`, and `cta` as optional and render each only when supplied, declaring spacing on the adjacent-sibling pair.
 - Reuse the shared `Media` and `Cta` typedefs from `../types.js`. Do not add a video shape.
 - When `cta.target` is `_blank`, pass it through to the CTA link and pair it with `rel="noreferrer noopener"`.
 - When `stepNumberStyle` is `visible`, derive step numbers from array order; when it is `hidden`, omit only the labels and retain the desktop rail. Derive DOM ids from `useId()` plus each step's `id`.

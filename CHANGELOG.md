@@ -8,6 +8,23 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.5.0 — 2026-08-29
+
+### Sections
+
+- `how-it-works-default`: steps may now select a fourth media backdrop, `sunflower`
+  (`#E8B314`), alongside `chianti`, `sky`, and `cypress`. Omitted still means the default
+  `ivory` panel, so existing configurations render unchanged.
+
+### Breaking
+
+### Internal
+
+- `how-it-works-default` dossier at Revision 1.12; the gallery's "Media backdrops" fixture now
+  shows all four backdrops across four steps.
+- Recorded `sunflower` in the Marketing Process Story extension in
+  `just-design-system/surfaces/web.md`.
+
 ## v1.4.1 — 2026-08-27
 
 ### Sections

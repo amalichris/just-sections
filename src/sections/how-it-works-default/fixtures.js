@@ -71,13 +71,14 @@ export default [
   {
     id: 'media-backdrops',
     label: 'Media backdrops',
-    note: 'Screenshots stay bottom-aligned by default; the final example opts into top alignment while each configured backdrop remains visible around the capture.',
+    note: 'All four configured backdrops. Screenshots stay bottom-aligned by default; the cypress example opts into top alignment while each backdrop remains visible around the capture.',
     props: {
-      title: 'Three steps, start to signature.',
+      title: 'Four steps, start to signature.',
       steps: [
         step('open', 'Open it inside Telegram', 'No new app, no separate account. It runs in the chat app you already have open.', 'chianti'),
         step('fill', 'Fill in the details once', 'Property, parties, dates, and rent — short questions in plain language.', 'sky'),
         step('pdf', 'Generate the PDF', 'Your contract is formatted and ready to send, print, or sign.', 'cypress', 'top'),
+        step('send', 'Send it for signature', 'Share the finished document straight from the chat you are already in.', 'sunflower'),
       ],
     },
   },
