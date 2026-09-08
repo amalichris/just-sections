@@ -8,6 +8,35 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.6.0 — 2026-09-08
+
+### Sections
+
+- New section `benefits-showcase`: a horizontal rail of three to eight portrait media cards
+  arguing product breadth, as a sibling to `benefits-default`'s three-outcome depth argument. A
+  page may use either or both. Below 1024px it is a native snap-scroll rail with a card peek;
+  at 1024px and above it pins and advances 1:1 with page scroll, releasing once exhausted (a
+  rail that already fits does not pin). Every card declares one of two media fields — a
+  `mediaBackdrop` colour token with a required screenshot, or a full-bleed
+  `mediaBackdropImage` composed whole with an optional screenshot laid over it. See its
+  `plan.md` for the full contract.
+- `benefits-default`: card radius 20px → 24px, adopting the new Marketing Landing Card Radius
+  (see `just-design-system/surfaces/web.md` §4). Visual only, no prop change.
+- `how-it-works-default`: media panel radius 20px → 24px, on both the desktop pinned panel and
+  the mobile/tablet inline-media frame, for the same reason. Visual only, no prop change.
+
+### Breaking
+
+### Internal
+
+- `fixtureMedia.js` gained an opt-in `screen` variant for gallery fixtures whose section seats a
+  device capture flush against its frame; the default `panel` placeholder would otherwise read
+  as a second frame the section does not render.
+- Catalogued the Aura inspiration behind `benefits-showcase` in `docs/inspiration/sections.md`.
+- Promoted the 24px landing card radius from a scoped exception on `benefits-showcase` to the
+  documented **Marketing Landing Card Radius** in `just-design-system/surfaces/web.md` §4, once
+  the same 20px-for-a-landing-card pattern turned up on two more sections.
+
 ## v1.5.0 — 2026-08-29
 
 ### Sections
