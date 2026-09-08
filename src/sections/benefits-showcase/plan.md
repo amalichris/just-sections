@@ -1,7 +1,7 @@
 # Benefits showcase plan
 
 - **Section ID:** `benefits-showcase`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page breadth section; `mediaBackdrop` variant per card. First expected consumer is JustConvert
 
@@ -75,7 +75,7 @@ Three points where an approved treatment already existed and was reused rather t
 
 Grid: 1120px maximum container for the intro and for the rail's inline insets, `clamp(20px, 4.444vw, 64px)` page gutters, 96px block padding (128px at 768px and above). Card gap 16px below 768px, 24px at 768px and above — the 8pt rhythm, widened from the 12px card-to-card value because a rail needs the gap to read as separation between peers rather than as grid tightening.
 
-The intro, the rail's first card, and the progress indicator all take the same container inset, so heading, card and indicator share one left edge and the indicator ends where the container ends rather than running to the viewport edge. Intro-to-rail rhythm matches the sibling sections: 48px below 768px and 64px above it. Inside the desktop pin it becomes `clamp(24px, 4vh, 48px)`, the same reduction `Marketing Process Story` already applies to its own pinned layout, so a short window compresses the rhythm instead of overflowing the pin.
+When the rail pins, the intro, the rail's first card, and the progress indicator all take the same container inset, so heading, card and indicator share one left edge and the indicator ends where the container ends rather than running to the viewport edge. That shared left edge is a property of the pinned, scrolling rail. A rail short enough that it never pins renders as a static row with no progress indicator, and there is no scroll for the heading's left edge to track; at 1024px and above that row is centred and the intro stays centred with it, matching every sibling marketing section. Below 1024px the rail is always a left-packed snap scroller with a visible peek regardless of length. Intro-to-rail rhythm matches the sibling sections: 48px below 768px and 64px above it. Inside the desktop pin it becomes `clamp(24px, 4vh, 48px)`, the same reduction `Marketing Process Story` already applies to its own pinned layout, so a short window compresses the rhythm instead of overflowing the pin.
 
 Every spacing value is a listed step on the 8pt scale and every type step is an existing scale entry or a row of the marketing landing ramp. The capture's top corners use 12pt Generous and the progress track 99pt Capsule, both documented.
 
@@ -83,7 +83,7 @@ Every spacing value is a listed step on the 8pt scale and every type step is an 
 
 ### Media headline contrast
 
-The media headline sits on the backdrop, so its colour is determined by the backdrop rather than left to page configuration:
+When a card carries a media headline it sits on the backdrop, so its colour is determined by the backdrop rather than left to page configuration:
 
 | Backdrop | Hex | Headline colour | Contrast |
 | --- | --- | --- | --- |
@@ -94,18 +94,17 @@ The media headline sits on the backdrop, so its colour is determined by the back
 | `charcoal` | `#30302E` (`darkSurface`) | `ivory` | ~13:1 |
 | `mediaBackdropImage` | page-supplied | `ivory` over a scrim | guaranteed by the scrim |
 
-Every card declares a field, and the field determines the headline colour — page configuration never picks it. For the five colour tokens the contrast is known here and fixed.
+Every card declares a field, and where a headline is present the field determines its colour — page configuration never picks it. For the five colour tokens the contrast is known here and fixed.
 
-A photograph's contrast is not knowable here, so a photographic field carries a **headline scrim**: a `nearBlack` gradient from transparent to 62% over the top 55% of the frame, with the headline in `ivory` above it. That is what makes an arbitrary page-supplied photograph safe to put text on, and it is why the scrim is not optional and not configurable. `Landing Hero Warm Glass Backdrop` already establishes that full-bleed marketing imagery may sit under a warm overlay so foreground text stays legible; this is the same principle applied to a card, using a top-anchored gradient rather than a full-frame wash so the photograph below stays readable as a photograph.
+A photograph's contrast is not knowable here, so a photographic field that carries a `mediaHeadline` gets a **headline scrim**: a `nearBlack` gradient from transparent to 62% over the top 55% of the frame, with the headline in `ivory` above it. That is what makes an arbitrary page-supplied photograph safe to put text on; where it renders it is not configurable. It exists only to give the headline a ground, so a card with no `mediaHeadline` renders no scrim and shows its frame image unshaded. `Landing Hero Warm Glass Backdrop` already establishes that full-bleed marketing imagery may sit under a warm overlay so foreground text stays legible; this is the same principle applied to a card, using a top-anchored gradient rather than a full-frame wash so the photograph below stays readable as a photograph.
 
 ## Public configuration
 
 **Required.** Missing any of these renders nothing and reports the omission in development.
 
 - `title`: section heading string.
-- `items`: array of **three to eight** `{ id, mediaHeadline, title, description, mediaBackdrop?, mediaBackdropImage?, media? }` objects with unique, non-empty ids.
+- `items`: array of **three to eight** `{ id, title, description, mediaHeadline?, mediaBackdrop?, mediaBackdropImage?, media? }` objects with unique, non-empty ids.
   - Below three there is no breadth to argue and `benefits-default` is the better section. Above eight the rail is longer than a reader will follow and the content is a feature table, not a showcase.
-  - `mediaHeadline` — the problem, in the reader's words, overlaid on the media. Required: a card with no headline is a screenshot with a caption, which is not this section.
   - `title` — the feature that answers it.
   - `description` — one or two sentences of body copy.
 
@@ -119,6 +118,7 @@ Supplying both, or neither, is invalid and renders nothing.
 **Optional per item.**
 
 - `media` — the shared `Media` shape: a device or interface capture, contained horizontally and seated on the frame's bottom edge. Required alongside `mediaBackdrop`, optional alongside `mediaBackdropImage`.
+- `mediaHeadline` — the problem, in the reader's words, overlaid on the media. It is the section's strongest device and a dressed showcase should carry one on every card. It is optional rather than required so a page whose frame images are finished compositions can run the rail as pure imagery: omit it and the card renders no headline `p` and no scrim. Omitting it on some cards but not others is allowed but reads as unfinished — treat that as a copy gap, not a layout control.
 
 ### One frame ratio, one asset spec
 
@@ -138,7 +138,7 @@ That is a deliberate constraint in favour of the page author. A single ratio mea
 
 The capture is a crop, not the whole screen: it is anchored at its own top and runs off the frame's lower edge, so a 0.87 window shows the top of a phone screenshot rather than a squashed whole one.
 
-The one thing that must not be composed into the asset is text. `mediaHeadline` is always real DOM text over the frame — it has to be readable by assistive technology, resizable by browser zoom, and translatable.
+The one thing that must not be composed into the asset is text. When a card carries a `mediaHeadline` it is always real DOM text over the frame — it has to be readable by assistive technology, resizable by browser zoom, and translatable — never baked into the image.
 
 **Optional.** Absence is the only signal; no `show`-style boolean.
 
@@ -220,7 +220,10 @@ No loading, empty, or error state: `items` is static config, and invalid configu
 - [ ] Each item declares exactly one media field; both or neither is invalid. `media` is required with a colour field and optional with an image field.
 - [ ] Renders eyebrow and subtitle only when supplied, with no residual spacing when omitted.
 - [ ] Media headline uses `ivory` on `chianti` / `sky` / `cypress` / `charcoal` and `nearBlack` on `sunflower`.
-- [ ] A photographic field renders the headline scrim; a colour field does not.
+- [ ] A photographic field with a headline renders the headline scrim; a colour field, and any card with no `mediaHeadline`, does not.
+- [ ] A card with no `mediaHeadline` renders no headline `p` and no scrim; a card with one renders both text and (over an image) the scrim.
+- [ ] The rail keeps an equal leading and trailing gutter while it scrolls, including on iOS Safari where flex end padding is dropped.
+- [ ] At 1024px and above a rail that does not pin is centred, and the intro is centred with it; a rail that pins keeps the shared left edge.
 - [x] Media frame is 3:4 at every viewport, with no per-breakpoint sources.
 - [x] A capture keeps 24px of colour field down each side, is centred, sits flush on the frame's bottom edge, is rounded on its top corners only, and is clipped rather than letterboxed; a backdrop image covers the frame.
 - [x] The media headline sits 24px from the frame's top and sides, with a 32px gap to the capture below 1024px and 24px above it.
@@ -247,6 +250,12 @@ No loading, empty, or error state: `items` is static config, and invalid configu
 **Revision 0.5.** Media frame radius 20px → 24px, recorded as a landing-only exception. The progress indicator moved to the container inset with 24px of clearance above it — it previously used `min(100%, 1120px)`, which below 1120px resolves to the full viewport and put the indicator edge to edge against the page gutter. Fixed an alignment bug found in the same pass: the desktop intro combined a 1120px box with an inset-sized padding, double-insetting the heading so it began 160px to the right of the rail's first card at 1440px. Worst-case pinned headroom at 1280×800 is 27px.
 
 **Revision 0.6.** The 24px radius exception was promoted to a named **Marketing Landing Card Radius** in `surfaces/web.md` §4, on the strength of the same value already existing twice more under the old 20pt Card step: `benefits-default__card` and `how-it-works-default`'s media panel (both breakpoints). All three moved to 24px in the same change; foundations §5 and every in-app surface are untouched. This section's own value did not change — only its documentation status did, from exception to shared pattern.
+
+**Revision 0.7.** Three corrections from the JustConvert integration, where the rail runs three cards of finished frame compositions with no overlaid copy:
+
+- **`mediaHeadline` is now optional.** It was required on the argument that "a card with no headline is a screenshot with a caption". That holds for a screenshot on a colour field; it does not hold for a `mediaBackdropImage` that is a finished composition. A card that omits it renders no headline `p` and, because the scrim exists only to give that text a ground, no scrim. A dressed showcase still carries one on every card — the plan says so — but the section no longer refuses to render without it.
+- **A non-pinning rail is centred at ≥1024px.** The shared left edge between heading, first card, and progress indicator is a property of the pinned, scrolling rail. When the rail is short enough that it never pins there is no scroll to anchor and no indicator, so the static row and its intro centre like every sibling marketing section. The left-edge treatment now scopes to `benefits-showcase__pinned--active`.
+- **Trailing rail gutter is a flex spacer, not `padding-inline-end`.** iOS Safari drops the end padding of a flex scroll container from its scrollable region, so the last card sat flush against the viewport edge. The leading inset stays as `padding-inline-start`; the trailing inset is a zero-width `::after` flex item, which is always inside the scroll width. Both are removed in the centred non-pinning case.
 
 **Known constraint, and how the pin defends against it.** The pinned composition must clear a caption whose height *grows as the card narrows*, because a narrower card wraps the description onto another line. Narrowing the card is therefore not a way to make the composition fit — measured, it made it 4px taller. The pin buys its headroom from chrome instead: `padding-block: clamp(24px, 4vh, 72px)`, tighter than the sibling pinned pattern's. At 1280×800 the eight-card fixture measures 634px against a 736px budget with a two-line description, and 685px with a three-line one. Below roughly 700px of viewport height the composition will still compress; `Marketing Process Story` carries the same constraint and it is accepted rather than engineered around.
 

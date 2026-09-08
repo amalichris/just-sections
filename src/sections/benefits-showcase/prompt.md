@@ -1,7 +1,7 @@
 # Benefits showcase implementation prompt
 
 - **Section ID:** `benefits-showcase`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -30,8 +30,8 @@ section[aria-labelledby]
       │     ├ div.__frame               3:4, ring, 24px radius (Marketing Landing
       │     │                         Card Radius), overflow hidden
       │     │ ├ img.__backdrop-image?   object-fit cover
-      │     │ ├ div.__scrim?            only with a backdrop image
-      │     │ ├ p.__media-headline
+      │     │ ├ div.__scrim?            only with a backdrop image AND a media headline
+      │     │ ├ p.__media-headline?     only when mediaHeadline is supplied
       │     │ └ img.__media?            object-fit contain, bottom-seated
       │     ├ h3
       │     └ p.__description
@@ -47,7 +47,8 @@ Use the shared `requireProps` guard. Reject, rendering nothing:
 
 - missing or empty `title`
 - `items` that is not an array of 3–8 entries
-- any item missing a non-empty unique `id`, `mediaHeadline`, `title`, or `description`
+- any item missing a non-empty unique `id`, `title`, or `description`
+- an item whose `mediaHeadline` is supplied but is not a non-empty string (it is optional; omit it entirely to render a card with no headline and no scrim)
 - an item that supplies both `mediaBackdrop` and `mediaBackdropImage`, or neither
 - an item with `mediaBackdrop` whose `mediaBackdrop` is not one of `chianti`, `sky`, `cypress`, `sunflower`, `charcoal`
 - an item with `mediaBackdrop` and no `media`
@@ -86,7 +87,7 @@ Non-negotiable:
 
 ## Fixtures
 
-Cover: a dressed `default`; a `minimal` with required props only that also proves the no-pin path; every `mediaBackdrop` member; a photographic field with and without a contained capture; the maximum item count; and invalid configurations marked `expectsNothing: true` for a missing title, too few items, both fields supplied, neither field supplied, and a colour field with no `media`.
+Cover: a dressed `default`; a `minimal` with required props only that also proves the no-pin path; every `mediaBackdrop` member; a photographic field with and without a contained capture; a `no-headline` fixture whose cards omit `mediaHeadline` (no headline `p`, no scrim); the maximum item count; and invalid configurations marked `expectsNothing: true` for a missing title, too few items, both fields supplied, neither field supplied, and a colour field with no `media`.
 
 ## Verify and synchronize
 

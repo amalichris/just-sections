@@ -8,6 +8,30 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.6.1 — 2026-09-08
+
+### Sections
+
+- `benefits-showcase`: `mediaHeadline` is now **optional** per card. A card that omits it
+  renders no overlaid headline and no scrim, so a rail of finished `mediaBackdropImage`
+  compositions can run as pure imagery with the `h3` and description below. A dressed showcase
+  still carries a headline on every card; the section just no longer refuses to render without
+  one.
+- `benefits-showcase`: a rail short enough that it never pins is now **centred** at 1024px and
+  above, with its intro centred to match, instead of packing against the left inset. The
+  shared left edge between heading, first card, and progress indicator only applies once the
+  rail actually pins and scrolls.
+- `benefits-showcase`: fixed a missing trailing gutter on the scroll rail — iOS Safari drops
+  the end padding of a flex scroll container, leaving the last card flush against the viewport
+  edge. The leading and trailing insets now match at every width.
+
+### Breaking
+
+### Internal
+
+- `benefits-showcase` `plan.md`/`prompt.md` at Revision 0.7; added a `no-headline` gallery
+  fixture.
+
 ## v1.6.0 — 2026-09-08
 
 ### Sections

@@ -121,6 +121,35 @@ export default [
     },
   },
   {
+    id: 'no-headline',
+    label: 'No media headline (finished frames)',
+    note: 'Three composed frames with mediaHeadline omitted: each card must render no headline p and no scrim, just the frame image, then the h3 and description on the page below. Three cards also exercise the no-pin path — at 1024px and above the row must be centred, not packed against the left inset, and the intro centred with it. On a narrow viewport check for an equal gutter at both ends of the rail.',
+    props: {
+      title: 'Everything you need to convert.',
+      items: [
+        {
+          id: 'currency',
+          title: '120 currencies. One amount, all your currencies.',
+          description:
+            'Add the currencies you use daily and see every conversion at once.',
+          mediaBackdropImage: composition('Currency frame'),
+        },
+        {
+          id: 'time',
+          title: 'Your places, side by side.',
+          description: 'Compare local times and move through the day across time zones.',
+          mediaBackdropImage: composition('World time frame'),
+        },
+        {
+          id: 'units',
+          title: 'The conversions you actually use.',
+          description: 'Weight, distance, temperature, area, and speed — entirely on-device.',
+          mediaBackdropImage: composition('Units frame'),
+        },
+      ],
+    },
+  },
+  {
     id: 'max-items',
     label: 'Maximum items (eight)',
     note: 'The longest rail the contract allows. At 1024px and above this is the deepest pin the section can produce — confirm the scroll length still feels proportionate and that the progress bar reaches full width exactly as the last card settles.',

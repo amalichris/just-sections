@@ -90,9 +90,22 @@
 
 .benefits-showcase__rail {
   display: flex;
-  padding-inline: var(--benefits-showcase-inset);
+  padding-inline-start: var(--benefits-showcase-inset);
   gap: var(--benefits-showcase-gap);
   list-style: none;
+}
+
+/* Trailing gutter as a flex item, not `padding-inline-end`: a flex scroll
+   container drops its end padding from the scrollable region on iOS Safari, so
+   the last card ends flush against the viewport edge. A zero-width spacer child
+   is inside the flex flow and always contributes to scroll width. */
+.benefits-showcase__rail::after {
+  content: '';
+  /* The rail `gap` already sits between the last card and this spacer, so the
+     spacer only needs to make up the rest of the inset for the trailing gutter
+     to match the leading `padding-inline-start`. */
+  flex: 0 0 max(0px, calc(var(--benefits-showcase-inset) - var(--benefits-showcase-gap)));
+  align-self: stretch;
 }
 
 .benefits-showcase__card {
@@ -261,18 +274,31 @@
     --benefits-showcase-card-width: clamp(240px, min(24vw, 32dvh), 340px);
   }
 
-  /* The inset alone places the heading on the container's left edge. Adding a
-     1120px box on top of it insets the text twice, pushing the heading past the
-     rail's first card instead of aligning with it. */
-  .benefits-showcase__intro {
+  /* Left-edge alignment is only meaningful when the rail actually pins and
+     scrolls: then the heading shares a left edge with the first card and the
+     progress indicator. A short rail that does not pin renders as a static row
+     and reads better centred, like every sibling marketing section. */
+  .benefits-showcase__pinned--active .benefits-showcase__intro {
     width: 100%;
     margin-inline: 0;
     padding-inline: var(--benefits-showcase-inset);
     text-align: left;
   }
 
-  .benefits-showcase__subtitle {
+  .benefits-showcase__pinned--active .benefits-showcase__subtitle {
     margin-inline: 0;
+  }
+
+  /* Not pinned: centre the card row instead of packing it against the inset.
+     The leading inset and the trailing spacer both exist to seat a scrolling
+     rail against the container edge; a centred static row wants neither. */
+  .benefits-showcase__pinned:not(.benefits-showcase__pinned--active) .benefits-showcase__rail {
+    justify-content: center;
+    padding-inline-start: 0;
+  }
+
+  .benefits-showcase__pinned:not(.benefits-showcase__pinned--active) .benefits-showcase__rail::after {
+    display: none;
   }
 
   /* The scroll track is only as tall as the rail needs: 100dvh for the pinned

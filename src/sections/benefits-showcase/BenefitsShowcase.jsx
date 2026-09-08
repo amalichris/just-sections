@@ -58,7 +58,7 @@ function hasValidItems(items) {
       typeof item !== 'object' ||
       !isNonEmptyString(item.id) ||
       ids.has(item.id) ||
-      !isNonEmptyString(item.mediaHeadline) ||
+      (item.mediaHeadline !== undefined && !isNonEmptyString(item.mediaHeadline)) ||
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
       !hasValidMediaField(item)
@@ -199,7 +199,7 @@ function useRailScroll(enabled) {
  * @param {string} props.title Required section heading.
  * @param {{
  *   id: string,
- *   mediaHeadline: string,
+ *   mediaHeadline?: string,
  *   title: string,
  *   description: string,
  *   mediaBackdrop?: 'chianti' | 'sky' | 'cypress' | 'sunflower' | 'charcoal',
@@ -209,7 +209,8 @@ function useRailScroll(enabled) {
  *   Required, three to eight. Each item declares exactly one media field:
  *   `mediaBackdrop` (a colour token, which makes `media` required) or
  *   `mediaBackdropImage` (a 4:5 composition filling the frame, which makes
- *   `media` optional).
+ *   `media` optional). `mediaHeadline` is optional: omit it and the card
+ *   renders its frame image with no overlaid headline and no scrim.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {string} [props.id] Section id, defaults to `benefits-showcase`.
@@ -300,24 +301,28 @@ export default function BenefitsShowcase({
                       }`}
                     >
                       {item.mediaBackdropImage ? (
-                        <>
-                          <img
-                            className="benefits-showcase__backdrop-image"
-                            src={item.mediaBackdropImage.src}
-                            alt={item.mediaBackdropImage.alt}
-                            width={item.mediaBackdropImage.width}
-                            height={item.mediaBackdropImage.height}
-                            loading={index === 0 ? 'eager' : 'lazy'}
-                            decoding="async"
-                          />
-                          {/* A page-supplied photograph has unknowable
-                              contrast, so the headline gets a guaranteed
-                              ground. Colour fields do not need one. */}
-                          <div className="benefits-showcase__scrim" aria-hidden="true" />
-                        </>
+                        <img
+                          className="benefits-showcase__backdrop-image"
+                          src={item.mediaBackdropImage.src}
+                          alt={item.mediaBackdropImage.alt}
+                          width={item.mediaBackdropImage.width}
+                          height={item.mediaBackdropImage.height}
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          decoding="async"
+                        />
                       ) : null}
 
-                      <p className="benefits-showcase__media-headline">{item.mediaHeadline}</p>
+                      {/* The scrim exists only to guarantee the headline a
+                          ground over a page-supplied image. With no headline
+                          there is nothing to protect, so a card that omits
+                          `mediaHeadline` shows its frame image unshaded. */}
+                      {item.mediaHeadline && item.mediaBackdropImage ? (
+                        <div className="benefits-showcase__scrim" aria-hidden="true" />
+                      ) : null}
+
+                      {item.mediaHeadline ? (
+                        <p className="benefits-showcase__media-headline">{item.mediaHeadline}</p>
+                      ) : null}
 
                       {item.media ? (
                         <img
