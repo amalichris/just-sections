@@ -1,0 +1,347 @@
+/* Section-local custom properties, namespaced per the project convention.
+   These are not design tokens and do not belong in tokens.css. */
+.benefits-showcase {
+  --benefits-showcase-gutter: clamp(20px, 4.444vw, 64px);
+  --benefits-showcase-card-width: clamp(240px, 68vw, 300px);
+  --benefits-showcase-gap: 16px;
+  --benefits-showcase-frame-ratio: 3 / 4;
+  /* Inline inset that lines the rail's first card up with the intro above it.
+     Below the container width it is the page gutter; above it, the margin that
+     centres a 1120px container. */
+  --benefits-showcase-inset: max(
+    var(--benefits-showcase-gutter),
+    calc((100vw - 1120px) / 2)
+  );
+
+  padding-block: 96px;
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+/* Static until the desktop pin is active. Rendering the wrapper at every
+   breakpoint keeps one DOM tree, so no viewport ships the other's markup and
+   the images never remount across a breakpoint change. */
+.benefits-showcase__scroll-track {
+  position: relative;
+}
+
+.benefits-showcase__layout {
+  display: grid;
+  gap: 48px;
+}
+
+.benefits-showcase__intro {
+  width: min(100%, 624px);
+  margin: 0 auto;
+  padding-inline: var(--benefits-showcase-gutter);
+  text-align: center;
+}
+
+.benefits-showcase__eyebrow {
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.benefits-showcase__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.benefits-showcase__intro h2 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.benefits-showcase__subtitle {
+  max-width: 34rem;
+  margin: 16px auto 0;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Full-bleed scroll container: the section carries no inline padding, so the
+   rail can run edge to edge and the peek of the next card reads as "there is
+   more to the right". The gutter is restored by the rail's own padding. */
+.benefits-showcase__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: var(--benefits-showcase-inset);
+  overscroll-behavior-x: contain;
+}
+
+.benefits-showcase__viewport:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 4px;
+}
+
+.benefits-showcase__rail {
+  display: flex;
+  padding-inline: var(--benefits-showcase-inset);
+  gap: var(--benefits-showcase-gap);
+  list-style: none;
+}
+
+.benefits-showcase__card {
+  flex: 0 0 var(--benefits-showcase-card-width);
+  width: var(--benefits-showcase-card-width);
+  scroll-snap-align: start;
+}
+
+/* The frame is the card. There is no surface behind the caption — Ring
+   elevation sits on the media itself so the section keeps the system's
+   containment without boxing a caption inside a redundant second container. */
+.benefits-showcase__frame {
+  display: grid;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+  /* One ratio at every viewport: a page author composes the frame once and it
+     is correct everywhere, with no art-directed per-breakpoint sources. */
+  aspect-ratio: var(--benefits-showcase-frame-ratio);
+  grid-template-rows: auto 1fr;
+}
+
+.benefits-showcase__frame--chianti {
+  background: #8e2441;
+}
+
+.benefits-showcase__frame--sky {
+  background: #2e74b5;
+}
+
+.benefits-showcase__frame--cypress {
+  background: #2d6b48;
+}
+
+.benefits-showcase__frame--sunflower {
+  background: #e8b314;
+}
+
+.benefits-showcase__frame--charcoal {
+  background: var(--just-color-dark-surface);
+}
+
+/* A composed frame fills edge to edge. An asset already at 4:5 lands exactly;
+   an off-ratio one is cropped rather than letterboxed. */
+.benefits-showcase__backdrop-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A page-supplied photograph has contrast this section cannot know, so the
+   headline gets a guaranteed ground. Top-anchored rather than a full wash so
+   the photograph below still reads as a photograph. */
+.benefits-showcase__scrim {
+  position: absolute;
+  inset: 0 0 45% 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(20 20 19 / 62%),
+    rgb(20 20 19 / 0%)
+  );
+}
+
+/* The headline carries the frame's inset rather than the frame carrying it, so
+   the capture below can reach the frame's own edges. Even inset on all sides:
+   the distance from the frame's top edge matches the distance from its left. */
+.benefits-showcase__media-headline {
+  position: relative;
+  /* Even inset top and left; the gap down to the capture is larger below
+     1024px, where the card is wide relative to the frame and the headline
+     would otherwise sit on top of the screen. */
+  margin: 24px 24px 32px;
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Sunflower is the one light field in the set; ivory on it fails contrast. */
+.benefits-showcase__frame--sunflower .benefits-showcase__media-headline {
+  color: var(--just-color-near-black);
+}
+
+/* Inset at the sides so the colour field stays visible down both edges, flush
+   at the bottom so the capture runs off the frame and is clipped rather than
+   ending. Rounded top corners read as the top of a screen; the bottom corners
+   need none, because nothing ends there.
+   Inset on all four sides — the treatment benefits-default uses — can never let
+   the subject reach an edge, which is what makes a phone screenshot read small.
+   `cover` anchored to the top rather than `contain` is what makes the bleed
+   real: a contained capture letterboxes itself back inside the frame. */
+.benefits-showcase__media {
+  position: relative;
+  /* An explicit width, not `auto` + stretch: a replaced element with an
+     intrinsic ratio is never stretched by `justify-self`, so `auto` would size
+     the capture to its own ratio and `cover` would never engage. */
+  width: calc(100% - 48px);
+  height: 100%;
+  min-height: 0;
+  justify-self: center;
+  border-radius: 12px 12px 0 0;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.benefits-showcase__frame + h3 {
+  margin-top: 16px;
+}
+
+.benefits-showcase__card h3 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.benefits-showcase__description {
+  margin-top: 8px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .benefits-showcase__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .benefits-showcase {
+    --benefits-showcase-card-width: clamp(300px, 44vw, 360px);
+    --benefits-showcase-gap: 24px;
+
+    padding-block: 128px;
+  }
+
+  .benefits-showcase__layout {
+    gap: 64px;
+  }
+
+  .benefits-showcase__intro h2 {
+    font-size: 3rem;
+  }
+
+  .benefits-showcase__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefits-showcase {
+    /* Partly derived from viewport height so the pinned composition shrinks on
+       short desktop windows instead of overflowing the pin. */
+    --benefits-showcase-card-width: clamp(240px, min(24vw, 32dvh), 340px);
+  }
+
+  /* The inset alone places the heading on the container's left edge. Adding a
+     1120px box on top of it insets the text twice, pushing the heading past the
+     rail's first card instead of aligning with it. */
+  .benefits-showcase__intro {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: var(--benefits-showcase-inset);
+    text-align: left;
+  }
+
+  .benefits-showcase__subtitle {
+    margin-inline: 0;
+  }
+
+  /* The scroll track is only as tall as the rail needs: 100dvh for the pinned
+     viewport, the rail's own horizontal overflow at a 1:1 pixel ratio, and
+     20dvh of dwell so the last card holds before the pin releases. */
+  .benefits-showcase__scroll-track--pinned {
+    min-block-size: calc(100dvh + var(--benefits-showcase-overflow) + 20dvh);
+  }
+
+  .benefits-showcase__pinned--active {
+    display: grid;
+    position: sticky;
+    top: 0;
+    block-size: 100dvh;
+    /* Tighter than the sibling pinned pattern's chrome. The composition has to
+       clear a caption whose height grows as the card narrows, so a short
+       desktop window buys its headroom back from padding rather than from card
+       width — narrowing the card wraps the description onto another line and
+       makes the composition taller, not shorter. */
+    padding-block: clamp(24px, 4vh, 72px);
+    align-content: center;
+  }
+
+  /* The pinned composition reduces its own rhythm on short windows rather than
+     overflowing, exactly as how-it-works-default's pinned layout does. */
+  .benefits-showcase__pinned--active .benefits-showcase__layout {
+    gap: clamp(24px, 4vh, 48px);
+  }
+
+  /* Page scroll drives the rail here, so it must not also be a scroll
+     container — two scroll mechanisms on one element fight each other. */
+  .benefits-showcase__viewport--pinned {
+    overflow: hidden;
+    scroll-snap-type: none;
+  }
+
+  .benefits-showcase__media-headline {
+    margin-bottom: 24px;
+    font-size: 1.5625rem;
+  }
+
+  /* Same inset as the intro and the rail, so the indicator starts where the
+     first card starts and ends where the container ends — never edge to edge.
+     `min(100%, 1120px)` is not the same thing: below 1120px it resolves to the
+     full viewport and runs into the page gutter. */
+  .benefits-showcase__progress {
+    overflow: hidden;
+    height: 2px;
+    margin-block-start: 24px;
+    margin-inline: var(--benefits-showcase-inset);
+    border-radius: 99px;
+    background: var(--just-color-warm-sand);
+  }
+
+  .benefits-showcase__progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--just-color-sienna);
+    transform-origin: left center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .benefits-showcase__intro h2 {
+    font-size: 4rem;
+  }
+
+  .benefits-showcase__subtitle {
+    font-size: 1.25rem;
+  }
+}

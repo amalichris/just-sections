@@ -1,7 +1,7 @@
 # Default benefits plan
 
 - **Section ID:** `benefits-default`
-- **Revision:** `1.1`
+- **Revision:** `1.2`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page value/benefit section; first consumer is the JustEjari page
 
@@ -44,7 +44,7 @@ The one interaction that would have conflicted with the system — a hover treat
 | Eyebrow | Inter 12px w500, 1.60, uppercase, 0.12px tracking | `sienna` | Same restrained brand label as the Marketing FAQ |
 | Title | Outfit 500, 1.10; 36/40/48/64px at 375/430/768/1440px | `nearBlack` | Section heading |
 | Subtitle | Inter 400, 1.60; 16/16/18/20px at 375/430/768/1440px | `oliveGray` | Supporting section copy |
-| Card surface | — | `ivory`, Ring (`0 0 0 1px ringWarm`) | 20pt radius, 24px padding (20px below 768px) |
+| Card surface | — | `ivory`, Ring (`0 0 0 1px ringWarm`) | 24pt radius (Marketing Landing Card Radius), 24px padding (20px below 768px) |
 | Card media frame | — | `parchment` by default; optional `chianti` (`#8E2441`), `sky` (`#2E74B5`), or `cypress` (`#2D6B48`) page-supplied media backdrop | 12pt radius, `overflow: hidden`, 16:10 aspect by default. The desktop anchor is the documented fluid-height exception and fills its two-row card; a configured backdrop gives an opaque image a 12% inset with `object-fit: contain`; default media keeps the tight `cover` crop. The backdrop is media presentation only, not a UI token or card surface. |
 | Card title | Outfit 20px w500, 1.20 (anchor card: 25px at ≥1024px) | `nearBlack` | Card Headline / Sheet Title, both existing scale steps |
 | Card body | Inter 16px w400, 1.60 | `oliveGray` | Body Standard |
@@ -121,6 +121,8 @@ Composed into `src/pages/justejari/page.config.js` under id `benefits`, replacin
 **Revision 0.9:** added optional `mediaSources` for breakpoint-specific zooms and crops, retaining `media` as the fallback and accessible text source.
 
 **Revision 1.0:** kept the desktop anchor positioned across both grid rows but aligned the card to its content height, removing the empty lower area beneath its copy without changing the universal 16:10 media frame.
+
+**Revision 1.2:** card radius 20px → 24px, adopting the **Marketing Landing Card Radius** promoted in `surfaces/web.md` §4 (originating from `benefits-showcase`, which found the same 20pt-Card-for-a-landing-card pattern repeated here and in `how-it-works-default`). No other change; not a prop change, so this is a patch.
 
 **Revision 1.1:** restored fluid height for the desktop anchor media at the user's direction. The anchor fills its two-row card, while mobile, tablet, and desktop secondary media remain 16:10.
 
