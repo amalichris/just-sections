@@ -1,7 +1,7 @@
 # Default how-it-works implementation prompt
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.12`
+- **Revision:** `1.13`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight

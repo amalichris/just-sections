@@ -1,7 +1,7 @@
 # Default how-it-works plan
 
 - **Section ID:** `how-it-works-default`
-- **Revision:** `1.12`
+- **Revision:** `1.13`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page process section; first consumer is the JustEjari page
 
@@ -46,7 +46,7 @@ The section is governed by the approved **Marketing Process Story** landing exte
 | Step title | Outfit 20px w500, 1.20 | `nearBlack` | Card Headline |
 | Step description | Inter 16px w400, 1.60 | `oliveGray` | Body Standard |
 | Progress rail (≥1024px) | 2px wide track + 2px fill | Track `borderCream`, fill `sienna` | Left of the step column; the only chromatic accent in the section body. Marks the current step only and cross-fades between segments. |
-| Media panel | — | 8px `ivory` frame, Ring (`0 0 0 1px ringWarm`); optional inner `chianti` (`#8E2441`), `sky` (`#2E74B5`), `cypress` (`#2D6B48`), or `sunflower` (`#E8B314`) backdrop | 20pt outer / 12pt inner radius. Screenshots are horizontally centred and bottom-aligned so the backdrop remains visible above and to both sides. |
+| Media panel | — | 8px `ivory` frame, Ring (`0 0 0 1px ringWarm`); optional inner `chianti` (`#8E2441`), `sky` (`#2E74B5`), `cypress` (`#2D6B48`), or `sunflower` (`#E8B314`) backdrop | 24pt outer (Marketing Landing Card Radius) / 12pt inner radius. Screenshots are horizontally centred and bottom-aligned so the backdrop remains visible above and to both sides. |
 | CTA | Inter 16px w500, 44px height | `ivory` on `sienna` | Existing intrinsic Sienna Brand Pill |
 
 Mobile disclosure **reuses the approved Marketing FAQ accordion treatment verbatim** — `borderCream` row dividers, 24px Lucide `Plus` in a 44px hit area, `stoneGray` closed and rotated 45° when open, 200ms `cubic-bezier(0.32, 0.72, 0, 1)` on height and icon rotation, 200ms `ease-out` on opacity, 2px `focusBlue` keyboard outline, 0.97 press scale. The pattern is scoped in `design.md` as "a landing-only control pattern", which is what this is; reusing it beats inventing a second, near-identical control. One deliberate difference: **step 1 is open on first render**, because a process section with everything collapsed shows the visitor nothing.
@@ -114,7 +114,7 @@ The control is the approved Marketing FAQ accordion trigger treatment minus the 
 
 ### < 1024px — accordion
 
-The intro centres within a 624px measure. Steps become an accordion: full-width flat trigger rows carrying the optional step number and title, a 72px minimum row with a 44px icon hit area, and the description plus media revealed in the panel beneath. Step 1 is open on first render; opening a step closes the previously open one; activating the open step closes it. Mobile and tablet media uses a 420px-tall stage wrapped in an 8px `ivory` frame with the warm ring and 20pt outer / 12pt inner radius; its screenshot is contained within 16px side and 44px top backdrop space, centred horizontally and aligned to the bottom. Media uses `loading="lazy"` and reserves its space before expansion, so opening a step does not shove the page.
+The intro centres within a 624px measure. Steps become an accordion: full-width flat trigger rows carrying the optional step number and title, a 72px minimum row with a 44px icon hit area, and the description plus media revealed in the panel beneath. Step 1 is open on first render; opening a step closes the previously open one; activating the open step closes it. Mobile and tablet media uses a 420px-tall stage wrapped in an 8px `ivory` frame with the warm ring and 24pt outer (Marketing Landing Card Radius) / 12pt inner radius; its screenshot is contained within 16px side and 44px top backdrop space, centred horizontally and aligned to the bottom. Media uses `loading="lazy"` and reserves its space before expansion, so opening a step does not shove the page.
 
 The optional CTA sits after the last step: intrinsic Sienna Brand Pill, left-aligned under the step column at ≥1024px, centred below 1024px.
 
@@ -189,6 +189,8 @@ Composed into `src/pages/justejari/page.config.js` under id `how-it-works`, repl
 **Revision 0.9:** removed the eager active-step mutation from click navigation so the observer changes rail, media, and `aria-current` only when the smooth scroll reaches a new step. Replaced per-segment scale growth with a 200ms opacity handoff, eliminating the distracting rail leap.
 
 **Revision 0.8:** removed the desktop rail hover recolor because the pointer cursor already communicates interactivity, and clamped step 1's click destination to the sticky-track start so reverse navigation no longer briefly releases and shifts the pinned composition.
+
+**Revision 1.13:** media panel outer radius 20px → 24px on both the desktop panel and the mobile/tablet inline-media frame, adopting the **Marketing Landing Card Radius** promoted in `surfaces/web.md` §4 (originating from `benefits-showcase`, which found the same 20pt-Card-for-a-landing-card pattern repeated here and in `benefits-default`). Inner-stage radius stays 12pt. No prop change, so this is a patch.
 
 **Revision 0.7:** recorded the approved Marketing Process Story pattern in `docs/design-system/design.md`, enforced the complete three-or-four-step and optional CTA contracts, and corrected desktop media stacking so the active image wins the cascade and every image fits inside the panel's 24px inset.
 

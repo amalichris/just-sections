@@ -172,7 +172,8 @@
   block-size: 420px;
   margin: 16px 0 24px;
   padding: 8px;
-  border-radius: 20px;
+  /* Marketing Landing Card Radius, not the 20pt in-app Card step. */
+  border-radius: 24px;
   background: var(--just-color-ivory);
   /* The accordion disclosure clips during its height transition, so an
      outward ring would lose its left and right edges. Keep the same ring
@@ -467,7 +468,8 @@
     position: relative;
     min-block-size: 320px;
     padding: 8px;
-    border-radius: 20px;
+    /* Marketing Landing Card Radius, not the 20pt in-app Card step. */
+    border-radius: 24px;
     background: var(--just-color-ivory);
     box-shadow: 0 0 0 1px var(--just-color-ring-warm);
   }

@@ -1,7 +1,7 @@
 # Default benefits implementation prompt
 
 - **Section ID:** `benefits-default`
-- **Revision:** `1.1`
+- **Revision:** `1.2`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
