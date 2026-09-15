@@ -37,6 +37,8 @@ function renderAnswer(answer) {
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {'parchment' | 'ivory'} [props.surface='parchment'] Section surface.
  * @param {string} [props.id] Section id, defaults to `faq`.
+ * @param {(event: { sectionId: string, interaction: 'item_opened', itemId: string }) => void}
+ *   [props.onInteraction] Called when a closed item opens.
  */
 export default function FaqDefault({
   title,
@@ -45,13 +47,20 @@ export default function FaqDefault({
   subtitle,
   surface = 'parchment',
   id = 'faq',
+  onInteraction,
 }) {
   const [openItemId, setOpenItemId] = useState(null)
   const instanceId = useId().replaceAll(':', '')
   const titleId = `${id}-${instanceId}-title`
 
   function toggleItem(itemId) {
-    setOpenItemId((currentItemId) => (currentItemId === itemId ? null : itemId))
+    const isOpening = openItemId !== itemId
+
+    setOpenItemId(isOpening ? itemId : null)
+
+    if (isOpening) {
+      onInteraction?.({ sectionId: id, interaction: 'item_opened', itemId })
+    }
   }
 
   if (requireProps('FaqDefault', { title, items })) return null

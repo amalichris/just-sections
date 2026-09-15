@@ -13,6 +13,20 @@ import config from './page.config'
 <ProductPage config={config} />
 ```
 
+Hosts can observe section interactions without putting functions into page config:
+
+```jsx
+<ProductPage
+  config={config}
+  onInteraction={({ sectionId, interaction, itemId }) => {
+    // Forward stable identifiers to the host's analytics layer.
+  }}
+/>
+```
+
+Callbacks are optional. Sections emit only the interactions documented in their dossier; the
+current FAQ reports `item_opened` and never includes question or answer copy.
+
 Today's consumer is JustEjari's `web/` department. JustConvert is next.
 
 ## Install

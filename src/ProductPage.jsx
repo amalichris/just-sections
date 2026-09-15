@@ -17,9 +17,18 @@ import './ProductPage.css'
  *   props?: Record<string, unknown>,
  * }} SectionEntry
  *
- * @param {{ config: { sections: SectionEntry[] } }} props
+ * @typedef {{
+ *   sectionId: string,
+ *   interaction: string,
+ *   itemId?: string,
+ * }} SectionInteraction
+ *
+ * @param {{
+ *   config: { sections: SectionEntry[] },
+ *   onInteraction?: (event: SectionInteraction) => void,
+ * }} props
  */
-export default function ProductPage({ config }) {
+export default function ProductPage({ config, onInteraction }) {
   const sections = config?.sections ?? []
 
   function renderSection(entry, index) {
@@ -35,7 +44,14 @@ export default function ProductPage({ config }) {
       return null
     }
 
-    return <Section key={entry.id ?? `${entry.type}-${index}`} id={entry.id} {...entry.props} />
+    return (
+      <Section
+        key={entry.id ?? `${entry.type}-${index}`}
+        id={entry.id}
+        {...entry.props}
+        onInteraction={onInteraction}
+      />
+    )
   }
 
   function sectionsIn(slot) {
