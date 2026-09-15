@@ -8,6 +8,22 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.7.0 — 2026-09-15
+
+### Sections
+
+- `faq-default`: hosts can now observe answer opens through the optional `ProductPage`
+  `onInteraction` callback. Events carry only the section id, `item_opened` interaction name,
+  and stable item id; initial render and closing an answer emit nothing. Existing consumers need
+  no configuration change.
+
+### Breaking
+
+### Internal
+
+- `faq-default` `plan.md`/`prompt.md` at Revision 0.9; the interaction callback remains outside
+  page config so consumer configuration stays JSON-like.
+
 ## v1.6.1 — 2026-09-08
 
 ### Sections
