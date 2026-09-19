@@ -66,6 +66,13 @@ Measured live at three widths — card 256/380/357px, media frame 256×321 (4:5)
 
 Source: [just-sections_benefits-section_insp.jpeg](just-sections_benefits-section_insp.jpeg) and `https://www.aura.com` (`section.section_safetyhp-help`).
 
+### Aura — "Digital protection for everything that matters" *(source for `benefits-carousel`)*
+Twelve features shown one at a time in a split card (text left, full-bleed photo right, 1120×600, 24px radius), picked from a row of uppercase title tabs, with 40px prev/next arrows and twelve 8px dots below; the next slide peeks in at the right edge. Tablet keeps the split at 672px. **Below 768px the carousel is replaced by a 12-item accordion** whose open item shows a 343×240 image above the text. Title 32px, body 18px, text bottom-aligned with an icon at the top.
+
+**Flag — do not copy its accessibility.** The arrows are `<a>` elements with no label, and the dots are 8×8px, well under a 44px target.
+
+Source: user screenshot and `https://www.aura.com` (`section.section_safetyhp-digital`).
+
 **How they differ:** Finsyc reuses its video-bg motif inside feature cards; Kelo builds three bespoke "live" widget demos (chart/terminal/orbit-avatars); Nura Health goes further still — its 3 artifacts are the only ones in the set simulating actual *user interaction* (a self-clicking cursor completing a task), not just live-updating data.
 
 ## How it Works
@@ -78,7 +85,14 @@ Copy: *"Manage your finances in **4 simple** steps"* · steps: "Connect Your Acc
 Same tabbed-pill mechanic, but each of the 4 phases (Discovery/Outreach/Workflows/Insights) gets an entirely **bespoke mini-mockup** (stagger-in match cards, typing-line skeletons, workflow node chain, stat tiles) rather than one reused card. Right-side visual is a **photographic background** (train/desert/landscape stock photos) behind a floating frosted-glass card that bobs (`y:[0,-10,0]`, 4s loop). Active tab icon pulses (`scale:[1,1.1,1]`). Accent `#00bc7d`.
 Copy: *"AI-Powered Sales Automation"* · *"Start Automating Now"*.
 
-**How they differ:** Finsyc reuses one video-backed card across all 4 steps; Kelo builds a unique mockup per step and swaps the backdrop for photography instead of video.
+### Aura — "Get started in 3 steps" *(source for `how-it-works-list`)*
+Text-only steps beside one static photo, no interaction. Desktop: text 450 / photo 540, gap 130; the photo stretches to the text column's height (`cover`, 24px radius). Each step is a divider row with a "Step N" label column, a 24px title and an 18px body; a pill CTA closes the column. Tablet and mobile stack text-first with the photo full-bleed (768×705, 375×345, no radius); on mobile the label sits above a 20px title.
+
+**Flag:** the steps are bare `div`s — no list and no headings.
+
+Source: user screenshot and `https://www.aura.com` (`section.section_safetyhp-start`).
+
+**How they differ:** Finsyc reuses one video-backed card across all 4 steps; Kelo builds a unique mockup per step and swaps the backdrop for photography instead of video; Aura drops per-step media entirely and lets one photograph carry the section.
 
 ## Why Choose Us / Trust
 
@@ -87,6 +101,15 @@ Two-column: sticky left heading + pill tags, right column is a **10-item benefit
 Copy: *"Take full control of your financial growth with **intelligent** tools"*.
 
 *(No equivalent section exists in Kelo or Learn.AI.)*
+
+## Story
+
+### Aura — "Proven fastest, most reliable fraud alerts" *(source for `story-default`)*
+Headline and one paragraph on the left, a portrait photo on the right (451 / 545 columns) with three PNG chat bubbles (a notification, an incoming message, a blue outgoing message) layered over it and running past its right edge. Tablet stacks with the photo full-bleed square and lets the bubbles overflow the viewport; mobile shows a 28px title, a square photo and only the first bubble.
+
+**Flag:** the bubble text exists only in image `alt`, and pre-launch chat bubbles read as testimonials. `story-default` drops the overlays.
+
+Source: user screenshot and `https://www.aura.com` (`section.section_safetyhp-services`).
 
 ## Philosophy / Manifesto
 

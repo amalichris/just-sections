@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import BenefitsCarousel from './benefits-carousel/BenefitsCarousel'
 import BenefitsDefault from './benefits-default/BenefitsDefault'
 import BenefitsShowcase from './benefits-showcase/BenefitsShowcase'
 import FaqDefault from './faq-default/FaqDefault'
@@ -6,7 +7,9 @@ import FooterDefault from './footer-default/FooterDefault'
 import HeaderDefault from './header-default/HeaderDefault'
 import HeroDefault from './hero-default/HeroDefault'
 import HowItWorksDefault from './how-it-works-default/HowItWorksDefault'
+import HowItWorksList from './how-it-works-list/HowItWorksList'
 import PricingBannerDefault from './pricing-banner-default/PricingBannerDefault'
+import StoryDefault from './story-default/StoryDefault'
 
 /**
  * `legal-document-default` is the one lazy section.
@@ -36,7 +39,10 @@ const sectionRegistry = {
   'hero-default': HeroDefault,
   'benefits-default': BenefitsDefault,
   'benefits-showcase': BenefitsShowcase,
+  'benefits-carousel': BenefitsCarousel,
   'how-it-works-default': HowItWorksDefault,
+  'how-it-works-list': HowItWorksList,
+  'story-default': StoryDefault,
   'pricing-banner-default': PricingBannerDefault,
   'faq-default': FaqDefault,
   'legal-document-default': LegalDocumentDefault,

@@ -1,0 +1,188 @@
+/* Section-local, not a token: the page gutter, shared with the edge-to-edge
+   photo so it cancels exactly the padding it sits in. */
+.story-default {
+  --story-default-gutter: clamp(20px, 4.444vw, 64px);
+
+  padding: 96px var(--story-default-gutter);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+/* Marketing Split Photo: stacked below 1024px, text first. */
+.story-default__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+/* Without a photo the note is a letter: one readable column, centred in the
+   container, text left-aligned. */
+.story-default__layout:not(.story-default__layout--with-media) .story-default__content {
+  width: min(100%, 624px);
+  margin-inline: auto;
+}
+
+.story-default__eyebrow {
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
+   residual margin above the title. */
+.story-default__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.story-default__content h2 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.story-default__body {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.story-default__body p {
+  color: var(--just-color-charcoal-warm);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.story-default__signature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.story-default__avatar {
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 99px;
+  object-fit: cover;
+}
+
+.story-default__signature p {
+  display: grid;
+  font-family: var(--just-font-body);
+}
+
+.story-default__name {
+  color: var(--just-color-near-black);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.story-default__role {
+  color: var(--just-color-olive-gray);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+/* The photo sits plainly on the page: no frame, border or elevation. */
+.story-default__photo {
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.story-default__photo--rounded {
+  border-radius: 24px;
+}
+
+.story-default__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Where the layout is stacked (below 1024px) a page may run the photo edge
+   to edge or drop it, separately for mobile and tablet. Edge to edge cancels
+   the section's own gutter rather than using 100vw, which includes a classic
+   scrollbar and would overshoot into horizontal scroll. It squares the
+   corners: a rounded photo touching the screen edge reads as clipped. */
+@media (max-width: 767px) {
+  .story-default__photo--mobile-edge-to-edge {
+    margin-inline: calc(-1 * var(--story-default-gutter));
+    border-radius: 0;
+  }
+
+  .story-default__photo--mobile-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .story-default__photo--tablet-edge-to-edge {
+    margin-inline: calc(-1 * var(--story-default-gutter));
+    border-radius: 0;
+  }
+
+  .story-default__photo--tablet-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .story-default__content h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .story-default {
+    padding-block: 128px;
+  }
+
+  .story-default__layout {
+    gap: 64px;
+  }
+
+  .story-default__content h2 {
+    font-size: 3rem;
+  }
+
+  .story-default__body {
+    margin-top: 32px;
+  }
+
+  .story-default__body p {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .story-default__layout--with-media {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: clamp(48px, 6.667vw, 96px);
+  }
+
+  .story-default__photo {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (min-width: 1200px) {
+  .story-default__content h2 {
+    font-size: 4rem;
+  }
+}

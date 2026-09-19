@@ -1,0 +1,282 @@
+/* Section-local, not a token: the page gutter, shared with the edge-to-edge
+   photo so it cancels exactly the padding it sits in. */
+.how-it-works-list {
+  --how-it-works-list-gutter: clamp(20px, 4.444vw, 64px);
+
+  padding: 96px var(--how-it-works-list-gutter);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+/* Marketing Split Photo: stacked below 1024px, text first. */
+.how-it-works-list__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+/* Without a photo the list would run the full 1120px container, which is far
+   past a readable measure for three short steps. */
+.how-it-works-list__layout:not(.how-it-works-list__layout--with-media) .how-it-works-list__content {
+  width: min(100%, 624px);
+  margin-inline: auto;
+}
+
+.how-it-works-list__eyebrow {
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so omitted optional content
+   leaves no residual margin. */
+.how-it-works-list__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.how-it-works-list__intro h2 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.how-it-works-list__subtitle {
+  max-width: 34rem;
+  margin-top: 16px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.how-it-works-list__steps {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--just-color-border-cream);
+}
+
+.how-it-works-list__step {
+  display: grid;
+  gap: 8px;
+  padding-block: 24px;
+  border-top: 1px solid var(--just-color-border-cream);
+}
+
+.how-it-works-list__label {
+  color: var(--just-color-stone-gray);
+  font-family: var(--just-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+.how-it-works-list__step h3 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.how-it-works-list__step p {
+  margin-top: 8px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.how-it-works-list__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--just-color-sienna);
+  border-radius: 99px;
+  background: var(--just-color-sienna);
+  box-shadow: 0 0 0 1px var(--just-color-sienna), 0 4px 24px rgb(0 0 0 / 5%);
+  color: var(--just-color-ivory);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 100ms ease-out;
+}
+
+.how-it-works-list__cta:hover {
+  border-color: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  background: color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--just-color-sienna) 88%, var(--just-color-near-black)), 0 4px 24px rgb(0 0 0 / 5%);
+}
+
+.how-it-works-list__cta:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 3px;
+}
+
+.how-it-works-list__cta:active {
+  transform: scale(0.97);
+}
+
+/* A page-supplied badge (e.g. Apple's official App Store badge) is a fixed
+   external asset: it keeps its own artwork instead of the pill chrome. */
+.how-it-works-list__cta--badge,
+.how-it-works-list__cta--badge:hover {
+  padding: 0;
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+}
+
+.how-it-works-list__cta--badge img {
+  display: block;
+  height: 44px;
+  width: auto;
+}
+
+/* The photo sits plainly on the page: no frame, border or elevation. */
+.how-it-works-list__photo {
+  overflow: hidden;
+  border-radius: 24px;
+  aspect-ratio: 1 / 1;
+}
+
+.how-it-works-list__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Where the layout is stacked (below 1024px) a page may run the photo edge
+   to edge or drop it, separately for mobile and tablet. Edge to edge cancels
+   the section's own gutter rather than using 100vw, which includes a classic
+   scrollbar and would overshoot into horizontal scroll. It squares the
+   corners: a rounded photo touching the screen edge reads as clipped. */
+@media (max-width: 767px) {
+  .how-it-works-list__photo--mobile-edge-to-edge {
+    margin-inline: calc(-1 * var(--how-it-works-list-gutter));
+    border-radius: 0;
+  }
+
+  .how-it-works-list__photo--mobile-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .how-it-works-list__photo--tablet-edge-to-edge {
+    margin-inline: calc(-1 * var(--how-it-works-list-gutter));
+    border-radius: 0;
+  }
+
+  .how-it-works-list__photo--tablet-hidden {
+    display: none;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .how-it-works-list__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .how-it-works-list {
+    padding-block: 128px;
+  }
+
+  .how-it-works-list__layout {
+    gap: 64px;
+  }
+
+  .how-it-works-list__intro h2 {
+    font-size: 3rem;
+  }
+
+  .how-it-works-list__subtitle {
+    font-size: 1.125rem;
+  }
+
+  .how-it-works-list__steps {
+    margin-top: 48px;
+  }
+
+  .how-it-works-list__step {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 0;
+  }
+
+  /* Optically align the label with the title's first line. */
+  .how-it-works-list__label {
+    padding-top: 4px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .how-it-works-list__layout--with-media {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: clamp(48px, 6.667vw, 96px);
+  }
+
+  .how-it-works-list__step {
+    padding-block: 32px;
+  }
+
+  .how-it-works-list__step h3 {
+    font-size: 1.5625rem;
+  }
+
+  .how-it-works-list__step p {
+    font-size: 1.125rem;
+  }
+
+  .how-it-works-list__label {
+    padding-top: 6px;
+  }
+
+  .how-it-works-list__photo {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (min-width: 1200px) {
+  .how-it-works-list__intro h2 {
+    font-size: 4rem;
+  }
+
+  .how-it-works-list__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-it-works-list__cta {
+    transition: none;
+  }
+
+  .how-it-works-list__cta:active {
+    transform: none;
+  }
+}

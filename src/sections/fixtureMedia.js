@@ -13,7 +13,7 @@
  *
  * @param {string} label Text drawn on the placeholder, so a gallery entry
  *   identifies which slot it is filling.
- * @param {{ width?: number, height?: number, alt?: string, variant?: 'panel' | 'screen' }} [options]
+ * @param {{ width?: number, height?: number, alt?: string, variant?: 'panel' | 'screen' | 'photo' }} [options]
  *   `alt` defaults to an empty string, matching how decorative media is
  *   configured. Pass real alt text when the fixture is exercising a section's
  *   informative-image path.
@@ -24,14 +24,16 @@
  *   with no inset and no border, for a section that seats a device capture
  *   against its frame's edges: there, `panel`'s inset card reads as a second
  *   frame the section does not actually render, which misleads a reviewer about
- *   the treatment being reviewed.
+ *   the treatment being reviewed. `photo` draws a full-bleed tonal field with
+ *   no edge of its own, for a section that sets a photograph plainly on the
+ *   page: any drawn border would read as a frame the section does not render.
  * @returns {Media}
  */
 export default function fixtureMedia(label, options = {}) {
   const { width = 640, height = 400, alt = '', variant = 'panel' } = options
 
-  const svg =
-    variant === 'screen' ? screenPlaceholder(label, width, height) : panelPlaceholder(label, width, height)
+  const placeholders = { panel: panelPlaceholder, screen: screenPlaceholder, photo: photoPlaceholder }
+  const svg = (placeholders[variant] ?? panelPlaceholder)(label, width, height)
 
   return { src: `data:image/svg+xml,${encodeURIComponent(svg)}`, alt, width, height }
 }
@@ -46,6 +48,25 @@ function panelPlaceholder(label, width, height) {
     `<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"`,
     ` font-family="Inter, sans-serif" font-size="${Math.round(width / 20)}"`,
     ` fill="#87867F">${label}</text></svg>`,
+  ].join('')
+}
+
+/**
+ * A photograph stand-in: a warm tonal field edge to edge, with a darker lower
+ * band so a reviewer can see where the section crops it.
+ */
+function photoPlaceholder(label, width, height) {
+  return [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"`,
+    ` width="${width}" height="${height}" role="img"><title>${label}</title>`,
+    `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">`,
+    `<stop offset="0" stop-color="#D8CFC0"/><stop offset="1" stop-color="#B8A993"/>`,
+    `</linearGradient></defs>`,
+    `<rect width="${width}" height="${height}" fill="url(#g)"/>`,
+    `<rect y="${Math.round(height * 0.72)}" width="${width}" height="${Math.round(height * 0.28)}" fill="#8F7F69" opacity="0.35"/>`,
+    `<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"`,
+    ` font-family="Inter, sans-serif" font-size="${Math.max(10, Math.round(width / 20))}"`,
+    ` fill="#5E5D59">${label}</text></svg>`,
   ].join('')
 }
 

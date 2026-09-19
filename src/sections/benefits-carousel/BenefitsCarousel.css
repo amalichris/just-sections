@@ -1,0 +1,534 @@
+/* Section-local, not a token: the page gutter, shared with the full-width
+   scroll rail so it can cancel exactly the padding it sits in. */
+.benefits-carousel {
+  --benefits-carousel-gutter: clamp(20px, 4.444vw, 64px);
+  --benefits-carousel-rail-gap: 16px;
+
+  padding: 96px var(--benefits-carousel-gutter);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+.benefits-carousel__layout {
+  display: grid;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  gap: 48px;
+}
+
+.benefits-carousel__intro {
+  max-width: 624px;
+}
+
+.benefits-carousel__eyebrow {
+  color: var(--just-color-sienna);
+  font-family: var(--just-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12px;
+  text-transform: uppercase;
+}
+
+/* Spacing lives on the pair, not the element, so omitted optional content
+   leaves no residual margin. */
+.benefits-carousel__eyebrow + h2 {
+  margin-top: 12px;
+}
+
+.benefits-carousel__intro h2 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.benefits-carousel__subtitle {
+  margin-top: 16px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ── Media, shared by the card panel and the accordion stage ─────────────── */
+
+.benefits-carousel__panel,
+.benefits-carousel__stage-mobile,
+.benefits-carousel__rail-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--just-color-warm-sand);
+}
+
+.benefits-carousel__panel--chianti,
+.benefits-carousel__stage-mobile--chianti,
+.benefits-carousel__rail-frame--chianti {
+  background: #8e2441;
+}
+
+.benefits-carousel__panel--sky,
+.benefits-carousel__stage-mobile--sky,
+.benefits-carousel__rail-frame--sky {
+  background: #2e74b5;
+}
+
+.benefits-carousel__panel--cypress,
+.benefits-carousel__stage-mobile--cypress,
+.benefits-carousel__rail-frame--cypress {
+  background: #2d6b48;
+}
+
+.benefits-carousel__panel--sunflower,
+.benefits-carousel__stage-mobile--sunflower,
+.benefits-carousel__rail-frame--sunflower {
+  background: #e8b314;
+}
+
+.benefits-carousel__panel--charcoal,
+.benefits-carousel__stage-mobile--charcoal,
+.benefits-carousel__rail-frame--charcoal {
+  background: var(--just-color-dark-surface);
+}
+
+.benefits-carousel__backdrop-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contained, centred, seated on the bottom edge: the Process Story stage rule. */
+.benefits-carousel__media {
+  position: absolute;
+  inset: 44px 24px 0;
+  width: calc(100% - 48px);
+  height: calc(100% - 44px);
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.benefits-carousel__stage-mobile .benefits-carousel__media,
+.benefits-carousel__rail-frame .benefits-carousel__media {
+  inset: 44px 16px 0;
+  width: calc(100% - 32px);
+}
+
+/* ── Card view, 768px and up ─────────────────────────────────────────────── */
+
+.benefits-carousel__cards {
+  display: none;
+}
+
+/* Positioned so a tab's offsetLeft is measured from the row. The inline
+   padding leaves room for the focus ring inside the scroll clip. */
+.benefits-carousel__tabs {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  margin: -4px;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.benefits-carousel__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Pills. Unselected: Warm Sand Pill (foundations §7). Selected: `nearBlack`,
+   the `surfaceInverse` role foundations names for selected chips. Dark
+   Charcoal has no capsule form, so it cannot be the selected pill. */
+.benefits-carousel__tab {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--just-color-warm-sand);
+  color: var(--just-color-charcoal-warm);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    transform 100ms ease-out;
+}
+
+.benefits-carousel__tab:active {
+  background: var(--just-color-ring-warm);
+  transform: scale(0.97);
+}
+
+.benefits-carousel__tab--selected,
+.benefits-carousel__tab--selected:active {
+  background: var(--just-color-near-black);
+  color: var(--just-color-ivory);
+}
+
+.benefits-carousel__tab:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 2px;
+}
+
+/* Every card shares one grid cell, so the stage takes the tallest card's
+   height and the layout never jumps between selections. */
+.benefits-carousel__stage {
+  display: grid;
+  margin-top: 24px;
+}
+
+.benefits-carousel__card {
+  display: grid;
+  grid-area: 1 / 1;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 560px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease-out, visibility 0s linear 200ms;
+}
+
+.benefits-carousel__card--selected {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 200ms ease-out, visibility 0s;
+}
+
+.benefits-carousel__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+}
+
+.benefits-carousel__text h3 {
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 1.5625rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.benefits-carousel__text p {
+  margin-top: 16px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.benefits-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Navigation circular icon button: 40px visual inside a 44px hit area. */
+.benefits-carousel__arrow {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--just-color-charcoal-warm);
+  place-items: center;
+  cursor: pointer;
+  transition: transform 100ms ease-out;
+}
+
+.benefits-carousel__arrow > span {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  border-radius: 99px;
+  background: var(--just-color-ivory);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+  place-items: center;
+}
+
+.benefits-carousel__arrow:disabled {
+  color: var(--just-color-stone-gray);
+  cursor: default;
+}
+
+.benefits-carousel__arrow:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 0;
+}
+
+.benefits-carousel__arrow:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.benefits-carousel__position {
+  min-width: 5ch;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.43;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* ── Scroll rail, opt-in below 768px: the Benefits Showcase mechanics ────── */
+
+/* Full width: cancels the section gutter so the peek of the next card runs to
+   the screen edge. The rail restores the gutter as its own inset. */
+.benefits-carousel__rail-viewport {
+  display: none;
+  margin-inline: calc(-1 * var(--benefits-carousel-gutter));
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline-start: var(--benefits-carousel-gutter);
+  overscroll-behavior-x: contain;
+}
+
+.benefits-carousel__rail-viewport:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: -2px;
+}
+
+.benefits-carousel__rail {
+  display: flex;
+  margin: 0;
+  padding: 0 0 0 var(--benefits-carousel-gutter);
+  gap: var(--benefits-carousel-rail-gap);
+  list-style: none;
+}
+
+/* Trailing gutter as a flex item, not `padding-inline-end`, which iOS Safari
+   drops from a flex scroll container (see benefits-showcase). */
+.benefits-carousel__rail::after {
+  content: '';
+  flex: 0 0 max(0px, calc(var(--benefits-carousel-gutter) - var(--benefits-carousel-rail-gap)));
+  align-self: stretch;
+}
+
+.benefits-carousel__rail-card {
+  flex: 0 0 clamp(240px, 68vw, 300px);
+  width: clamp(240px, 68vw, 300px);
+  scroll-snap-align: start;
+}
+
+/* No Ring: the frame holds a colour field or a photograph, both of which
+   stand off the page on their own, and a ring around a photo reads as a frame. */
+.benefits-carousel__rail-frame {
+  border-radius: 24px;
+  aspect-ratio: 3 / 4;
+}
+
+.benefits-carousel__rail-card h3 {
+  margin-top: 16px;
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.benefits-carousel__rail-card p {
+  margin-top: 8px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* ── Accordion, below 768px: the Marketing FAQ treatment ─────────────────── */
+
+.benefits-carousel__accordion {
+  border-bottom: 1px solid var(--just-color-border-cream);
+}
+
+.benefits-carousel__item {
+  border-top: 1px solid var(--just-color-border-cream);
+}
+
+.benefits-carousel__item h3 {
+  font: inherit;
+}
+
+.benefits-carousel__item button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 72px;
+  padding: 24px 0;
+  border: 0;
+  background: transparent;
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 100ms ease-out;
+}
+
+.benefits-carousel__item button > span:first-child {
+  padding: 10px 16px 10px 0;
+}
+
+.benefits-carousel__item button:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 2px;
+}
+
+.benefits-carousel__item button:active {
+  transform: scale(0.97);
+}
+
+.benefits-carousel__icon {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  color: var(--just-color-stone-gray);
+  place-items: center;
+  transition: color 200ms ease-out, transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.benefits-carousel__item--open .benefits-carousel__icon {
+  color: var(--just-color-near-black);
+  transform: rotate(45deg);
+}
+
+.benefits-carousel__region {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 200ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms ease-out;
+}
+
+.benefits-carousel__region > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.benefits-carousel__region p {
+  padding-right: 60px;
+  color: var(--just-color-olive-gray);
+  font-family: var(--just-font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.benefits-carousel__stage-mobile {
+  height: 420px;
+  margin: 24px 0;
+  border-radius: 24px;
+}
+
+.benefits-carousel__item--open .benefits-carousel__region {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (min-width: 400px) and (max-width: 767px) {
+  .benefits-carousel__intro h2 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .benefits-carousel {
+    padding-block: 128px;
+  }
+
+  .benefits-carousel__layout {
+    gap: 64px;
+  }
+
+  .benefits-carousel__intro h2 {
+    font-size: 3rem;
+  }
+
+  .benefits-carousel__subtitle {
+    font-size: 1.125rem;
+  }
+
+  .benefits-carousel__cards {
+    display: block;
+    min-width: 0;
+  }
+
+  .benefits-carousel__accordion {
+    display: none;
+  }
+}
+
+/* Below 768px the page chooses the accordion or the rail; from 768px it is
+   always the tabs and card. */
+@media (max-width: 767px) {
+  .benefits-carousel--mobile-rail .benefits-carousel__rail-viewport {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefits-carousel__text {
+    padding: 40px;
+  }
+
+  .benefits-carousel__text h3 {
+    font-size: 2rem;
+  }
+
+  .benefits-carousel__text p {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .benefits-carousel__intro h2 {
+    font-size: 4rem;
+  }
+
+  .benefits-carousel__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefits-carousel__card,
+  .benefits-carousel__card--selected,
+  .benefits-carousel__tab,
+  .benefits-carousel__arrow,
+  .benefits-carousel__item button,
+  .benefits-carousel__icon,
+  .benefits-carousel__region {
+    transition: none;
+  }
+
+  .benefits-carousel__tab:active,
+  .benefits-carousel__arrow:not(:disabled):active,
+  .benefits-carousel__item button:active {
+    transform: none;
+  }
+}
