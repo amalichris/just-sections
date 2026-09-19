@@ -8,6 +8,41 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.8.0 — 2026-09-19
+
+### Sections
+
+- `benefits-carousel` (new): three to twelve features, one split card at a time, chosen from a
+  row of pill tabs with prev/next buttons. Each item takes exactly one backdrop,
+  `mediaBackdrop` (`chianti` | `sky` | `cypress` | `sunflower` | `charcoal`, which makes `media`
+  required) or `mediaBackdropImage` (fills the panel edge to edge), plus an optional contained
+  `media`. Below 768px `layoutOnMobile` chooses `accordion` (default) or `rail`, a
+  `benefits-showcase`-style horizontal scroll rail. Emits `item_selected` through
+  `onInteraction` when a reader picks a different item.
+- `story-default` (new): title, prose `body` (blank lines separate paragraphs), optional
+  `eyebrow`, optional `signature` (`name`, `role`, round `avatar`) and optional `media` photo.
+  With a photo it is a text-and-photo split; without one a 624px letter column. Photos sit
+  plainly on the page; `mediaCorners` is `rounded` (default) or `square`.
+- `how-it-works-list` (new): three or four text-only steps numbered `01`–`04`, with optional
+  `eyebrow`, `subtitle`, `cta` (badge supported) and `media` photo.
+- `story-default` and `how-it-works-list`: `mediaOnMobile` (below 768px) and `mediaOnTablet`
+  (768–1023px) each take `contained` (default), `edge-to-edge` (full viewport width, square
+  corners) or `hidden`.
+
+No existing section changed. Every existing page config stays valid.
+
+### Breaking
+
+### Internal
+
+- Dossiers for the three sections (`benefits-carousel` 0.3, `story-default` 0.3,
+  `how-it-works-list` 0.3), gallery fixtures, and inspiration catalog entries for the three
+  aura.com sources.
+- `fixtureMedia` gains a `photo` placeholder variant with no drawn edge, for sections that set a
+  photograph plainly on the page.
+- Design authority: `just-design-system` `surfaces/web.md` §9 (Features Carousel, Story, Steps
+  List, Split Photo).
+
 ## v1.7.0 — 2026-09-15
 
 ### Sections
