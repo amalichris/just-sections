@@ -8,6 +8,24 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.9.0 — 2026-09-24
+
+### Sections
+
+- `benefits-carousel`: new optional per-item `mediaVerticalAlignment` — `bottom` (default, unchanged)
+  or `top`. With `top`, the contained `media` sits on the panel's top edge and the 44px backdrop
+  space moves below it, in the card, the accordion stage and the rail frame, as Process Story
+  steps already allow. Existing page configs render exactly as before. Any other value makes the
+  section render nothing, like every other invalid item field.
+
+### Internal
+
+- `benefits-carousel` dossier revision 0.4: new `top-aligned-media` and
+  `unknown-media-alignment` gallery fixtures. Design system: `surfaces/web.md` §9 Marketing
+  Features Carousel (2026-09-24).
+
+---
+
 ## v1.8.0 — 2026-09-19
 
 ### Sections
