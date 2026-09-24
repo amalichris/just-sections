@@ -1,7 +1,7 @@
 # Benefits carousel plan
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page feature section; `mediaBackdrop` variant per item. First expected consumer is JustConvert's main landing page
 
@@ -46,7 +46,9 @@ Implements **Marketing Features Carousel** (`surfaces/web.md` §9), agreed with 
 | `items[].mediaBackdropImage` | optional | `Media`, filled with `cover`; makes `media` optional. Exactly one of the two backdrop fields |
 | `items[].media` | optional | `Media`, contained over the backdrop |
 | `items[].mediaVerticalAlignment` | variant | `bottom` (default) \| `top`; top seats `media` on the panel's top edge with the 44px space below it, at every width. Any other value renders nothing |
+| `items[].descriptionOnMobile` | optional | Replaces `description` in the accordion or rail below 768px |
 | `eyebrow`, `subtitle` | optional | Intro copy |
+| `titleOnMobile`, `subtitleOnMobile` | optional | Replace `title` and `subtitle` below 768px. `subtitleOnMobile` alone shows a subtitle on mobile only |
 | `layoutOnMobile` | variant | `accordion` (default) \| `rail`, below 768px; any other value renders nothing. Tablet and desktop always use the tabs |
 | `id` | optional | Defaults to `benefits-carousel` |
 | `onInteraction` | optional | `{ sectionId, interaction: 'item_selected', itemId }` when a reader makes a different item active |
@@ -59,6 +61,7 @@ Invalid or incomplete items render nothing and are reported in development.
 - **Below 768px, `accordion`:** single-open accordion, first item open, description above a 420px media stage.
 - **Below 768px, `rail`:** native horizontal scroll with snapping and a peek, first card on the gutter, trailing gutter kept by a flex spacer (iOS Safari drops end padding). No selection state and no `onInteraction` events.
 - Both expressions are rendered and CSS picks one, so server output is identical at every width. One `activeId` drives both; if the accordion closes every item the card view shows the first.
+- Mobile copy (`titleOnMobile`, `subtitleOnMobile`, `items[].descriptionOnMobile`) is rendered beside the default and CSS picks one at 768px; the rail and accordion read the item's mobile description directly. An empty string renders nothing.
 - No autoplay. Reduced motion removes the fade, disclosure and press transitions.
 
 ## Accessibility
@@ -77,6 +80,7 @@ Invalid or incomplete items render nothing and are reported in development.
 - [x] Keyboard: Home/End/Arrow keys move focus and selection; arrows disable at the ends.
 - [x] Invalid fixtures (2 items, 13 items, colour without media, both backdrops, no title, unknown `layoutOnMobile`, unknown `mediaVerticalAlignment`) render nothing.
 - [x] `mediaVerticalAlignment: 'top'` seats the capture on the top edge in the card, accordion stage and rail frame; other items stay on the bottom edge.
+- [x] Mobile copy: below 768px the heading, subtitle and item descriptions show their mobile alternatives; from 768px the defaults. The heading's accessible name is the visible copy. An empty mobile string renders nothing.
 - [x] Mobile rail: full width, first card on the heading's edge, 20px trailing gutter, no page overflow; hidden from 768px.
 - [x] Reviewed in the gallery.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
@@ -85,4 +89,5 @@ Invalid or incomplete items render nothing and are reported in development.
 
 - **0.2:** tabs became pills (user request, 2026-09-19). Dark Charcoal only exists at 8pt, so the selected pill uses `nearBlack` (`surfaceInverse`, "selected chips"); labels moved from 14px to foundations' 16px pill-label size.
 - **0.4:** added per-item `mediaVerticalAlignment: 'top'` (JustConvert request, 2026-09-24, for a converter-picker sheet that reads only from the top), mirroring Process Story's top alignment. Design system: `surfaces/web.md` §9 Marketing Features Carousel, updated the same day.
+- **0.5:** added optional `titleOnMobile`, `subtitleOnMobile` and `items[].descriptionOnMobile` (JustConvert request, 2026-09-24). Its landing and Emirates pages had rendered two full carousels behind a page-level viewport switch to get shorter copy on phones; this puts that choice in one section. Content only, no visual change. Design system: `surfaces/web.md` §9, updated the same day.
 - **0.3:** added `layoutOnMobile: 'rail'` (user request, 2026-09-19; a tablet option was considered and dropped). Backdrop photos confirmed edge to edge; mobile frames and stages lost their Ring, and the gallery's photo placeholder switched to `fixtureMedia`'s `photo` variant, because the default `panel` placeholder's own inset border had read as padding and a frame.

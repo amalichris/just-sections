@@ -130,6 +130,23 @@ export default [
     },
   },
   {
+    id: 'mobile-copy',
+    label: 'Mobile copy',
+    note: "titleOnMobile, subtitleOnMobile and descriptionOnMobile on the first two items. Below 768px the heading, subtitle and those rail descriptions switch to the shorter copy; the third item keeps its description. From 768px the tabs and card show the default copy.",
+    props: {
+      title: 'The small conversions between one place and the next.',
+      titleOnMobile: 'The small conversions between places.',
+      subtitle: 'Currency, world time, and everyday units in one focused app.',
+      subtitleOnMobile: 'Currency, world time, and units in one app.',
+      layoutOnMobile: 'rail',
+      items: [
+        { ...colourItems[0], descriptionOnMobile: 'Every price in the currencies you use.' },
+        { ...colourItems[1], descriptionOnMobile: 'Home and your next stop.' },
+        colourItems[2],
+      ],
+    },
+  },
+  {
     id: 'photo-backdrops',
     label: 'Photo backdrops',
     note: 'mediaBackdropImage alone fills the panel; with media, the capture sits over the photo.',
@@ -205,6 +222,16 @@ export default [
     props: {
       title: 'Invalid alignment',
       items: [...colourItems.slice(0, 2), { ...colourItems[2], mediaVerticalAlignment: 'middle' }],
+    },
+  },
+  {
+    id: 'empty-mobile-copy',
+    label: 'Empty descriptionOnMobile',
+    note: 'Mobile copy is optional, but an empty string is invalid. Must render nothing.',
+    expectsNothing: true,
+    props: {
+      title: 'Invalid mobile copy',
+      items: [...colourItems.slice(0, 2), { ...colourItems[2], descriptionOnMobile: '' }],
     },
   },
   {

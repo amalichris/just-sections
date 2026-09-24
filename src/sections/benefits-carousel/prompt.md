@@ -1,7 +1,7 @@
 # Benefits carousel implementation prompt
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -22,6 +22,7 @@
 - `layoutOnMobile: 'rail'` renders a full-width snap-scroll rail instead of the accordion below 768px, reusing the Benefits Showcase mobile rail sizing and its trailing-gutter spacer. Validate the value.
 - Backdrop photos fill their container with `cover`; no Ring on mobile frames or stages.
 - An item's optional `mediaVerticalAlignment` is `bottom` (default) or `top`; validate it. `top` adds `benefits-carousel__media--top-aligned`, which moves the 44px space below the image and uses `object-position: center top` in the card, accordion stage and rail frame.
+- Optional `titleOnMobile`, `subtitleOnMobile` and `items[].descriptionOnMobile` replace their defaults below 768px; validate each as a non-empty string when set. Render the heading and subtitle alternatives side by side (`benefits-carousel__copy--wide` / `--mobile`) and let CSS choose; the rail and accordion use `descriptionOnMobile ?? description`, and the rail's name uses `titleOnMobile ?? title`.
 - Fire `onInteraction({ sectionId, interaction: 'item_selected', itemId })` only when the active item changes to a different one.
 - No new dependencies; Lucide icons only.
 

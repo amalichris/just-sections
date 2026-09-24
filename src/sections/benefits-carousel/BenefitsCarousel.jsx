@@ -14,6 +14,10 @@ function isNonEmptyString(value) {
   return typeof value === 'string' && value.length > 0
 }
 
+function isOptionalString(value) {
+  return value === undefined || isNonEmptyString(value)
+}
+
 function hasValidMedia(media) {
   return (
     media !== null &&
@@ -66,6 +70,7 @@ function hasValidItems(items) {
       ids.has(item.id) ||
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
+      !isOptionalString(item.descriptionOnMobile) ||
       !hasValidMediaField(item)
     ) {
       return false
@@ -139,14 +144,18 @@ function MediaPanel({ item, className, eager }) {
  *   mediaBackdropImage?: Media,
  *   media?: Media,
  *   mediaVerticalAlignment?: 'bottom' | 'top',
+ *   descriptionOnMobile?: string,
  * }[]} props.items
  *   Required, three to twelve. Each item declares exactly one backdrop:
  *   `mediaBackdrop` (a colour token, which makes `media` required) or
  *   `mediaBackdropImage` (filled with `cover`, which makes `media` optional).
  *   `media` is contained, centred and seated on the panel's bottom edge, or on
- *   its top edge with `mediaVerticalAlignment: 'top'`.
+ *   its top edge with `mediaVerticalAlignment: 'top'`. `descriptionOnMobile`
+ *   replaces `description` in the accordion or rail below 768px.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
+ * @param {string} [props.titleOnMobile] Replaces `title` below 768px.
+ * @param {string} [props.subtitleOnMobile] Replaces `subtitle` below 768px.
  * @param {'accordion' | 'rail'} [props.layoutOnMobile='accordion'] Below 768px:
  *   a single-open accordion, or a native horizontal scroll rail of portrait
  *   cards with a peek of the next one.
@@ -159,6 +168,8 @@ export default function BenefitsCarousel({
   items,
   eyebrow,
   subtitle,
+  titleOnMobile,
+  subtitleOnMobile,
   layoutOnMobile = 'accordion',
   id = 'benefits-carousel',
   onInteraction,
@@ -177,6 +188,8 @@ export default function BenefitsCarousel({
       'three to twelve complete items with unique ids and exactly one backdrop each':
         itemsAreValid ? true : undefined,
       "layoutOnMobile of 'accordion' or 'rail'": MOBILE_LAYOUTS.has(layoutOnMobile) ? true : undefined,
+      'titleOnMobile and subtitleOnMobile as non-empty strings when set':
+        isOptionalString(titleOnMobile) && isOptionalString(subtitleOnMobile) ? true : undefined,
     })
   )
     return null
@@ -256,8 +269,27 @@ export default function BenefitsCarousel({
       <div className="benefits-carousel__layout">
         <header className="benefits-carousel__intro">
           {eyebrow ? <p className="benefits-carousel__eyebrow">{eyebrow}</p> : null}
-          <h2 id={titleId}>{title}</h2>
-          {subtitle ? <p className="benefits-carousel__subtitle">{subtitle}</p> : null}
+          {/* Mobile copy is rendered beside the default and CSS picks one, so
+              server output stays identical at every width. A hidden span
+              drops out of the heading's accessible name. */}
+          <h2 id={titleId}>
+            {titleOnMobile ? (
+              <>
+                <span className="benefits-carousel__copy--wide">{title}</span>
+                <span className="benefits-carousel__copy--mobile">{titleOnMobile}</span>
+              </>
+            ) : (
+              title
+            )}
+          </h2>
+          {subtitle ? (
+            <p className={`benefits-carousel__subtitle${subtitleOnMobile ? ' benefits-carousel__copy--wide' : ''}`}>
+              {subtitle}
+            </p>
+          ) : null}
+          {subtitleOnMobile ? (
+            <p className="benefits-carousel__subtitle benefits-carousel__copy--mobile">{subtitleOnMobile}</p>
+          ) : null}
         </header>
 
         <div className="benefits-carousel__cards">
@@ -355,7 +387,7 @@ export default function BenefitsCarousel({
           <div
             className="benefits-carousel__rail-viewport"
             role="group"
-            aria-label={title}
+            aria-label={titleOnMobile ?? title}
             tabIndex={0}
           >
             <ul className="benefits-carousel__rail">
@@ -363,7 +395,7 @@ export default function BenefitsCarousel({
                 <li key={item.id} className="benefits-carousel__rail-card">
                   <MediaPanel item={item} className="benefits-carousel__rail-frame" eager={index === 0} />
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <p>{item.descriptionOnMobile ?? item.description}</p>
                 </li>
               ))}
             </ul>
@@ -405,7 +437,7 @@ export default function BenefitsCarousel({
                     inert={!isOpen}
                   >
                     <div>
-                      <p>{item.description}</p>
+                      <p>{item.descriptionOnMobile ?? item.description}</p>
                       <MediaPanel item={item} className="benefits-carousel__stage-mobile" eager={index === 0} />
                     </div>
                   </div>
