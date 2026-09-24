@@ -1,7 +1,7 @@
 # Benefits carousel plan
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page feature section; `mediaBackdrop` variant per item. First expected consumer is JustConvert's main landing page
 
@@ -45,6 +45,7 @@ Implements **Marketing Features Carousel** (`surfaces/web.md` §9), agreed with 
 | `items[].mediaBackdrop` | variant | `chianti` \| `sky` \| `cypress` \| `sunflower` \| `charcoal`; makes `media` required |
 | `items[].mediaBackdropImage` | optional | `Media`, filled with `cover`; makes `media` optional. Exactly one of the two backdrop fields |
 | `items[].media` | optional | `Media`, contained over the backdrop |
+| `items[].mediaVerticalAlignment` | variant | `bottom` (default) \| `top`; top seats `media` on the panel's top edge with the 44px space below it, at every width. Any other value renders nothing |
 | `eyebrow`, `subtitle` | optional | Intro copy |
 | `layoutOnMobile` | variant | `accordion` (default) \| `rail`, below 768px; any other value renders nothing. Tablet and desktop always use the tabs |
 | `id` | optional | Defaults to `benefits-carousel` |
@@ -74,7 +75,8 @@ Invalid or incomplete items render nothing and are reported in development.
 - [x] Exposes only the documented configuration and variants.
 - [x] Works at 375, 430, 768, 1024 and 1440 with no horizontal page overflow.
 - [x] Keyboard: Home/End/Arrow keys move focus and selection; arrows disable at the ends.
-- [x] Invalid fixtures (2 items, 13 items, colour without media, both backdrops, no title, unknown `layoutOnMobile`) render nothing.
+- [x] Invalid fixtures (2 items, 13 items, colour without media, both backdrops, no title, unknown `layoutOnMobile`, unknown `mediaVerticalAlignment`) render nothing.
+- [x] `mediaVerticalAlignment: 'top'` seats the capture on the top edge in the card, accordion stage and rail frame; other items stay on the bottom edge.
 - [x] Mobile rail: full width, first card on the heading's edge, 20px trailing gutter, no page overflow; hidden from 768px.
 - [x] Reviewed in the gallery.
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
@@ -82,4 +84,5 @@ Invalid or incomplete items render nothing and are reported in development.
 ## Implementation notes
 
 - **0.2:** tabs became pills (user request, 2026-09-19). Dark Charcoal only exists at 8pt, so the selected pill uses `nearBlack` (`surfaceInverse`, "selected chips"); labels moved from 14px to foundations' 16px pill-label size.
+- **0.4:** added per-item `mediaVerticalAlignment: 'top'` (JustConvert request, 2026-09-24, for a converter-picker sheet that reads only from the top), mirroring Process Story's top alignment. Design system: `surfaces/web.md` §9 Marketing Features Carousel, updated the same day.
 - **0.3:** added `layoutOnMobile: 'rail'` (user request, 2026-09-19; a tablet option was considered and dropped). Backdrop photos confirmed edge to edge; mobile frames and stages lost their Ring, and the gallery's photo placeholder switched to `fixtureMedia`'s `photo` variant, because the default `panel` placeholder's own inset border had read as padding and a frame.

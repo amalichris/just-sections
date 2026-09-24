@@ -7,6 +7,7 @@ const MIN_ITEM_COUNT = 3
 const MAX_ITEM_COUNT = 12
 const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress', 'sunflower', 'charcoal'])
 const MOBILE_LAYOUTS = new Set(['accordion', 'rail'])
+const MEDIA_VERTICAL_ALIGNMENTS = new Set(['bottom', 'top'])
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 
 function isNonEmptyString(value) {
@@ -35,6 +36,11 @@ function hasValidMediaField(item) {
   const hasBackdropImage = item.mediaBackdropImage !== undefined
 
   if (hasBackdrop === hasBackdropImage) return false
+  if (
+    item.mediaVerticalAlignment !== undefined &&
+    !MEDIA_VERTICAL_ALIGNMENTS.has(item.mediaVerticalAlignment)
+  )
+    return false
 
   if (hasBackdrop) {
     return MEDIA_BACKDROPS.has(item.mediaBackdrop) && hasValidMedia(item.media)
@@ -93,7 +99,9 @@ function MediaPanel({ item, className, eager }) {
 
       {item.media ? (
         <img
-          className="benefits-carousel__media"
+          className={`benefits-carousel__media${
+            item.mediaVerticalAlignment === 'top' ? ' benefits-carousel__media--top-aligned' : ''
+          }`}
           src={item.media.src}
           alt={item.media.alt}
           width={item.media.width}
@@ -130,11 +138,13 @@ function MediaPanel({ item, className, eager }) {
  *   mediaBackdrop?: 'chianti' | 'sky' | 'cypress' | 'sunflower' | 'charcoal',
  *   mediaBackdropImage?: Media,
  *   media?: Media,
+ *   mediaVerticalAlignment?: 'bottom' | 'top',
  * }[]} props.items
  *   Required, three to twelve. Each item declares exactly one backdrop:
  *   `mediaBackdrop` (a colour token, which makes `media` required) or
  *   `mediaBackdropImage` (filled with `cover`, which makes `media` optional).
- *   `media` is contained, centred and seated on the panel's bottom edge.
+ *   `media` is contained, centred and seated on the panel's bottom edge, or on
+ *   its top edge with `mediaVerticalAlignment: 'top'`.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {'accordion' | 'rail'} [props.layoutOnMobile='accordion'] Below 768px:

@@ -118,6 +118,18 @@
   width: calc(100% - 32px);
 }
 
+/* Top alignment, the Process Story rule: the same-sized image sits on the top
+   edge and the 44px backdrop space moves below it. */
+.benefits-carousel__media.benefits-carousel__media--top-aligned {
+  inset: 0 24px 44px;
+  object-position: center top;
+}
+
+.benefits-carousel__stage-mobile .benefits-carousel__media.benefits-carousel__media--top-aligned,
+.benefits-carousel__rail-frame .benefits-carousel__media.benefits-carousel__media--top-aligned {
+  inset: 0 16px 44px;
+}
+
 /* ── Card view, 768px and up ─────────────────────────────────────────────── */
 
 .benefits-carousel__cards {

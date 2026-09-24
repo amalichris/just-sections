@@ -116,6 +116,20 @@ export default [
     },
   },
   {
+    id: 'top-aligned-media',
+    label: 'Top-aligned media',
+    note: "The second item sets mediaVerticalAlignment: 'top': its capture sits on the panel's top edge with the 44px backdrop space below it, at every width (card, accordion stage and rail frame). The other items stay on the bottom edge.",
+    props: {
+      title: 'Top-aligned media',
+      layoutOnMobile: 'rail',
+      items: [
+        colourItems[0],
+        { ...colourItems[1], mediaVerticalAlignment: 'top' },
+        { ...colourItems[2], mediaVerticalAlignment: 'bottom' },
+      ],
+    },
+  },
+  {
     id: 'photo-backdrops',
     label: 'Photo backdrops',
     note: 'mediaBackdropImage alone fills the panel; with media, the capture sits over the photo.',
@@ -181,6 +195,16 @@ export default [
     props: {
       title: 'Both',
       items: [...colourItems.slice(0, 2), { ...photoItems[1], mediaBackdrop: 'chianti' }],
+    },
+  },
+  {
+    id: 'unknown-media-alignment',
+    label: 'Unknown mediaVerticalAlignment',
+    note: "Only 'bottom' and 'top' are valid. Must render nothing.",
+    expectsNothing: true,
+    props: {
+      title: 'Invalid alignment',
+      items: [...colourItems.slice(0, 2), { ...colourItems[2], mediaVerticalAlignment: 'middle' }],
     },
   },
   {

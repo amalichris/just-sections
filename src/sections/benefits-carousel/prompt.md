@@ -1,7 +1,7 @@
 # Benefits carousel implementation prompt
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -21,6 +21,7 @@
 - The accordion reuses the FAQ trigger, icon and disclosure rules.
 - `layoutOnMobile: 'rail'` renders a full-width snap-scroll rail instead of the accordion below 768px, reusing the Benefits Showcase mobile rail sizing and its trailing-gutter spacer. Validate the value.
 - Backdrop photos fill their container with `cover`; no Ring on mobile frames or stages.
+- An item's optional `mediaVerticalAlignment` is `bottom` (default) or `top`; validate it. `top` adds `benefits-carousel__media--top-aligned`, which moves the 44px space below the image and uses `object-position: center top` in the card, accordion stage and rail frame.
 - Fire `onInteraction({ sectionId, interaction: 'item_selected', itemId })` only when the active item changes to a different one.
 - No new dependencies; Lucide icons only.
 
