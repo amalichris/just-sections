@@ -8,6 +8,23 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.10.0 — 2026-09-24
+
+### Sections
+
+- `benefits-carousel`: new optional `titleOnMobile`, `subtitleOnMobile` and per-item
+  `descriptionOnMobile`. Below 768px they replace the title, subtitle and the item's description
+  in the accordion or rail; from 768px the defaults show. Both versions are in the server HTML
+  and CSS picks one, so there is no hydration swap. Existing page configs render exactly as
+  before. An empty string makes the section render nothing.
+
+### Internal
+
+- `benefits-carousel` dossier revision 0.5: new `mobile-copy` and `empty-mobile-copy` gallery
+  fixtures. Design system: `surfaces/web.md` §9 Marketing Features Carousel (2026-09-24).
+
+---
+
 ## v1.9.0 — 2026-09-24
 
 ### Sections
