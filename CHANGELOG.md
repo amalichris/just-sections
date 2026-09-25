@@ -8,6 +8,31 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.11.0 — 2026-09-25
+
+### Sections
+
+- `pricing-banner-default`: new optional `frame` — `band` (default, unchanged) or `card`. With
+  `card`, the same centred content sits in an inset 24px-radius `darkSurface` card with a
+  `ringWarm` Ring, capped at 1120px, on the parchment page inside the page gutters. The section
+  has no block padding in this frame, so place it between padded marketing sections. Any other
+  value renders the band. Existing page configs render exactly as before.
+
+### Tokens
+
+- New dark-appearance palette tokens from foundations §2: `--just-color-umber`,
+  `--just-color-walnut`, `--just-color-cocoa`, `--just-color-pebble` and
+  `--just-color-error-on-dark`. Additions only: no existing value changed, and nothing repaints.
+  Web still renders light (foundations §2.2).
+
+### Internal
+
+- `pricing-banner-default` dossier revision 0.7 and a `card-frame` gallery fixture. The
+  JustConvert demo snapshot uses the card frame. Design system: `surfaces/web.md` §9 Marketing
+  CTA Banner (2026-09-25).
+
+---
+
 ## v1.10.0 — 2026-09-24
 
 ### Sections
