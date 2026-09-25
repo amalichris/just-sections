@@ -1,7 +1,7 @@
 # Pricing banner default implementation prompt
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -17,10 +17,11 @@ Build the centered, full-width Just acquisition banner exactly as described in `
 - Keep the component and local styles in this folder.
 - Require title and a labelled CTA link; default only the anchor ID to `pricing`.
 - Treat eyebrow and subtitle as optional and render each only when supplied. Declare the spacing above the title on the eyebrow-to-title pair so an omitted eyebrow leaves no residual margin.
-- Use the approved dark CTA Banner pattern and Sienna Brand Pill CTA; do not add cards, billing controls, assets, or variants.
+- Use the approved dark CTA Banner pattern and Sienna Brand Pill CTA; do not add billing controls, assets, or variants beyond `frame`.
 - Apply the documented deeper-Sienna hover state while preserving focus and press behavior.
 - Preserve normal anchor behavior, focus visibility, a 44px target, and reduced-motion handling.
 - When `cta.badge` is supplied, render that image (44px height, auto width) in place of the label and strip the pill chrome — no background, border, or hover recoloring. Keep focusBlue outline and the 0.97 press scale.
+- Accept `frame` (`band` default, `card`). With `card`, add a modifier class: the section becomes a parchment gutter with no block padding, and the content becomes the inset 24px-radius `darkSurface` card with a `ringWarm` Ring, sized and padded as `plan.md` specifies. Any other value renders the band.
 - When `cta.target` is `_blank`, pass it through to the link and pair it with `rel="noreferrer noopener"`.
 
 ## Verify and synchronize

@@ -59,6 +59,25 @@ export default [
     },
   },
   {
+    id: 'card-frame',
+    label: 'Card frame',
+    note: 'frame: card. The same content in an inset 24px-radius darkSurface card with a ringWarm Ring, on parchment inside the page gutters, capped at 1120px. No block padding on the section.',
+    props: {
+      title: 'Made to do one job well.',
+      subtitle: 'No ads. No account. No advertising profile.',
+      frame: 'card',
+      cta: {
+        label: 'Download on the App Store',
+        href: '#top',
+        badge: fixtureMedia('App Store badge', {
+          width: 135,
+          height: 40,
+          alt: 'Download on the App Store',
+        }),
+      },
+    },
+  },
+  {
     id: 'missing-required',
     label: 'Missing required prop',
     note: 'No `cta`. An acquisition band without its action must render nothing and report it.',

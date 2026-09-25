@@ -10,6 +10,8 @@ import './PricingBannerDefault.css'
  * @param {Cta} props.cta Required acquisition call to action.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
+ * @param {'band' | 'card'} [props.frame='band'] Full-width band, or an inset
+ *   card on the page background.
  * @param {string} [props.id] Section id, defaults to `pricing`.
  */
 export default function PricingBannerDefault({
@@ -17,6 +19,7 @@ export default function PricingBannerDefault({
   cta,
   eyebrow,
   subtitle,
+  frame = 'band',
   id = 'pricing',
 }) {
   const instanceId = useId().replaceAll(':', '')
@@ -24,8 +27,12 @@ export default function PricingBannerDefault({
 
   if (requireProps('PricingBannerDefault', { title, cta })) return null
 
+  // Any value other than `card` falls back to the band, so a typo never
+  // removes the page's closing call to action.
+  const frameClass = frame === 'card' ? ' pricing-banner-default--card' : ''
+
   return (
-    <section id={id} className="pricing-banner-default" aria-labelledby={titleId}>
+    <section id={id} className={`pricing-banner-default${frameClass}`} aria-labelledby={titleId}>
       <div className="pricing-banner-default__content">
         {eyebrow ? <p className="pricing-banner-default__eyebrow">{eyebrow}</p> : null}
         <h2 id={titleId}>{title}</h2>

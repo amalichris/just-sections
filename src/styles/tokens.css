@@ -29,6 +29,9 @@
   --just-color-white: #ffffff;
   --just-color-warm-sand: #e8e6dc;
   --just-color-dark-surface: #30302e;
+  --just-color-umber: #1b1a18; /* dark appearance */
+  --just-color-walnut: #232220; /* dark appearance */
+  --just-color-cocoa: #2b2a27; /* dark appearance */
 
   /* Text */
   --just-color-charcoal-warm: #4d4c48;
@@ -36,6 +39,7 @@
   --just-color-stone-gray: #87867f;
   --just-color-dark-warm: #3d3d3a;
   --just-color-warm-silver: #b0aea5;
+  --just-color-pebble: #8f8e86; /* dark appearance */
 
   /* Border & ring */
   --just-color-border-cream: #f0eee6;
@@ -45,6 +49,7 @@
 
   /* Semantic */
   --just-color-error: #b53333;
+  --just-color-error-on-dark: #eb7a6f; /* dark appearance */
   --just-color-destructive: #e5484d;
   --just-color-focus-blue: #3898ec;
 }

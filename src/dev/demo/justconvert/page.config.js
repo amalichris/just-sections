@@ -108,6 +108,7 @@ export default {
         eyebrow: '',
         title: 'Made to do one job well.',
         subtitle: 'No ads. No accounts. No tracking.',
+        frame: 'card',
         cta: appStoreCta,
       },
     },

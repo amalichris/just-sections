@@ -1,7 +1,7 @@
 # Pricing banner default plan
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -23,6 +23,8 @@ The approved Marketing CTA Banner extension defines the full-width `darkSurface`
 
 **Proposed exception, agreed for JustConvert:** as in `header-default`, a CTA may supply `badge` to render a fixed external asset — Apple's official App Store badge — unmodified in place of the pill: no dark-surface pill background, border, or hover recoloring, only the 44px target, focusBlue outline, and 0.97 press scale remain. Same rationale as `header-default`'s § Just design-system translation; not a new button style.
 
+**Card frame (agreed 2026-09-25, `surfaces/web.md` §9 Marketing CTA Banner):** the same content in an inset card instead of the band. The section takes the `parchment` page background and the page gutters (20px; `clamp(24px, 4.444vw, 64px)` from 768px) with no block padding, since the neighbouring marketing sections carry the 96 / 128px rhythm. The card is `min(100%, 1120px)` wide, centred, 24px radius (Marketing Landing Card Radius), `darkSurface` with a 1px `ringWarm` Ring — the light values of `surfacePremium` and `ringPremium`. Card padding is 64px × 24px, 96px × 64px from 768px; the band's 440 / 480px minimum block size moves onto the card. Content, type ramp and CTA are unchanged. Dark values (`cocoa`, `coral` 45% Ring, `nearBlack` page) are documented in the design system and are not rendered: web has not adopted dark appearance.
+
 ## Public configuration
 
 **Required.** Missing either of these renders nothing and reports the omission in development.
@@ -36,7 +38,11 @@ The approved Marketing CTA Banner extension defines the full-width `darkSurface`
 - `subtitle`: supporting copy below the title.
 - `id`: section id, defaults to `pricing`.
 
-The 16px space above the title belongs to the eyebrow-to-title pair, so omitting the eyebrow leaves no residual margin. There are no variants, optional CTA states, plan data, billing controls, or assets.
+**Variant.**
+
+- `frame`: `band` (default) or `card`. Any other value renders the band, so a typo never removes the closing call to action.
+
+The 16px space above the title belongs to the eyebrow-to-title pair, so omitting the eyebrow leaves no residual margin. The `frame` variant is the only one. There are no optional CTA states, plan data, billing controls, or assets.
 
 ## Behavior and responsive design
 
@@ -55,6 +61,9 @@ The section is labelled by its `h2`. Its CTA is a native link with a 44px minimu
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 - [x] A `cta.badge` renders as an unstyled image link with no pill chrome or hover recoloring.
 - [x] `cta.target: '_blank'` opens the CTA in a new tab with safe opener isolation.
+- [x] `frame: 'card'` renders the inset card at 375px, 768px and 1440px without horizontal overflow; an omitted or unknown `frame` renders the band unchanged.
+
+**Revision 0.7:** added the `frame` variant with the `card` frame.
 
 **Revision 0.6:** added the optional `cta.target` behavior so external acquisition links can explicitly open in a new tab.
 

@@ -105,6 +105,28 @@
   width: auto;
 }
 
+/* Card frame: the page background shows around an inset `surfacePremium`
+   card with its `ringPremium` Ring. The section keeps the page gutters but
+   no block padding — the neighbouring marketing sections set the rhythm. */
+.pricing-banner-default--card {
+  display: block;
+  min-block-size: 0;
+  padding: 0 20px;
+  background: var(--just-color-parchment);
+}
+
+.pricing-banner-default--card .pricing-banner-default__content {
+  box-sizing: border-box;
+  width: min(100%, 1120px);
+  min-block-size: 440px;
+  margin: 0 auto;
+  padding: 64px 24px;
+  justify-content: center;
+  border-radius: 24px;
+  background: var(--just-color-dark-surface);
+  box-shadow: 0 0 0 1px var(--just-color-ring-warm);
+}
+
 @media (min-width: 400px) and (max-width: 767px) {
   .pricing-banner-default h2 {
     font-size: 2.5rem;
@@ -123,6 +145,16 @@
 
   .pricing-banner-default__subtitle {
     font-size: 1.125rem;
+  }
+
+  .pricing-banner-default--card {
+    min-block-size: 0;
+    padding: 0 clamp(24px, 4.444vw, 64px);
+  }
+
+  .pricing-banner-default--card .pricing-banner-default__content {
+    min-block-size: 480px;
+    padding: 96px 64px;
   }
 }
 
