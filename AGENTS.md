@@ -2,7 +2,7 @@
 
 ## Operating principles
 
-- Think before coding. Do not assume requirements; surface material uncertainty, tradeoffs, or conflicting evidence before making a consequential choice.
+- Read before coding. Resolve routine details from repo evidence; raise only uncertainty that would change the result.
 - Simplicity first. Implement the smallest change that fully solves the request. Do not add speculative features, abstractions, dependencies, or configuration.
 - Make surgical changes. Touch only files required by the task. Preserve existing behavior and style; clean up only issues introduced by the current change.
 - Execute against a goal. State or infer checkable success criteria, then verify the relevant criteria before declaring the work complete.
