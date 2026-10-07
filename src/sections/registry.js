@@ -1,6 +1,8 @@
 import { lazy } from 'react'
 import BenefitsCarousel from './benefits-carousel/BenefitsCarousel'
 import BenefitsDefault from './benefits-default/BenefitsDefault'
+import BenefitsList from './benefits-list/BenefitsList'
+import ValueSummary from './value-summary/ValueSummary'
 import BenefitsShowcase from './benefits-showcase/BenefitsShowcase'
 import FaqDefault from './faq-default/FaqDefault'
 import FooterDefault from './footer-default/FooterDefault'
@@ -38,6 +40,8 @@ const sectionRegistry = {
   'header-default': HeaderDefault,
   'hero-default': HeroDefault,
   'benefits-default': BenefitsDefault,
+  'benefits-list': BenefitsList,
+  'value-summary': ValueSummary,
   'benefits-showcase': BenefitsShowcase,
   'benefits-carousel': BenefitsCarousel,
   'how-it-works-default': HowItWorksDefault,

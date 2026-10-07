@@ -68,6 +68,18 @@ export default {
       },
     },
     {
+      type: "value-summary",
+      id: "at-a-glance",
+      props: {
+        title: "A rental contract, from your phone.",
+        items: [
+          { id: "free", value: "3 free", label: "PDF generations" },
+          { id: "details", value: "Party links", label: "Collect details directly" },
+          { id: "output", value: "PDF", label: "A formatted contract" },
+        ],
+      },
+    },
+    {
       type: "benefits-default",
       id: "benefits",
       props: {
@@ -158,6 +170,18 @@ export default {
           },
         ],
         cta: { label: "Open JustEjari", href: justEjariUrl },
+      },
+    },
+    {
+      type: "benefits-list",
+      id: "everyday-benefits",
+      props: {
+        title: "From details to a finished contract.",
+        items: [
+          { id: "contracts", title: "Draft your contracts right from your phone", description: "Input core property details, rent amounts, and cheque schedules through clean, structured forms. No desktop needed, no broken Word templates.", icon: "document" },
+          { id: "generate", title: "Every clause in place", description: "One tap turns your answers into a formatted document with every clause in place.", icon: "check" },
+          { id: "fields", title: "Send a link, skip the manual data entry", description: "Generate a secure web link for tenants or landlords to enter their own personal details and upload IDs directly—no copy-pasting required." },
+        ],
       },
     },
     {

@@ -8,6 +8,28 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.12.0 — 2026-10-07
+
+### Sections
+
+- New `benefits-list`: text-led outcome rows with always-visible explanations, optional
+  decorative Check/Document icons, and responsive title/explanation columns. Requires `title`
+  and a nonempty `items` array; all existing section contracts remain valid.
+- New `value-summary`: one to four static page-owned facts, each with a value, label and optional
+  qualification. Requires `title` and `items`; values stack on mobile, form a row on larger
+  screens, and four facts use 2×2 on tablet. Neither section adds imagery, controls or motion.
+
+### Internal
+
+- Complete dossiers, fixtures and gallery coverage for both sections; dev-only product rigs
+  demonstrate composition. PRD-001 coordinates the work, retaining dossiers as section contracts.
+- Repo-local PRD Architect skill link and PRD/tasks templates. Shared web design authority records
+  both new patterns. A full section rhythm audit is recorded; composition-spacing changes remain
+  proposed pending agreement, so existing section spacing is unchanged in this release.
+- Package and lockfile root version metadata synchronized; no dependencies changed.
+
+---
+
 ## v1.11.0 — 2026-09-25
 
 ### Sections

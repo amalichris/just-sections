@@ -202,3 +202,11 @@ Copy: *"Subscribe to our news later"* · *"© 2026 Kelo. All right Reserved"*.
 Deep Charcoal (`#1A1A1A`), `rounded-t-[4rem]` — continues the global oversized-radius system rather than going flat/square like the other two footers. Distinguishing feature: a **"System Operational" status indicator with a pulsing green dot** (`#22c55e`), a literal uptime/status-page motif borrowed into a marketing footer — reinforcing the "clinical instrument" brand identity rather than being a generic link/newsletter block.
 
 **How they differ:** Finsyc's footer is a polished, on-brand typographic showpiece (giant wordmark reveal); Kelo's is functionally richer (real validation) but visually plainer and has unedited placeholder copy; Nura Health's is the only one to borrow a "system status" UI motif (pulsing operational dot) as its distinguishing footer element rather than a wordmark or newsletter form.
+
+## Editorial benefits and value summaries
+
+### Claude Startups — Benefits rows and offer summary
+
+Source folder: [claude-startups](claude-startups/source.md); live source: https://claude.com/programs/startups.
+
+`benefits-list` extracts the text-led divider rows under “For founders on the frontier”; `value-summary` extracts the prominent static offer values. Both translate structure through the Just system, without Claude’s typography, assets, copy or reveals.

@@ -22,6 +22,9 @@ export { default as ProductPage } from './ProductPage'
 export { default as sectionRegistry } from './sections/registry'
 export { default as requireProps } from './sections/requireProps'
 
+export { default as BenefitsList } from './sections/benefits-list/BenefitsList'
+export { default as ValueSummary } from './sections/value-summary/ValueSummary'
+
 export { default as BenefitsDefault } from './sections/benefits-default/BenefitsDefault'
 export { default as FaqDefault } from './sections/faq-default/FaqDefault'
 export { default as FooterDefault } from './sections/footer-default/FooterDefault'

@@ -124,3 +124,11 @@ Use the `publish-just-sections` skill. It owns the release type logic, the `CHAN
 - Do not modify lockfiles, build configuration, dependencies, or generated output unless the task requires it.
 - Do not remove or rewrite existing copy, assets, or routes merely to simplify a task.
 - In the final handoff, summarize the changed files and report the verification actually run, including any checks that could not be performed.
+
+## Cross-section PRDs
+
+Use `.skills/prd-architect/SKILL.md` when asked for a PRD. Cross-section work lives in
+`prd/{number}-{slug}/prd.md` and `tasks.md`, using `prd/_template/`. The PRD coordinates
+section additions, composition changes and releases; it references each section’s co-located
+`plan.md` and `prompt.md`, which remain required and own the implementation contract.
+A PRD does not replace dossiers or move their planning artifacts out of their section folders.

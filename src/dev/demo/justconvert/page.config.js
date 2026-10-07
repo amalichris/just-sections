@@ -49,6 +49,18 @@ export default {
       },
     },
     {
+      type: 'value-summary',
+      id: 'at-a-glance',
+      props: {
+        title: 'Currency, time, and everyday units.',
+        items: [
+          { id: 'currencies', value: '120', label: 'Currencies', description: 'Reference rates refresh once a day.' },
+          { id: 'cities', value: '588', label: 'Cities', description: 'Time conversion works offline.' },
+          { id: 'tools', value: '7', label: 'Converters', description: 'All included with every plan.' },
+        ],
+      },
+    },
+    {
       type: 'how-it-works-default',
       id: 'app-features',
       props: {
@@ -98,6 +110,18 @@ export default {
             mediaBackdrop: 'cypress',
             mediaVerticalAlignment: 'top',
           },
+        ],
+      },
+    },
+    {
+      type: 'benefits-list',
+      id: 'everyday-benefits',
+      props: {
+        title: 'The conversions you actually use.',
+        items: [
+          { id: 'currency', title: 'Currency conversion', description: 'Convert prices in the currencies you use most, with daily reference rates that stay available offline for 24 hours.', icon: 'check' },
+          { id: 'time', title: 'World time', description: 'Add the cities that matter to you, compare local times, and move through the day to find the right time across time zones.' },
+          { id: 'units', title: 'Everyday units', description: 'Convert weight, distance, temperature, area, and speed - instantly and entirely on-device.' },
         ],
       },
     },

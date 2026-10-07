@@ -123,3 +123,14 @@ global styles.
 `~/Programming/just-design-system` is the family-level source of truth: `foundations.md` for
 tokens, type, spacing, and motion; `surfaces/web.md` for how a landing page is built. This
 repo restates none of it.
+
+## Planning sections
+
+Every section keeps its `plan.md` and `prompt.md` in its dossier under `src/sections/`.
+For work spanning sections, use the repo’s `.skills/prd-architect` with `prd/_template/`;
+[PRD-001](prd/001-editorial-sections/prd.md) coordinates the editorial sections and release.
+The PRD references dossiers instead of replacing their contracts.
+
+`benefits-list` adds text-led divider rows with optional decorative icons. `value-summary`
+adds one to four static facts with labels and optional qualifications. Both are driven by
+page configuration; their galleries cover minimal, complete, long-copy and invalid cases.
