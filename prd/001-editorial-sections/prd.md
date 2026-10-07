@@ -1,6 +1,6 @@
 # PRD-001: Editorial sections and page rhythm
 
-**Status:** draft (composition-spacing agreement pending)
+**Status:** draft (two sections released; composition-spacing agreement pending)
 **Author:** Codex
 **Created:** 2026-10-07
 **Last updated:** 2026-10-07
@@ -109,12 +109,12 @@ All rows expand with copy, no clipping, horizontal body overflow or animation. I
 
 ## 8 · Acceptance checks
 
-- [ ] GIVEN complete configuration WHEN each section renders THEN its documented content appears in order at all five gallery widths.
-- [ ] GIVEN optional content is absent WHEN minimal fixtures render THEN no empty nodes or residual optional-content spacing appears.
-- [ ] GIVEN missing required fields, duplicate ids or malformed nested data WHEN rendered THEN the whole invalid section renders nothing and reports in development.
-- [ ] GIVEN repeated section types WHEN composed THEN `aria-labelledby` references unique existing headings.
-- [ ] GIVEN long titles/values WHEN rendered at 320px THEN the document does not scroll horizontally.
-- [ ] GIVEN a consumer imports tokens without reset WHEN rendered THEN lists, margins, type and layout remain correct.
+- [x] GIVEN complete configuration WHEN each section renders THEN its documented content appears in order at all five gallery widths.
+- [x] GIVEN optional content is absent WHEN minimal fixtures render THEN no empty nodes or residual optional-content spacing appears.
+- [x] GIVEN missing required fields, duplicate ids or malformed nested data WHEN rendered THEN the whole invalid section renders nothing and reports in development.
+- [x] GIVEN repeated section types WHEN composed THEN `aria-labelledby` references unique existing headings.
+- [x] GIVEN long titles/values WHEN rendered at 320px THEN the document does not scroll horizontally.
+- [x] GIVEN a consumer imports tokens without reset WHEN rendered THEN lists, margins, type and layout remain correct.
 - [ ] GIVEN the accepted rhythm rule WHEN compatible parchment sections are adjacent THEN one block of separation remains; omitted invalid sections do not create gaps, and isolated/excluded sections retain spacing.
-- [ ] GIVEN the release WHEN both consumers install it THEN manifest pins, lockfile SHAs and on-disk versions match the tag, builds pass and route-review evidence is recorded.
-- [ ] GIVEN the package WHEN packed THEN no dev rig, docs tree, product images, dependencies or secrets enter the published surface.
+- [x] GIVEN the release WHEN both consumers install it THEN manifest pins, lockfile SHAs and on-disk versions match the tag, builds pass and route-review evidence is recorded.
+- [x] GIVEN the package WHEN packed THEN no dev rig, docs tree, product images, dependencies or secrets enter the published surface.
