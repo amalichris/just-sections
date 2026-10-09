@@ -1,4 +1,8 @@
 .header-default {
+  --header-glass-fill: rgb(250 249 245 / 76%);
+  --header-glass-filter: blur(12px) saturate(88%);
+  --header-cta-glass-fill: rgb(250 249 245 / 44%);
+  --header-mobile-glass-fill: linear-gradient(to bottom, rgb(250 249 245 / 88%), rgb(250 249 245 / 64%) 48%, rgb(250 249 245 / 0%) 100%);
   position: fixed;
   inset: 0 0 auto;
   z-index: 20;
@@ -80,15 +84,15 @@
   padding: 0 24px;
   border: 1px solid rgb(250 249 245 / 72%);
   border-radius: 99px;
-  background: rgb(250 249 245 / 44%);
+  background: var(--header-cta-glass-fill);
   box-shadow: 0 0 0 1px rgb(250 249 245 / 18%);
   font-family: var(--just-font-body);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;
   white-space: nowrap;
-  -webkit-backdrop-filter: blur(12px) saturate(88%);
-  backdrop-filter: blur(12px) saturate(88%);
+  -webkit-backdrop-filter: var(--header-glass-filter);
+  backdrop-filter: var(--header-glass-filter);
   transition:
     background-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
     border-color 200ms cubic-bezier(0.32, 0.72, 0, 1),
@@ -159,10 +163,10 @@
     padding: 4px 6px 4px 20px;
     border: 1px solid color-mix(in srgb, var(--just-color-ring-warm) 72%, transparent);
     border-radius: 99px;
-    background: rgb(250 249 245 / 76%);
-    box-shadow: 0 0 0 1px rgb(209 207 197 / 36%);
-    -webkit-backdrop-filter: blur(12px) saturate(88%);
-    backdrop-filter: blur(12px) saturate(88%);
+    background: var(--header-glass-fill);
+    box-shadow: 0 0 0 1px rgb(209 207 197 / 36%), inset 0 1px 0 rgb(250 249 245 / 72%);
+    -webkit-backdrop-filter: var(--header-glass-filter);
+    backdrop-filter: var(--header-glass-filter);
   }
 
   /* The text pill supplies its own 24px right padding, which reads as
@@ -192,26 +196,15 @@
     position: absolute;
     z-index: -1;
     inset: 0;
-    border-bottom: 1px solid transparent;
-    background: rgb(250 249 245 / 0%);
-    box-shadow: 0 1px 0 transparent;
+    background: var(--header-mobile-glass-fill);
     content: '';
+    pointer-events: none;
     opacity: 0;
-    transform: translateZ(0);
-    transition:
-      background-color 200ms ease-out,
-      border-color 200ms ease-out,
-      box-shadow 200ms ease-out,
-      opacity 200ms ease-out;
+    transition: opacity 200ms ease-out;
   }
 
   .header-default--scrolled::before {
-    border-bottom-color: rgb(209 207 197 / 64%);
-    background: rgb(250 249 245 / 88%);
-    box-shadow: 0 1px 0 rgb(209 207 197 / 36%);
     opacity: 1;
-    -webkit-backdrop-filter: blur(16px) saturate(88%);
-    backdrop-filter: blur(16px) saturate(88%);
   }
 
   .header-default__nav {
@@ -241,6 +234,32 @@
   }
 }
 
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-default {
+    --header-glass-fill: var(--just-color-ivory);
+    --header-glass-filter: none;
+    --header-cta-glass-fill: var(--just-color-ivory);
+    --header-mobile-glass-fill: var(--just-color-ivory);
+  }
+
+  .header-default__links a {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .header-default {
+    --header-glass-fill: var(--just-color-ivory);
+    --header-glass-filter: none;
+    --header-cta-glass-fill: var(--just-color-ivory);
+    --header-mobile-glass-fill: var(--just-color-ivory);
+  }
+
+  .header-default__links a {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header-default,
   .header-default__nav,
@@ -248,5 +267,9 @@
   .header-default__links a,
   .header-default__cta {
     transition: none;
+  }
+
+  .header-default__cta:active {
+    transform: none;
   }
 }

@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.9`
+- **Revision:** `0.12`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -28,6 +28,11 @@ Build the fixed landing header described in `plan.md`.
 - When `cta.badge` is supplied, render that image (44px height, auto width) in place of the label and strip the pill chrome — no background, border, backdrop-filter, or hover/scroll recoloring — at every header state. Keep focusBlue outline and the 0.97 press scale.
 - When `cta.target` is `_blank`, pass it through to the link and pair it with `rel="noreferrer noopener"`.
 - In the scrolled glass-pill state, give a badge CTA 14px extra right margin (the difference between the nav's 6px padding and the wordmark's 20px left inset) so it doesn't sit flush against the pill edge the way a self-padded text pill wouldn't.
+
+- Add the approved ivory upper inset rim to the scrolled desktop/tablet pill; preserve its existing warm ring, fill, and filter.
+- Render the mobile background as one decorative, pointer-transparent pseudo-element contained within the original header height, with no extension below it. Use an ivory tint gradient (88% at the top, 64% near the controls, transparent at the lower edge); fade its opacity on scroll-state changes. Keep the wordmark and CTA visible. Do not apply mobile blur layers, backdrop filters, masks, or a bottom rule.
+- Use section-local CSS variables for opaque ivory/no-filter fallbacks under unsupported backdrop filtering, reduced transparency, and increased contrast. Keep nav labels fully opaque in these states, and do not restyle badge CTAs or Sienna CTA states.
+- Disable the CTA active transform under reduced motion as well as transitions.
 
 ## Verify and synchronize
 

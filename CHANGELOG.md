@@ -8,6 +8,21 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.13.1 — 2026-10-09
+
+### Sections
+
+- `header-default`: mobile keeps its original height and visible controls while an ivory
+  background fades into the page, replacing the blurred rail and bottom rule. Desktop's
+  scrolled glass pill gains a subtle upper rim. Opaque fallbacks support reduced transparency,
+  increased contrast, and unavailable backdrop filtering; reduced motion disables press scale.
+  No props or page-config changes are required.
+
+### Internal
+
+- Header plan and prompt synchronized at revision 0.12; shared web design authority records
+  the final gradient treatment.
+
 ## v1.13.0 — 2026-10-09
 
 ### Sections
