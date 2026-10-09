@@ -202,3 +202,26 @@
     transform: none;
   }
 }
+
+/* Optional media-free composition: optically centered, covered by later sections. */
+.hero-default--optical-cover .hero-default__content {
+  justify-content: center;
+  padding: 112px 24px calc(112px + 10dvh);
+}
+.hero-default--optical-cover .hero-default__content h1 {
+  white-space: pre-line;
+}
+@media (max-width: 767px) {
+  .hero-default--optical-cover .hero-default__content {
+    padding: calc(96px + env(safe-area-inset-top, 0px)) 20px calc(96px + 8svh);
+  }
+  .hero-default--optical-cover .hero-default__content h1 {
+    font-size: clamp(1.5rem, 8vw, 3rem);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-default--optical-cover {
+    position: sticky;
+    top: 0;
+  }
+}

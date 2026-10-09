@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -92,3 +92,18 @@ The section following the hero on `/` — the gallery's fixture-built demo page 
 **Revision 0.8:** replaced the fixed-height hero and implied next-section reserve with an intrinsic flow box whose minimum is one viewport. The backdrop remains viewport-bound while the hero expands to contain the configured phone, keeping every following section independent.
 
 **Revision 0.7:** added the approved desktop/tablet hero depth treatment. The decorative backdrop follows scroll 10% more slowly (80px maximum) while the foreground phone travels 6% faster (56px maximum); mobile, reduced motion, reading content, and native page scroll remain unchanged.
+
+## Revision 1.7 — optional optical cover composition
+
+`layout` is an optional enum: `default` (unchanged) or `optical-cover`. The latter is
+intended for heroes without foreground media: full viewport, copy centered slightly
+above midpoint, explicit headline newlines, and the approved mobile headline clamp.
+ProductPage marks the composition so subsequent main sections sit above the sticky hero.
+With reduced motion, the hero stays in normal flow. Native scrolling and existing header
+behavior remain unchanged. Default heroes retain their original sizing and parallax.
+This is an explicit exception to the default no-pinning and independent-section rules
+above, approved for this variant only; the default implementation remains unchanged.
+
+Acceptance: check optical cover at 320/375/768/1280, two-line supplied headline, no
+horizontal overflow, following sections covering the hero, reverse scroll, reduced-motion
+fallback, legal routes unaffected, and unchanged default fixtures. No custom scroll driver.

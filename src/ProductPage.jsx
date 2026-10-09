@@ -30,6 +30,9 @@ import './ProductPage.css'
  */
 export default function ProductPage({ config, onInteraction }) {
   const sections = config?.sections ?? []
+  const hasCoverHero = sections.some(
+    (entry) => entry.type === 'hero-default' && entry.props?.layout === 'optical-cover',
+  )
 
   function renderSection(entry, index) {
     const Section = sectionRegistry[entry.type]
@@ -64,7 +67,7 @@ export default function ProductPage({ config, onInteraction }) {
   // header and footer painted while it resolves, with no layout-shifting
   // skeleton to swap out.
   return (
-    <div className="product-page">
+    <div className={`product-page${hasCoverHero ? ' product-page--cover-hero' : ''}`}>
       <Suspense fallback={null}>
         {sectionsIn('header')}
         <main>{sectionsIn('main')}</main>

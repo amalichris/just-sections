@@ -37,6 +37,17 @@ export default [
     },
   },
   {
+    id: 'optical-cover',
+    label: 'Optical cover',
+    note: 'Full viewport with optically centered copy. In ProductPage, subsequent sections cover the hero; reduced motion uses normal flow.',
+    props: {
+      title: 'Dubai tenancy contracts.\nOne workflow.',
+      subtitle: 'Collect details, review documents, and prepare the tenancy contract PDF from your phone.',
+      background: fixtureMedia('Backdrop', { width: 1440, height: 900 }),
+      layout: 'optical-cover',
+    },
+  },
+  {
     id: 'minimal',
     label: 'Minimal (required only)',
     note: 'Title alone. No subtitle, backdrop, or device — omitting them must leave no gaps.',

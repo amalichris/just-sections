@@ -1,7 +1,7 @@
 # Default hero implementation prompt
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -36,3 +36,18 @@ Build the default hero exactly as described in `plan.md`.
 2. Inspect the preview route at desktop, tablet, and mobile widths.
 3. Verify bounded depth at desktop/tablet, a static mobile and reduced-motion composition, the viewport-bound artwork, intrinsic phone containment, clear next-section handoff, readable text, and image alternatives.
 4. Update this file and `plan.md` together, incrementing Revision if implementation changes a decision.
+
+## Revision 1.7 — optional optical cover composition
+
+`layout` is an optional enum: `default` (unchanged) or `optical-cover`. The latter is
+intended for heroes without foreground media: full viewport, copy centered slightly
+above midpoint, explicit headline newlines, and the approved mobile headline clamp.
+ProductPage marks the composition so subsequent main sections sit above the sticky hero.
+With reduced motion, the hero stays in normal flow. Native scrolling and existing header
+behavior remain unchanged. Default heroes retain their original sizing and parallax.
+This is an explicit exception to the default no-pinning and independent-section rules
+above, approved for this variant only; the default implementation remains unchanged.
+
+Acceptance: check optical cover at 320/375/768/1280, two-line supplied headline, no
+horizontal overflow, following sections covering the hero, reverse scroll, reduced-motion
+fallback, legal routes unaffected, and unchanged default fixtures. No custom scroll driver.

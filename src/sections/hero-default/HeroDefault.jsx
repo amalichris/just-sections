@@ -18,16 +18,17 @@ const DEVICE_OFFSET_MAX = 56
  * @param {Media} [props.background] Full-bleed artwork beneath the warm glass
  *   overlay. Omitted, the hero keeps its parchment backdrop.
  * @param {Media} [props.media] Product image following the copy in normal flow.
+ * @param {'default' | 'optical-cover'} [props.layout] Optional full-screen optical cover composition.
  * @param {string} [props.id] Section id, defaults to `top`.
  */
-export default function HeroDefault({ title, subtitle, cta, background, media, id = 'top' }) {
+export default function HeroDefault({ title, subtitle, cta, background, media, layout = 'default', id = 'top' }) {
   const heroRef = useRef(null)
   const instanceId = useId().replaceAll(':', '')
   const titleId = `${id}-${instanceId}-title`
 
   useEffect(() => {
     const hero = heroRef.current
-    if (!hero) return undefined
+    if (!hero || layout === 'optical-cover') return undefined
 
     const parallaxQuery = window.matchMedia(PARALLAX_QUERY)
     let frameId = null
@@ -78,12 +79,12 @@ export default function HeroDefault({ title, subtitle, cta, background, media, i
       parallaxQuery.removeEventListener('change', scheduleUpdate)
       clearOffsets()
     }
-  }, [])
+  }, [layout])
 
   if (requireProps('HeroDefault', { title })) return null
 
   return (
-    <section ref={heroRef} id={id} className="hero-default" aria-labelledby={titleId}>
+    <section ref={heroRef} id={id} className={`hero-default${layout === 'optical-cover' ? ' hero-default--optical-cover' : ''}`} aria-labelledby={titleId}>
       <div className="hero-default__backdrop" aria-hidden="true">
         {background ? (
           <img

@@ -8,6 +8,21 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.13.0 — 2026-10-09
+
+### Sections
+
+- `hero-default`: optional `layout: 'optical-cover'` centers media-free copy slightly above
+  midpoint in a full-screen hero, preserves explicit headline line breaks, and lets subsequent
+  ProductPage sections cover it during native scroll. Reduced motion uses normal flow.
+  Existing page configs retain their previous sizing, typography and parallax.
+
+### Internal
+
+- Revision 1.7 dossier and optical-cover fixture; design-system extension recorded.
+- JustEjari adopts the variant; JustConvert remains on v1.12.0 because this release is
+  scoped to JustEjari's selected composition and its default hero is unchanged.
+
 ## v1.12.0 — 2026-10-07
 
 ### Sections
