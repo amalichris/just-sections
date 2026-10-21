@@ -1,7 +1,7 @@
 # Benefits carousel plan
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page feature section; `mediaBackdrop` variant per item. First expected consumer is JustConvert's main landing page
 
@@ -36,16 +36,30 @@ Implements **Marketing Features Carousel** (`surfaces/web.md` §9), agreed with 
 - Mobile rail: the Benefits Showcase Rail's mobile mechanics (full-width snap scroller, `clamp(240px, 68vw, 300px)` cards, 16px gap, 3:4 frames with the caption beneath).
 - Backdrop photos fill their panel or frame edge to edge; mobile frames and stages carry no Ring.
 
+### Unframed presentation (selected 2026-10-21)
+
+`presentation: 'unframed'` serves screenshots with working notes. Keep the controls, type,
+split, fade and stable stage; remove the ivory card, Ring, outer radius, media fill and inset.
+Copy stays left-aligned and is vertically centered beside the screenshot. From 768px the columns have a 48px gap and the
+media stage is 560px tall; long copy can grow the overall stage. Screenshots are contained in
+full without cropping or stretching. Default image alignment is top; an explicit per-item
+top/bottom alignment still applies. Mobile keeps a transparent, square 420px accordion stage
+or the existing 3:4 rail stage. Arrows retain their existing circular button treatment.
+
+Unframed requires `media` on every item and forbids both backdrop fields; supplied backdrop
+content is rejected rather than silently discarded. Default `card` behavior is unchanged.
+
 ## Public configuration
 
 | Prop | Kind | Notes |
 | --- | --- | --- |
 | `title` | required | Section heading; also labels the tab list |
 | `items` | required | 3–12 `{ id, title, description, mediaBackdrop? , mediaBackdropImage?, media? }` with unique ids |
-| `items[].mediaBackdrop` | variant | `chianti` \| `sky` \| `cypress` \| `sunflower` \| `charcoal`; makes `media` required |
-| `items[].mediaBackdropImage` | optional | `Media`, filled with `cover`; makes `media` optional. Exactly one of the two backdrop fields |
-| `items[].media` | optional | `Media`, contained over the backdrop |
-| `items[].mediaVerticalAlignment` | variant | `bottom` (default) \| `top`; top seats `media` on the panel's top edge with the 44px space below it, at every width. Any other value renders nothing |
+| `presentation` | variant | `card` (default) \| `unframed`; unknown values render nothing |
+| `items[].mediaBackdrop` | variant | `chianti` \| `sky` \| `cypress` \| `sunflower` \| `charcoal`; makes `media` required. Card only; forbidden in unframed |
+| `items[].mediaBackdropImage` | optional | `Media`, filled with `cover`; makes `media` optional. Exactly one of the two backdrop fields in card; forbidden in unframed |
+| `items[].media` | optional / required by variant | Contained `Media`; required in unframed, with neither backdrop field |
+| `items[].mediaVerticalAlignment` | variant | `bottom` (card default) \| `top` (unframed default); in card, top seats `media` on the panel's top edge with the 44px space below it, at every width. Any other value renders nothing |
 | `items[].descriptionOnMobile` | optional | Replaces `description` in the accordion or rail below 768px |
 | `eyebrow`, `subtitle` | optional | Intro copy |
 | `titleOnMobile`, `subtitleOnMobile` | optional | Replace `title` and `subtitle` below 768px. `subtitleOnMobile` alone shows a subtitle on mobile only |
@@ -82,7 +96,9 @@ Invalid or incomplete items render nothing and are reported in development.
 - [x] `mediaVerticalAlignment: 'top'` seats the capture on the top edge in the card, accordion stage and rail frame; other items stay on the bottom edge.
 - [x] Mobile copy: below 768px the heading, subtitle and item descriptions show their mobile alternatives; from 768px the defaults. The heading's accessible name is the visible copy. An empty mobile string renders nothing.
 - [x] Mobile rail: full width, first card on the heading's edge, 20px trailing gutter, no page overflow; hidden from 768px.
-- [x] Reviewed in the gallery.
+- [x] Unframed gallery review at all five widths: no chrome, complete images, vertically centered copy, stable stage, accordion and rail.
+- [x] Unknown presentation and invalid unframed media/backdrops render nothing.
+- [x] Reviewed in the gallery (prior revisions).
 - [x] `prompt.md` has the same Section ID and Revision as this plan.
 
 ## Implementation notes
@@ -91,3 +107,30 @@ Invalid or incomplete items render nothing and are reported in development.
 - **0.4:** added per-item `mediaVerticalAlignment: 'top'` (JustConvert request, 2026-09-24, for a converter-picker sheet that reads only from the top), mirroring Process Story's top alignment. Design system: `surfaces/web.md` §9 Marketing Features Carousel, updated the same day.
 - **0.5:** added optional `titleOnMobile`, `subtitleOnMobile` and `items[].descriptionOnMobile` (JustConvert request, 2026-09-24). Its landing and Emirates pages had rendered two full carousels behind a page-level viewport switch to get shorter copy on phones; this puts that choice in one section. Content only, no visual change. Design system: `surfaces/web.md` §9, updated the same day.
 - **0.3:** added `layoutOnMobile: 'rail'` (user request, 2026-09-19; a tablet option was considered and dropped). Backdrop photos confirmed edge to edge; mobile frames and stages lost their Ring, and the gallery's photo placeholder switched to `fixtureMedia`'s `photo` variant, because the default `panel` placeholder's own inset border had read as padding and a frame.
+
+- **0.6:** optional unframed presentation for screenshots and working notes. No consumer migration is required.
+
+## Verification — revision 0.6, 2026-10-21
+
+- `npm run lint` and production `npm run build` pass.
+- All 21 fixtures checked in the browser at 375, 430, 768, 1024 and 1440 CSS pixels
+  (105 fixture/width checks): valid fixtures render, invalid ones render nothing, no
+  page overflow, and no broken loaded images. Default card fixtures remain valid.
+- Unframed accordion and rail visually inspected; accordion switches the expanded item,
+  rail scrolls horizontally without page overflow. Tablet/desktop retain the split.
+- Desktop Home and ArrowRight change focus and selection. Portrait, landscape and square
+  slides all measure a 560px stage. Copy is vertically centered with zero card padding; card and
+  media backgrounds are transparent, with no card Ring or radius; images use contain.
+- Existing reduced-motion CSS still covers every transition/press state; no new motion was
+  added. The OS reduced-motion preference was not toggled during this verification.
+- Shared authority records the approved presentation in its web surface and changelog.
+
+## Release verification — v1.14.0, 2026-10-21
+
+The owner selected vertically centered, left-aligned copy. `npm run lint`, production build,
+and `npm pack --dry-run` pass (82 package files; no dev harness, docs directory or image assets).
+All 21 fixtures pass render/invalid/overflow/image checks at 375, 430, 768, 1024 and 1440 against
+the production preview in the Codex Chromium browser (105 checks). Centered unframed layout
+visually inspected. Firefox is installed but computer-use access was denied; Firefox rendering
+remains unverified. Existing reduced-motion rules were inspected; OS preference not toggled.
+JustConvert and JustEjari upgrades are deferred; the build-story Site is the adopting consumer.

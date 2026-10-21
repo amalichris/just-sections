@@ -8,6 +8,24 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.14.0 — 2026-10-21
+
+### Sections
+
+- `benefits-carousel`: opt into `presentation: 'unframed'` for screenshots and working notes
+  on the page background. Left-aligned copy is vertically centered beside complete contained
+  media, without card fill, Ring, radius, or media backdrop. Tabs, arrows, stable stage,
+  mobile accordion/rail, keyboard access, and reduced motion retain their existing behavior.
+  Unframed items require `media` and omit both backdrop fields. Existing configs keep the
+  default card treatment and need no edits.
+
+### Internal
+
+- Revision 0.6 dossier, portrait/landscape/square fixtures, unframed accordion and rail,
+  and invalid-media/presentation fixtures.
+- Build-story Site adopts this release. JustConvert and JustEjari remain on v1.13.1;
+  their production upgrades are deferred because this release targets the build-story Site.
+
 ## v1.13.1 — 2026-10-09
 
 ### Sections

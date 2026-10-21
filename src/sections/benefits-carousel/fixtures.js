@@ -85,6 +85,25 @@ const twelveItems = [
   },
 ]
 
+const unframedItems = [
+  {
+    id: 'first-version', title: 'The first version',
+    description: 'A short working note beside a portrait screenshot. The image keeps its own edges and proportions, with no media backdrop.',
+    media: fixtureMedia('Portrait screenshot', { width: 900, height: 1600, alt: 'Illustrative portrait screenshot', variant: 'screen' }),
+  },
+  {
+    id: 'exploration', title: 'The exploration',
+    description: 'A wide exploration board is contained in the same stage.\n\nThis longer note checks paragraph spacing and stable slide height. The layout should read as an explanation beside an artifact, rather than a promotional card.',
+    media: fixtureMedia('Landscape exploration', { width: 1600, height: 900, alt: 'Illustrative landscape exploration board', variant: 'screen' }),
+  },
+  {
+    id: 'decision', title: 'The decision',
+    description: 'A square artifact with explicit bottom alignment. Text stays vertically centered while the complete image sits at the bottom of the reserved media stage.',
+    mediaVerticalAlignment: 'bottom',
+    media: fixtureMedia('Square artifact', { width: 1000, height: 1000, alt: 'Illustrative square artifact', variant: 'screen' }),
+  },
+]
+
 export default [
   {
     id: 'default',
@@ -166,6 +185,36 @@ export default [
       items: twelveItems,
       layoutOnMobile: 'rail',
     },
+  },
+  {
+    id: 'unframed', label: 'Unframed working notes',
+    note: 'Vertically centered copy and complete portrait, landscape and square images on the page background. No card, Ring, media backdrop, inset or outer radius. Tabs/arrows remain; stable stage. Mobile uses the accordion.',
+    props: { eyebrow: 'Build notes', title: 'How the idea evolved', subtitle: 'Screenshots and the decisions beside them.', presentation: 'unframed', items: unframedItems },
+  },
+  {
+    id: 'unframed-rail', label: 'Unframed mobile rail',
+    note: 'Unframed with the mobile rail. Complete images sit at the top of transparent 3:4 stages; explicit bottom alignment remains supported.',
+    props: { title: 'How the idea evolved', presentation: 'unframed', layoutOnMobile: 'rail', items: unframedItems },
+  },
+  {
+    id: 'unknown-presentation', label: 'Unknown presentation', expectsNothing: true,
+    note: 'An unknown presentation must render nothing.',
+    props: { title: 'Invalid presentation', presentation: 'plain', items: unframedItems },
+  },
+  {
+    id: 'unframed-without-media', label: 'Unframed without media', expectsNothing: true,
+    note: 'Unframed requires media on every item.',
+    props: { title: 'Missing screenshot', presentation: 'unframed', items: [unframedItems[0], unframedItems[1], { id: 'missing', title: 'Missing', description: 'No screenshot.' }] },
+  },
+  {
+    id: 'unframed-with-colour', label: 'Unframed with colour backdrop', expectsNothing: true,
+    note: 'Unframed rejects a colour backdrop rather than silently ignoring it.',
+    props: { title: 'Forbidden backdrop', presentation: 'unframed', items: [unframedItems[0], unframedItems[1], { ...unframedItems[2], mediaBackdrop: 'sky' }] },
+  },
+  {
+    id: 'unframed-with-photo', label: 'Unframed with photo backdrop', expectsNothing: true,
+    note: 'Unframed rejects a photo backdrop rather than silently ignoring it.',
+    props: { title: 'Forbidden backdrop', presentation: 'unframed', items: [unframedItems[0], unframedItems[1], { ...unframedItems[2], mediaBackdropImage: photo('Forbidden backdrop') }] },
   },
   {
     id: 'missing-title',

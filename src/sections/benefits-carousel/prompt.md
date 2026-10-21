@@ -1,7 +1,7 @@
 # Benefits carousel implementation prompt
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.5`
+- **Revision:** `0.6`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -13,7 +13,7 @@
 ## Implement
 
 - `BenefitsCarousel.jsx` and `BenefitsCarousel.css` in this folder; register as `benefits-carousel`.
-- Validate with the Benefits Showcase media-field rule (exactly one backdrop; a colour requires `media`) and 3–12 items with unique ids; guard with `requireProps`.
+- Validate 3–12 unique items. `presentation` is `card` (default) or `unframed`. Card keeps the existing exactly-one-backdrop contract. Unframed requires `media` and forbids both backdrops. Reject unknown values with `requireProps`.
 - Render the tab/card view and the accordion together; CSS switches at 768px. One `activeId` drives both.
 - Tabs are pills: Warm Sand Pill unselected, `nearBlack`/`ivory` selected, Inter 16px w500.
 - Tabs follow the WAI-ARIA tabs pattern with a roving tab index and Left/Right/Home/End. Reveal the selected tab by scrolling the row, never with `scrollIntoView`.
@@ -24,6 +24,8 @@
 - An item's optional `mediaVerticalAlignment` is `bottom` (default) or `top`; validate it. `top` adds `benefits-carousel__media--top-aligned`, which moves the 44px space below the image and uses `object-position: center top` in the card, accordion stage and rail frame.
 - Optional `titleOnMobile`, `subtitleOnMobile` and `items[].descriptionOnMobile` replace their defaults below 768px; validate each as a non-empty string when set. Render the heading and subtitle alternatives side by side (`benefits-carousel__copy--wide` / `--mobile`) and let CSS choose; the rail and accordion use `descriptionOnMobile ?? description`, and the rail's name uses `titleOnMobile ?? title`.
 - Fire `onInteraction({ sectionId, interaction: 'item_selected', itemId })` only when the active item changes to a different one.
+- Unframed removes card/media fill, Ring, radius and inset, adds a 48px desktop gap and vertically centers copy. Contain complete screenshots in a 560px desktop stage, 420px accordion stage or existing 3:4 rail stage. Default object position is top; explicit top/bottom remains available. Keep the shared tallest-slide grid and all controls. Preserve description paragraph breaks only in unframed mode.
+- Add unframed accordion/rail fixtures with portrait, landscape and square media plus long copy; add invalid presentation, missing-media and forbidden-backdrop fixtures.
 - No new dependencies; Lucide icons only.
 
 ## Verify and synchronize

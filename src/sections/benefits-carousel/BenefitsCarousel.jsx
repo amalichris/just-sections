@@ -6,6 +6,7 @@ import './BenefitsCarousel.css'
 const MIN_ITEM_COUNT = 3
 const MAX_ITEM_COUNT = 12
 const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress', 'sunflower', 'charcoal'])
+const PRESENTATIONS = new Set(['card', 'unframed'])
 const MOBILE_LAYOUTS = new Set(['accordion', 'rail'])
 const MEDIA_VERTICAL_ALIGNMENTS = new Set(['bottom', 'top'])
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'
@@ -28,23 +29,28 @@ function hasValidMedia(media) {
 }
 
 /**
- * Every item declares exactly one backdrop, and which one decides whether the
+ * Card items declare exactly one backdrop, and which one decides whether the
  * contained image is required — the rule `benefits-showcase` already uses.
  *
  * A colour field with nothing on it is an empty coloured rectangle, so `media`
  * is required there. A backdrop image can stand on its own, so `media` is
- * optional over it.
+ * optional over it. Unframed items require media without either backdrop.
  */
-function hasValidMediaField(item) {
+function hasValidMediaField(item, presentation) {
   const hasBackdrop = item.mediaBackdrop !== undefined
   const hasBackdropImage = item.mediaBackdropImage !== undefined
 
-  if (hasBackdrop === hasBackdropImage) return false
   if (
     item.mediaVerticalAlignment !== undefined &&
     !MEDIA_VERTICAL_ALIGNMENTS.has(item.mediaVerticalAlignment)
   )
     return false
+
+  if (presentation === 'unframed') {
+    return !hasBackdrop && !hasBackdropImage && hasValidMedia(item.media)
+  }
+
+  if (hasBackdrop === hasBackdropImage) return false
 
   if (hasBackdrop) {
     return MEDIA_BACKDROPS.has(item.mediaBackdrop) && hasValidMedia(item.media)
@@ -56,7 +62,7 @@ function hasValidMediaField(item) {
   )
 }
 
-function hasValidItems(items) {
+function hasValidItems(items, presentation) {
   if (!Array.isArray(items) || items.length < MIN_ITEM_COUNT || items.length > MAX_ITEM_COUNT)
     return false
 
@@ -71,7 +77,7 @@ function hasValidItems(items) {
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
       !isOptionalString(item.descriptionOnMobile) ||
-      !hasValidMediaField(item)
+      !hasValidMediaField(item, presentation)
     ) {
       return false
     }
@@ -105,7 +111,11 @@ function MediaPanel({ item, className, eager }) {
       {item.media ? (
         <img
           className={`benefits-carousel__media${
-            item.mediaVerticalAlignment === 'top' ? ' benefits-carousel__media--top-aligned' : ''
+            item.mediaVerticalAlignment === 'top'
+              ? ' benefits-carousel__media--top-aligned'
+              : item.mediaVerticalAlignment === 'bottom'
+                ? ' benefits-carousel__media--bottom-aligned'
+                : ''
           }`}
           src={item.media.src}
           alt={item.media.alt}
@@ -146,11 +156,12 @@ function MediaPanel({ item, className, eager }) {
  *   mediaVerticalAlignment?: 'bottom' | 'top',
  *   descriptionOnMobile?: string,
  * }[]} props.items
- *   Required, three to twelve. Each item declares exactly one backdrop:
+ *   Required, three to twelve. Card items declare exactly one backdrop:
  *   `mediaBackdrop` (a colour token, which makes `media` required) or
  *   `mediaBackdropImage` (filled with `cover`, which makes `media` optional).
  *   `media` is contained, centred and seated on the panel's bottom edge, or on
- *   its top edge with `mediaVerticalAlignment: 'top'`. `descriptionOnMobile`
+ *   its top edge with `mediaVerticalAlignment: 'top'`. Unframed items require
+ *   `media`, forbid backdrops, and default to top alignment. `descriptionOnMobile`
  *   replaces `description` in the accordion or rail below 768px.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
@@ -159,6 +170,8 @@ function MediaPanel({ item, className, eager }) {
  * @param {'accordion' | 'rail'} [props.layoutOnMobile='accordion'] Below 768px:
  *   a single-open accordion, or a native horizontal scroll rail of portrait
  *   cards with a peek of the next one.
+ * @param {'card' | 'unframed'} [props.presentation='card'] Unframed removes card
+ *   and media chrome, vertically centers notes, requires media and forbids backdrops.
  * @param {string} [props.id] Section id, defaults to `benefits-carousel`.
  * @param {(event: { sectionId: string, interaction: 'item_selected', itemId: string }) => void}
  *   [props.onInteraction] Called when a reader makes a different item active.
@@ -171,10 +184,11 @@ export default function BenefitsCarousel({
   titleOnMobile,
   subtitleOnMobile,
   layoutOnMobile = 'accordion',
+  presentation = 'card',
   id = 'benefits-carousel',
   onInteraction,
 }) {
-  const itemsAreValid = hasValidItems(items)
+  const itemsAreValid = hasValidItems(items, presentation)
   const [activeId, setActiveId] = useState(() => (itemsAreValid ? items[0].id : null))
   const tabListRef = useRef(null)
   const tabRefs = useRef(new Map())
@@ -185,7 +199,8 @@ export default function BenefitsCarousel({
     requireProps('BenefitsCarousel', {
       title,
       items,
-      'three to twelve complete items with unique ids and exactly one backdrop each':
+      "presentation of 'card' or 'unframed'": PRESENTATIONS.has(presentation) ? true : undefined,
+      'three to twelve complete items with unique ids and media matching the presentation':
         itemsAreValid ? true : undefined,
       "layoutOnMobile of 'accordion' or 'rail'": MOBILE_LAYOUTS.has(layoutOnMobile) ? true : undefined,
       'titleOnMobile and subtitleOnMobile as non-empty strings when set':
@@ -263,7 +278,7 @@ export default function BenefitsCarousel({
   return (
     <section
       id={id}
-      className={`benefits-carousel benefits-carousel--mobile-${layoutOnMobile}`}
+      className={`benefits-carousel benefits-carousel--mobile-${layoutOnMobile} benefits-carousel--${presentation}`}
       aria-labelledby={titleId}
     >
       <div className="benefits-carousel__layout">

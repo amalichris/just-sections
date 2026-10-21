@@ -43,3 +43,11 @@ Do not edit a copy, and do not re-add a symlink. A pattern that conflicts with, 
 absent from the system must be proposed as an exception, agreed, and written into
 `just-design-system` *in the same change* — before anything here relies on it. See that repo's
 `README.md` and `CHANGELOG.md`.
+
+## Approved carousel presentation — 2026-10-21
+
+`benefits-carousel` supports optional `presentation: 'unframed'` for screenshots and working
+notes. It removes card and media chrome and vertically centers left-aligned copy beside
+contained media. Existing tokens, controls and the default card presentation remain unchanged.
+The family authority is `just-design-system/surfaces/web.md` §9 **Marketing Features Carousel**,
+including its **Unframed presentation** extension and associated changelog entry.
