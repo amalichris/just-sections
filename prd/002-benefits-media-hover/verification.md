@@ -19,4 +19,27 @@
 
 ## Consumers
 
-Pending rollout; record exact lock SHAs, commands and production-preview route checks below.
+Both consumers installed v1.14.1 using npm ci. Installed versions and lockfile resolved
+SHAs match annotated tag commit a4087941db32b3ac365f0e36a048dce2a7ebef68. Only the root
+spec and just-sections version/resolved fields changed; platform metadata was preserved.
+
+- JustConvert commit 60b94da pushed to dev. Build/lint/17 static checks pass, including
+  server-rendered content and hosting checks. Chromium production preview tested /,
+  /emirates, /emirates/verify, /emirates/success, /terms, /privacy and unmatched path at
+  375/768/1440 (21 checks): one h1, no overflow, broken loaded images or Markdown links.
+  The unmatched-path preview used Vite's homepage SPA fallback and emitted hydration
+  warnings; production 404 output/routing is covered separately by static tests.
+  A subsequent /emirates check produced no new errors. /support returns 308 to canonical FAQ.
+- JustConvert production hover measured 1.025 while the stage remained untransformed.
+  Home/ArrowRight move tab focus and selection together; mobile rail keyboard scrolling
+  works without page overflow. This is not a physical touch test.
+- JustEjari commit 7d05b6e pushed to develop. Production build passes. Chromium preview
+  /, /terms, /privacy at 375/768/1280 (9 checks) passes one-h1/overflow/image/Markdown-link
+  checks. Legal pages have no mailto links. Initial checks preceded lazy content; rerun
+  after awaiting visible h1 passed all nine. No legal content changed.
+- Firefox access was denied. Coarse-pointer and reduced-motion guards were inspected in
+  compiled CSS but physical touch and dynamic OS preference switching remain unverified.
+- Build-story Site is not a registered repo consumer and uses excluded unframed media;
+  no external Site was republished. No production-site promotion was performed.
+
+Both Vercel staging deployments completed successfully: JustConvert dev 60b94da and JustEjari develop 7d05b6e. Verified through GitHub Vercel commit statuses on 2026-10-26.

@@ -1,6 +1,6 @@
 # PRD-002: Benefits media hover
 
-**Status:** in-progress
+**Status:** done
 **Author:** Codex
 **Created:** 2026-10-26
 **Last updated:** 2026-10-26
@@ -118,15 +118,15 @@ eligibility resets to the ordinary untransformed state immediately.
 
 ## 8 · Acceptance checks
 
-- [ ] Given card media and a hover-capable fine pointer with motion allowed, entering
+- [x] Given card media and a hover-capable fine pointer with motion allowed, entering
   the media area scales images to 1.025 with the specified duration/curve; leaving
   returns to 1 without waiting for a previous transition to complete.
-- [ ] Given bottom/top foreground or backdrop media, its anchor is bottom/top/center
+- [x] Given bottom/top foreground or backdrop media, its anchor is bottom/top/center
   respectively; the colored stage, text and controls do not scale.
-- [ ] Given touch-only input, reduced motion, or unframed presentation, no image zoom
+- [x] Given touch-only input, reduced motion, or unframed presentation, no image zoom
   or zoom transition occurs. Ordinary touch rail scrolling still works.
-- [ ] Existing fixtures render correctly or reject invalid configurations at all five
+- [x] Existing fixtures render correctly or reject invalid configurations at all five
   gallery widths; no new page overflow, broken images or keyboard regression.
-- [ ] Lint, production build and pack review pass. No added runtime dependencies/dev code/assets.
-- [ ] Annotated v1.14.1 is pushed; both registered consumers adopt matching lock SHAs,
+- [x] Lint, production build and pack review pass. No added runtime dependencies/dev code/assets.
+- [x] Annotated v1.14.1 is pushed; both registered consumers adopt matching lock SHAs,
   build and receive production-preview route checks. Report browser limitations honestly.

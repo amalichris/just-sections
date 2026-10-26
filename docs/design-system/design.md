@@ -51,3 +51,8 @@ notes. It removes card and media chrome and vertically centers left-aligned copy
 contained media. Existing tokens, controls and the default card presentation remain unchanged.
 The family authority is `just-design-system/surfaces/web.md` §9 **Marketing Features Carousel**,
 including its **Unframed presentation** extension and associated changelog entry.
+
+
+## Approved carousel media hover — 2026-10-26
+
+Default card media uses a restrained fine-pointer zoom with attachment-aware anchors. Touch-only input, reduced motion and unframed media stay static. The authority is `just-design-system/surfaces/web.md`, Features carousel media hover.
