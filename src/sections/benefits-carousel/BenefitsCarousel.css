@@ -134,6 +134,30 @@
   inset: 0 16px 44px;
 }
 
+/* Decorative media motion follows input capability, not viewport size. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .benefits-carousel:not(.benefits-carousel--unframed) .benefits-carousel__media,
+  .benefits-carousel:not(.benefits-carousel--unframed) .benefits-carousel__backdrop-image {
+    transition: transform 350ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .benefits-carousel:not(.benefits-carousel--unframed) .benefits-carousel__media {
+    transform-origin: center bottom;
+  }
+
+  .benefits-carousel:not(.benefits-carousel--unframed) .benefits-carousel__media--top-aligned {
+    transform-origin: center top;
+  }
+
+  .benefits-carousel:not(.benefits-carousel--unframed) :is(
+    .benefits-carousel__panel,
+    .benefits-carousel__stage-mobile,
+    .benefits-carousel__rail-frame
+  ):hover > :is(.benefits-carousel__media, .benefits-carousel__backdrop-image) {
+    transform: scale(1.025);
+  }
+}
+
 /* ── Card view, 768px and up ─────────────────────────────────────────────── */
 
 .benefits-carousel__cards {

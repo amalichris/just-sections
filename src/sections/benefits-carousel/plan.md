@@ -1,7 +1,7 @@
 # Benefits carousel plan
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.6`
+- **Revision:** `0.7`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page feature section; `mediaBackdrop` variant per item. First expected consumer is JustConvert's main landing page
 
@@ -134,3 +134,16 @@ the production preview in the Codex Chromium browser (105 checks). Centered unfr
 visually inspected. Firefox is installed but computer-use access was denied; Firefox rendering
 remains unverified. Existing reduced-motion rules were inspected; OS preference not toggled.
 JustConvert and JustEjari upgrades are deferred; the build-story Site is the adopting consumer.
+
+
+## Card media hover — revision 0.7
+
+Approved in PRD-002 and the shared Features carousel media hover extension. In card
+presentation only, scale foreground/backdrop images to 1.025 on their media container's
+hover, with 350ms cubic-bezier(0.32, 0.72, 0, 1). Gate both transition and transform on
+hover:hover, pointer:fine and prefers-reduced-motion:no-preference. Bottom/top foreground
+anchors follow attachment; backdrops center. Containers stay still and clip overflow.
+Reverse immediately from the current scale on leave; no delay, bounce, cursor, click
+behavior, focus stop, or touch-scroll handler. Touch-only and reduced-motion remain
+static. Unframed and hero remain unchanged. Reuse existing photo, alignment, rail and
+unframed fixtures; verify pointer interruption and eligibility changes in production CSS.

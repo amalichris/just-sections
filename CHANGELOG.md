@@ -8,6 +8,21 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.14.1 — 2026-10-26
+
+### Sections
+
+- `benefits-carousel`: framed media gently scales 2.5% when hovered with a fine pointer.
+  The 350ms existing web curve follows each screenshot's top/bottom attachment;
+  photo backdrops scale from the center. Containers and controls remain fixed.
+  Touch-only input, reduced motion and unframed presentation remain static.
+  No config migration, new props, JavaScript, or dependencies.
+
+### Internal
+
+- PRD-002, dossier revision 0.7 and shared motion documentation. Both registered
+  product consumers roll to this patch; production promotion remains separate.
+
 ## v1.14.0 — 2026-10-21
 
 ### Sections
