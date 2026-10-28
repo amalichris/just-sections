@@ -8,6 +8,13 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.15.1 — 2026-10-28
+
+### Sections
+
+- Wide-screen media keeps its center hover anchor when fine-pointer hover is enabled.
+  Existing bottom-attached media keeps its bottom anchor. No configuration changes.
+
 ## v1.15.0 — 2026-10-28
 
 ### Sections

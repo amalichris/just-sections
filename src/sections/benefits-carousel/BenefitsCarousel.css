@@ -627,7 +627,7 @@
 
 /* Optional mixed-screen artwork: default cards retain their existing geometry. */
 .benefits-carousel__picture { display: contents; }
-.benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
+.benefits-carousel .benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
   inset: 24px;
   width: calc(100% - 48px);
   height: calc(100% - 48px);
@@ -659,7 +659,7 @@
     aspect-ratio: auto;
     height: clamp(320px, 90.666667vw, 400px);
   }
-  .benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
+  .benefits-carousel .benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
     inset: 16px;
     width: calc(100% - 32px);
     height: calc(100% - 32px);
