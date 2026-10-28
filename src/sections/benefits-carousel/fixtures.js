@@ -106,6 +106,20 @@ const unframedItems = [
 
 export default [
   {
+    id: 'mixed-screens', label: 'Mixed phone and wide screens',
+    props: { title: 'Ready for more room', layoutOnMobile: 'rail', items: [
+      { ...colourItems[0], mediaLayout: 'phone-screen', mediaOnMobile: capture('Mobile phone') },
+      { ...colourItems[1], mediaLayout: 'phone-screen', mediaOnMobile: capture('Mobile clock') },
+      { ...colourItems[2], mediaLayout: 'wide-screen', mediaBackdrop: 'charcoal',
+        media: fixtureMedia('Wide screen', { width: 1800, height: 1200, alt: 'Wide screen', variant: 'screen' }) },
+    ] },
+  },
+  { id: 'unknown-media-layout', label: 'Invalid media layout', expectsNothing: true,
+    props: { title: 'Invalid', items: colourItems.slice(0, 3).map(item => ({ ...item, mediaLayout: 'unknown' })) } },
+  { id: 'invalid-mobile-media', label: 'Invalid mobile media', expectsNothing: true,
+    props: { title: 'Invalid', items: colourItems.slice(0, 3).map(item => ({ ...item, mediaOnMobile: {} })) } },
+
+  {
     id: 'default',
     label: 'Default',
     note: 'Twelve items, every optional prop, all five colour fields and both photo modes. At 768px+: the tab row scrolls sideways, arrows are disabled at the ends, the counter tracks the tab, the card never changes height. Use Tab to reach the selected tab, then Left/Right/Home/End. Below 768px: an accordion with the first item open.',

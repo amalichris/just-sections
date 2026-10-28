@@ -153,7 +153,7 @@
     .benefits-carousel__panel,
     .benefits-carousel__stage-mobile,
     .benefits-carousel__rail-frame
-  ):hover > :is(.benefits-carousel__media, .benefits-carousel__backdrop-image) {
+  ):hover :is(.benefits-carousel__media, .benefits-carousel__backdrop-image) {
     transform: scale(1.025);
   }
 }
@@ -622,5 +622,51 @@
   .benefits-carousel__arrow:not(:disabled):active,
   .benefits-carousel__item button:active {
     transform: none;
+  }
+}
+
+/* Optional mixed-screen artwork: default cards retain their existing geometry. */
+.benefits-carousel__picture { display: contents; }
+.benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
+  inset: 24px;
+  width: calc(100% - 48px);
+  height: calc(100% - 48px);
+  object-position: center;
+  transform-origin: center;
+}
+@media (min-width: 1024px) {
+  .benefits-carousel__card--wide-screen {
+    grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+    min-height: 600px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .benefits-carousel__card--wide-screen {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(520px, 1fr);
+  }
+  .benefits-carousel__card--wide-screen .benefits-carousel__text { justify-content: center; }
+}
+@media (max-width: 767px) {
+  .benefits-carousel__rail {
+    --benefits-carousel-screen-top: calc((clamp(320px, 90.666667vw, 400px) - (clamp(384px, 108.8vw, 480px) - 32px) * .656572) / 2);
+  }
+  .benefits-carousel__rail-card--wide-screen {
+    flex-basis: clamp(384px, 108.8vw, 480px);
+    width: clamp(384px, 108.8vw, 480px);
+  }
+  .benefits-carousel__rail-card--wide-screen .benefits-carousel__rail-frame {
+    aspect-ratio: auto;
+    height: clamp(320px, 90.666667vw, 400px);
+  }
+  .benefits-carousel__media-layout--wide-screen .benefits-carousel__media {
+    inset: 16px;
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+  }
+  .benefits-carousel__rail-frame.benefits-carousel__media-layout--phone-screen .benefits-carousel__media {
+    top: var(--benefits-carousel-screen-top);
+    bottom: auto;
+    object-position: center top;
   }
 }

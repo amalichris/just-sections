@@ -8,6 +8,21 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.15.0 — 2026-10-28
+
+### Sections
+
+- `benefits-carousel`: optional `mediaLayout` (`standard`, `wide-screen`, `phone-screen`)
+  and `mediaOnMobile` artwork support mixed portrait and landscape screens. Wide cards use
+  1.6× mobile rail width, centered media, stacked tablet copy and a 65% desktop media area.
+  Phone mobile artwork can align its screen edge with the wide screen without changing scale.
+  Default card and unframed configurations retain their appearance; no migration required.
+  Existing keyboard, native scrolling, fine-pointer hover and reduced-motion behavior remain.
+
+### Internal
+
+- Dossier revision 0.8 and mixed-screen/invalid configuration gallery fixtures.
+
 ## v1.14.1 — 2026-10-26
 
 ### Sections

@@ -1,7 +1,7 @@
 # Benefits carousel implementation prompt
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.7`
+- **Revision:** `0.8`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -47,3 +47,32 @@ Reverse immediately from the current scale on leave; no delay, bounce, cursor, c
 behavior, focus stop, or touch-scroll handler. Touch-only and reduced-motion remain
 static. Unframed and hero remain unchanged. Reuse existing photo, alignment, rail and
 unframed fixtures; verify pointer interruption and eligibility changes in production CSS.
+
+
+## Mixed screen artwork — revision 0.8 (approved 2026-10-28)
+
+Optional per-item `mediaLayout`: `standard` (default), `wide-screen`, or `phone-screen`.
+Optional `mediaOnMobile: Media` supplies a native picture source below 768px. Both are
+card-only; unknown layouts, malformed media and unframed combinations render nothing.
+No existing consumer configuration needs migration. No product names, assets or alt selectors
+belong in library CSS. `picture` uses display:contents and foreground hover still reaches img.
+
+Wide-screen: centered complete media, 24px insets; desktop 35/65 split and 600px minimum
+height; tablet 768–1023 stacks text over a minimum 520px media area. Mobile rail card is
+1.6× standard width (384–480px, 108.8vw), same 320–400px frame height as standard cards,
+16px insets. Native rail scroll reveals the wider-than-viewport card; no page overflow.
+Center hover anchor; existing fine-pointer/reduced-motion gates remain unchanged.
+
+Artwork contract: wide transparent canvas 600×400, screen 560×393.943 centered. Phone
+canvas 400×600, screen 360 wide; phone-screen mobile source has zero top canvas padding.
+The mobile phone inset is half the frame height minus half the displayed wide screen height
+(.656572 × available wide canvas width). This aligns visible top edges without rescaling
+phones or leaving a gap at the bottom. Normal desktop artwork remains unchanged. Top-attached
+sheets and backdrop photos retain existing placement. These are artwork proportions, not
+hardware styling; the consumer owns screen corner masks and exports. Alternate media
+must preserve the base canvas aspect ratio. Accordion keeps its existing stage height;
+phone top-edge matching applies only to rails.
+
+Acceptance: review default + mixed-screen fixtures at 375/430/768/1024/1440, validate
+unknown layout/media rejection, stable stage, no body overflow, keyboard tabs and rail,
+complete wide screens and existing pointer/reduced-motion behavior; build/lint/package audit.

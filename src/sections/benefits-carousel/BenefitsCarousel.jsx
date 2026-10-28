@@ -6,6 +6,7 @@ import './BenefitsCarousel.css'
 const MIN_ITEM_COUNT = 3
 const MAX_ITEM_COUNT = 12
 const MEDIA_BACKDROPS = new Set(['chianti', 'sky', 'cypress', 'sunflower', 'charcoal'])
+const MEDIA_LAYOUTS = new Set(['standard', 'wide-screen', 'phone-screen'])
 const PRESENTATIONS = new Set(['card', 'unframed'])
 const MOBILE_LAYOUTS = new Set(['accordion', 'rail'])
 const MEDIA_VERTICAL_ALIGNMENTS = new Set(['bottom', 'top'])
@@ -37,6 +38,9 @@ function hasValidMedia(media) {
  * optional over it. Unframed items require media without either backdrop.
  */
 function hasValidMediaField(item, presentation) {
+  if (item.mediaLayout !== undefined && !MEDIA_LAYOUTS.has(item.mediaLayout)) return false
+  if (item.mediaOnMobile !== undefined && !hasValidMedia(item.mediaOnMobile)) return false
+  if (presentation === 'unframed' && (item.mediaLayout !== undefined || item.mediaOnMobile !== undefined)) return false
   const hasBackdrop = item.mediaBackdrop !== undefined
   const hasBackdropImage = item.mediaBackdropImage !== undefined
 
@@ -93,7 +97,7 @@ function prefersReducedMotion() {
 
 function MediaPanel({ item, className, eager }) {
   return (
-    <div className={`${className}${item.mediaBackdrop ? ` ${className}--${item.mediaBackdrop}` : ''}`}>
+    <div className={`${className}${item.mediaLayout ? ` benefits-carousel__media-layout--${item.mediaLayout}` : ''}${item.mediaBackdrop ? ` ${className}--${item.mediaBackdrop}` : ''}`}>
       {item.mediaBackdropImage ? (
         <img
           className="benefits-carousel__backdrop-image"
@@ -109,6 +113,8 @@ function MediaPanel({ item, className, eager }) {
       ) : null}
 
       {item.media ? (
+        <picture className="benefits-carousel__picture">
+          {item.mediaOnMobile ? <source media="(max-width: 767px)" srcSet={item.mediaOnMobile.srcSet ?? item.mediaOnMobile.src} sizes={item.mediaOnMobile.sizes} /> : null}
         <img
           className={`benefits-carousel__media${
             item.mediaVerticalAlignment === 'top'
@@ -126,6 +132,7 @@ function MediaPanel({ item, className, eager }) {
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
         />
+        </picture>
       ) : null}
     </div>
   )
@@ -153,6 +160,8 @@ function MediaPanel({ item, className, eager }) {
  *   mediaBackdrop?: 'chianti' | 'sky' | 'cypress' | 'sunflower' | 'charcoal',
  *   mediaBackdropImage?: Media,
  *   media?: Media,
+ *   mediaOnMobile?: Media,
+ *   mediaLayout?: 'standard' | 'wide-screen' | 'phone-screen',
  *   mediaVerticalAlignment?: 'bottom' | 'top',
  *   descriptionOnMobile?: string,
  * }[]} props.items
@@ -350,7 +359,7 @@ export default function BenefitsCarousel({
                 <div
                   key={item.id}
                   id={panelId(item.id)}
-                  className={`benefits-carousel__card${isSelected ? ' benefits-carousel__card--selected' : ''}`}
+                  className={`benefits-carousel__card${item.mediaLayout === 'wide-screen' ? ' benefits-carousel__card--wide-screen' : ''}${isSelected ? ' benefits-carousel__card--selected' : ''}`}
                   role="tabpanel"
                   aria-labelledby={tabId(item.id)}
                   inert={!isSelected}
@@ -407,7 +416,7 @@ export default function BenefitsCarousel({
           >
             <ul className="benefits-carousel__rail">
               {items.map((item, index) => (
-                <li key={item.id} className="benefits-carousel__rail-card">
+                <li key={item.id} className={`benefits-carousel__rail-card${item.mediaLayout === 'wide-screen' ? ' benefits-carousel__rail-card--wide-screen' : ''}`}>
                   <MediaPanel item={item} className="benefits-carousel__rail-frame" eager={index === 0} />
                   <h3>{item.title}</h3>
                   <p>{item.descriptionOnMobile ?? item.description}</p>

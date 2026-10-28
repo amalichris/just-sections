@@ -56,3 +56,11 @@ including its **Unframed presentation** extension and associated changelog entry
 ## Approved carousel media hover — 2026-10-26
 
 Default card media uses a restrained fine-pointer zoom with attachment-aware anchors. Touch-only input, reduced motion and unframed media stay static. The authority is `just-design-system/surfaces/web.md`, Features carousel media hover.
+
+
+## Approved mixed-screen carousel artwork — 2026-10-28
+
+Optional wide-screen and phone-screen layouts support the approved mixed-device benefits
+presentation: 1.6× mobile rail width, centered wide artwork, stacked tablet copy, desktop
+65% media, and matching mobile screen top edges. Existing cards remain unchanged. See
+benefits-carousel revision 0.8 and the family web surface's mixed-screen artwork extension.
