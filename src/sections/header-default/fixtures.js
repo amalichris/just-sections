@@ -22,6 +22,16 @@ export default [
     },
   },
   {
+    id: 'static',
+    label: 'Static position',
+    note: 'In normal flow at the top of the page. Scrolling must not morph it into the glass pill or show the mobile rail; it scrolls away with the page.',
+    props: {
+      brand: { label: 'Acme', href: '#top' },
+      cta: { label: 'Get started', href: '#pricing' },
+      position: 'static',
+    },
+  },
+  {
     id: 'minimal',
     label: 'Minimal (required only)',
     note: 'No navigation. Omitting it must leave no residual spacing beside the wordmark.',

@@ -154,6 +154,14 @@
   width: auto;
 }
 
+/* Static variant: in normal flow at the top of the page, no scroll states.
+   The page background shows through; the next section follows directly. */
+.header-default--static {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+}
+
 @media (min-width: 768px) {
   .header-default--scrolled {
     padding-top: 16px;

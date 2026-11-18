@@ -53,12 +53,11 @@
   padding: 0 max(20px, env(safe-area-inset-left, 0px)) 48px max(20px, env(safe-area-inset-right, 0px));
 }
 
-/* The top padding clears the fixed `header-default`, as on legal pages. */
 .mic-intro {
   display: grid;
   gap: 16px;
   max-width: 760px;
-  padding-block: 128px 40px;
+  padding-block: 48px 40px;
 }
 
 .mic-intro h1 {
@@ -1064,7 +1063,7 @@
 
 @media (max-width: 767px) {
   .mic-intro {
-    padding-block: 104px 28px;
+    padding-block: 24px 28px;
   }
 
   .mic-card {

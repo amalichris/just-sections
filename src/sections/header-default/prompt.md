@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.12`
+- **Revision:** `0.13`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight

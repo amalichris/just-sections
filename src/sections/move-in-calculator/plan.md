@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.1`
+- **Revision:** `1.2`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -110,6 +110,7 @@ Mediterranean pigments are added there from foundations §2.3.
 ## Implementation notes
 
 - Static registry import: no heavy dependency, so it does not earn a lazy entry.
-- The intro's top padding (128px, 104px under 768px) clears the fixed `header-default`, matching
-  the legal pages. Added in v1.16.1 after the first consumer check.
+- Compose it after `header-default` with `position: 'static'`: the header sits in flow and scrolls
+  away, so the intro keeps its own 48px top padding (24px under 768px). v1.16.1 briefly cleared a
+  fixed header with 128px; v1.17.0 returns to the static composition the owner chose.
 - Copy failure is silent: the share URL stays visible as selectable text.

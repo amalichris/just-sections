@@ -8,6 +8,16 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.17.0 — 2026-11-18
+
+### Sections
+
+- `header-default`: optional `position` variant, `fixed` (default, unchanged) or `static`.
+  `static` sits in normal flow at the top of the page and scrolls away, with no glass pill or
+  mobile rail. Existing configs are unaffected.
+- `move-in-calculator`: intro top padding returns to 48px (24px under 768px) for use after a
+  static header. Pages using it should set `position: 'static'` on their `header-default`.
+
 ## v1.16.1 — 2026-11-18
 
 ### Sections

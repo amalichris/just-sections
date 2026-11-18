@@ -10,9 +10,12 @@ import './HeaderDefault.css'
  * @param {Cta} props.cta Required top-of-page call to action.
  * @param {NavigationItem[]} [props.navigation] Same-page links. Omitted or
  *   empty renders no link list; the wordmark and CTA keep their positions.
+ * @param {'fixed' | 'static'} [props.position='fixed'] `fixed` follows the
+ *   page and morphs into the glass pill on scroll; `static` sits at the top of
+ *   the page in normal flow and scrolls away with it.
  * @param {string} [props.id] Optional element id.
  */
-export default function HeaderDefault({ brand, cta, navigation, id }) {
+export default function HeaderDefault({ brand, cta, navigation, position = 'fixed', id }) {
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -43,11 +46,17 @@ export default function HeaderDefault({ brand, cta, navigation, id }) {
 
   if (requireProps('HeaderDefault', { brand, cta })) return null
 
+  // Any value other than `static` keeps the fixed header, so a typo never
+  // changes how an existing page behaves.
+  const isStatic = position === 'static'
+  const stateClass = isStatic
+    ? ' header-default--static'
+    : isScrolled
+      ? ' header-default--scrolled'
+      : ''
+
   return (
-    <header
-      id={id}
-      className={`header-default${isScrolled ? ' header-default--scrolled' : ''}`}
-    >
+    <header id={id} className={`header-default${stateClass}`}>
       <nav className="header-default__nav" aria-label="Primary navigation">
         <a className="header-default__wordmark" href={brand.href}>
           {brand.label}

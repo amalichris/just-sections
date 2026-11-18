@@ -1,7 +1,7 @@
 # Move-in calculator implementation prompt
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.1`
+- **Revision:** `1.2`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
