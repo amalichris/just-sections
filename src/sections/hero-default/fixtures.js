@@ -37,6 +37,18 @@ export default [
     },
   },
   {
+    id: 'painted',
+    label: 'Painted backdrop',
+    note: 'Optical cover with backdrop: painted. No blur, the painting fades into parchment at the bottom, and the hero scrolls away instead of staying pinned.',
+    props: {
+      title: 'Dubai tenancy contracts.\nOne workflow.',
+      subtitle: 'Collect details, review documents, and prepare the tenancy contract PDF from your phone.',
+      background: fixtureMedia('Backdrop', { width: 1536, height: 1024 }),
+      layout: 'optical-cover',
+      backdrop: 'painted',
+    },
+  },
+  {
     id: 'optical-cover',
     label: 'Optical cover',
     note: 'Full viewport with optically centered copy. In ProductPage, subsequent sections cover the hero; reduced motion uses normal flow.',

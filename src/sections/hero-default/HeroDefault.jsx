@@ -19,16 +19,20 @@ const DEVICE_OFFSET_MAX = 56
  *   overlay. Omitted, the hero keeps its parchment backdrop.
  * @param {Media} [props.media] Product image following the copy in normal flow.
  * @param {'default' | 'optical-cover'} [props.layout] Optional full-screen optical cover composition.
+ * @param {'glass' | 'painted'} [props.backdrop='glass'] `painted` shows a painting
+ *   without blur under a light parchment veil, fading into the page at the bottom,
+ *   with no parallax and no pinned cover (web §9 "Painted imagery").
  * @param {string} [props.id] Section id, defaults to `top`.
  */
-export default function HeroDefault({ title, subtitle, cta, background, media, layout = 'default', id = 'top' }) {
+export default function HeroDefault({ title, subtitle, cta, background, media, layout = 'default', backdrop = 'glass', id = 'top' }) {
+  const painted = backdrop === 'painted'
   const heroRef = useRef(null)
   const instanceId = useId().replaceAll(':', '')
   const titleId = `${id}-${instanceId}-title`
 
   useEffect(() => {
     const hero = heroRef.current
-    if (!hero || layout === 'optical-cover') return undefined
+    if (!hero || layout === 'optical-cover' || painted) return undefined
 
     const parallaxQuery = window.matchMedia(PARALLAX_QUERY)
     let frameId = null
@@ -79,12 +83,12 @@ export default function HeroDefault({ title, subtitle, cta, background, media, l
       parallaxQuery.removeEventListener('change', scheduleUpdate)
       clearOffsets()
     }
-  }, [layout])
+  }, [layout, painted])
 
   if (requireProps('HeroDefault', { title })) return null
 
   return (
-    <section ref={heroRef} id={id} className={`hero-default${layout === 'optical-cover' ? ' hero-default--optical-cover' : ''}`} aria-labelledby={titleId}>
+    <section ref={heroRef} id={id} className={`hero-default${layout === 'optical-cover' ? ' hero-default--optical-cover' : ''}${painted ? ' hero-default--painted' : ''}`} aria-labelledby={titleId}>
       <div className="hero-default__backdrop" aria-hidden="true">
         {background ? (
           <img

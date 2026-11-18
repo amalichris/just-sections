@@ -1,7 +1,7 @@
 # Default hero implementation prompt
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.7`
+- **Revision:** `1.8`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight

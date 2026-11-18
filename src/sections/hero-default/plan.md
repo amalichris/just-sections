@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.7`
+- **Revision:** `1.8`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -94,6 +94,11 @@ The section following the hero on `/` — the gallery's fixture-built demo page 
 **Revision 0.7:** added the approved desktop/tablet hero depth treatment. The decorative backdrop follows scroll 10% more slowly (80px maximum) while the foreground phone travels 6% faster (56px maximum); mobile, reduced motion, reading content, and native page scroll remain unchanged.
 
 ## Revision 1.7 — optional optical cover composition
+
+`backdrop` is an optional enum (v1.21.0): `glass` (default, unchanged) or `painted`. `painted`
+removes the blur, lays a light parchment veil over the painting (35% → 30% → 60% → solid) so it
+fades into the page at the bottom, switches the subtitle to `textEmphasis`, and turns off both
+the parallax and the optical-cover pin: the hero scrolls with the page. Web §9 "Painted imagery".
 
 `layout` is an optional enum: `default` (unchanged) or `optical-cover`. The latter is
 intended for heroes without foreground media: full viewport, copy centered slightly

@@ -225,3 +225,28 @@
     top: 0;
   }
 }
+
+/* Painted backdrop (web §9 "Painted imagery"): no blur so the brushwork stays
+   visible, a light parchment veil behind the copy, and a fade into the page at
+   the bottom. It scrolls with the page: no parallax, no pinned cover. */
+.hero-default--painted .hero-default__glass {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: linear-gradient(
+    to bottom,
+    rgb(245 244 237 / 35%) 0%,
+    rgb(245 244 237 / 30%) 35%,
+    rgb(245 244 237 / 60%) 72%,
+    var(--just-color-parchment) 100%
+  );
+}
+
+.hero-default--painted .hero-default__content p {
+  color: var(--just-color-dark-warm);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-default--optical-cover.hero-default--painted {
+    position: relative;
+  }
+}

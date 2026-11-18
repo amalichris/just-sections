@@ -40,7 +40,10 @@ export default function ProductPage({ config, onInteraction }) {
   const sections = config?.sections ?? []
   usePageMeta(config?.meta)
   const hasCoverHero = sections.some(
-    (entry) => entry.type === 'hero-default' && entry.props?.layout === 'optical-cover',
+    (entry) =>
+      entry.type === 'hero-default' &&
+      entry.props?.layout === 'optical-cover' &&
+      entry.props?.backdrop !== 'painted',
   )
 
   function renderSection(entry, index) {

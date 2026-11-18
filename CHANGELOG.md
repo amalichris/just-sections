@@ -8,6 +8,15 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.21.0 — 2026-11-18
+
+### Sections
+
+- `hero-default`: optional `backdrop` (`glass`, the default and unchanged, or `painted`).
+  `painted` shows the background without blur under a parchment veil that fades into the page,
+  with no parallax and no pinned optical cover. `ProductPage` no longer marks a painted
+  optical-cover hero as a cover hero.
+
 ## v1.20.0 — 2026-11-18
 
 ### Sections
