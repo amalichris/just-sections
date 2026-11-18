@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.2`
+- **Revision:** `1.3`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -69,8 +69,14 @@ Mediterranean pigments are added there from foundations §2.3.
 - `shareUrl`: absolute page URL. Enables "Copy link" and the visible share URL. Omitted, neither renders.
 - `id`: defaults to `calculator`.
 
-**Query string.** On load the section reads `rent`, `cheques`, `type` (`apartment`|`villa`),
-`beds` (0–4), `furnished` (`1`), `agent` (`0`). Invalid values fall back to defaults.
+**Query string.** The link always carries the latest breakdown. `rent`, `cheques`, `type`
+(`apartment`|`villa`), `beds` (0–4), `furnished` (`0`|`1`) and `agent` (`0`|`1`) are always
+written; `deposit` (%), `fee` (%), `extras`, `utilities` and `other` (amounts) only when they
+differ from their defaults. On load every key is read back; invalid values fall back to
+defaults, and a shared `deposit` or `utilities` counts as an edit, so it is not overwritten by
+the furnishing or bedroom defaults. When `shareUrl` is set, the address bar is kept in sync with
+`history.replaceState` (debounced 300ms, no history entries), so copying the browser URL and
+"Copy link" give the same result.
 
 ## Behavior and responsive design
 

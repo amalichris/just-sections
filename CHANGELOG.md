@@ -8,6 +8,16 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.17.1 — 2026-11-18
+
+### Sections
+
+- `move-in-calculator`: the share link now carries the full breakdown. Besides rent, cheques,
+  property, bedrooms, furnishing and agent, it adds `deposit`, `fee`, `extras`, `utilities` and
+  `other` whenever they differ from their defaults, and a shared link restores all of them.
+  When `shareUrl` is set, the address bar follows the current breakdown (no history entries).
+  No configuration changes.
+
 ## v1.17.0 — 2026-11-18
 
 ### Sections

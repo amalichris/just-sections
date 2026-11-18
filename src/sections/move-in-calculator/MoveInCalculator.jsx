@@ -84,6 +84,19 @@ export default function MoveInCalculator({
 
   useEffect(() => () => clearTimeout(animTimer.current), [])
 
+  // Keep the address bar on the current breakdown, so copying the browser URL
+  // shares the same result as "Copy link". Debounced so typing does not flood
+  // the history entry; replaceState adds no back-button steps.
+  useEffect(() => {
+    if (!shareUrl || !assumptions || typeof window === 'undefined') return undefined
+    const timer = setTimeout(() => {
+      const { pathname, hash } = window.location
+      window.history.replaceState(window.history.state, '', `${pathname}?${shareParams(state, assumptions)}${hash}`)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [state, shareUrl, assumptions])
+
   if (requireProps('MoveInCalculator', { title, assumptions })) return null
 
   const a = assumptions
@@ -125,16 +138,7 @@ export default function MoveInCalculator({
   }
 
   function shareLink() {
-    const params = new URLSearchParams({
-      rent: String(s.rent),
-      cheques: String(s.cheques),
-      type: s.type,
-      beds: String(s.beds),
-      furnished: s.furn === 'furnished' ? '1' : '0',
-      agent: s.agent ? '1' : '0',
-    })
-
-    return `${shareUrl}?${params}`
+    return `${shareUrl}?${shareParams(s, a)}`
   }
 
   function copy(text, key) {
@@ -705,6 +709,41 @@ function initialState(a) {
     base.dep = a.depositPercent[base.furn]
     base.utility = a.utilityEstimates[base.type][base.beds]
   }
+  if (typeof window !== 'undefined' && a) {
+    const q = new URLSearchParams(window.location.search)
+    const read = (key) => (q.has(key) ? parseAmount(q.get(key)) : null)
+    const dep = read('deposit')
+    const fee = read('fee')
+    const once = read('extras')
+    const utility = read('utilities')
+    const extra = read('other')
+    if (dep !== null) Object.assign(base, { dep, depTouched: true })
+    if (fee !== null) base.fee = fee
+    if (once !== null) base.once = once
+    if (utility !== null) Object.assign(base, { utility, utilityTouched: true })
+    if (extra !== null) base.extra = extra
+  }
 
   return base
+}
+
+// Every input that changes the breakdown. The six main choices are always
+// written; edited assumptions and monthly amounts only when they differ from
+// their defaults, which keeps an untouched link short.
+function shareParams(s, a) {
+  const params = new URLSearchParams({
+    rent: String(s.rent),
+    cheques: String(s.cheques),
+    type: s.type,
+    beds: String(s.beds),
+    furnished: s.furn === 'furnished' ? '1' : '0',
+    agent: s.agent ? '1' : '0',
+  })
+  if (s.dep !== a.depositPercent[s.furn]) params.set('deposit', String(s.dep))
+  if (s.fee !== a.agentFeePercent) params.set('fee', String(s.fee))
+  if (s.once > 0) params.set('extras', String(s.once))
+  if (s.utility !== a.utilityEstimates[s.type][s.beds]) params.set('utilities', String(s.utility))
+  if (s.extra > 0) params.set('other', String(s.extra))
+
+  return params
 }
