@@ -8,6 +8,22 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.16.0 — 2026-11-18
+
+### Sections
+
+- New `move-in-calculator`: a tool-first rental cost calculator that owns the page `h1`.
+  Required `title` and `assumptions` (every market figure and fee label comes from page
+  config); optional `subtitle`, `aside`, `disclaimer`, `shareUrl`, `id`. Reads shared inputs
+  from the query string. Implements web §9 "Marketing Tool Calculator". No existing section
+  changes; no page-config edits needed.
+
+### Tokens
+
+- Adds the five foundations §2.3 pigments: `--just-color-apricot-clay`, `--just-color-open-sky`,
+  `--just-color-marigold`, `--just-color-fresh-olive`, `--just-color-warm-limestone`. Additive
+  only: no existing token changes, so nothing already rendered repaints.
+
 ## v1.15.1 — 2026-10-28
 
 ### Sections
