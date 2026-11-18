@@ -52,4 +52,13 @@
   --just-color-error-on-dark: #eb7a6f; /* dark appearance */
   --just-color-destructive: #e5484d;
   --just-color-focus-blue: #3898ec;
+
+  /* Mediterranean editorial pigments — foundations §2.3. Presentation fills
+     only (charts, category labels, text markers, occasional fields), always
+     with near-black text and a written label. Never an action or state color. */
+  --just-color-apricot-clay: #de998c;
+  --just-color-open-sky: #86b8d0;
+  --just-color-marigold: #e6c363;
+  --just-color-fresh-olive: #a5bc8c;
+  --just-color-warm-limestone: #cfb69c;
 }

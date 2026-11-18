@@ -10,6 +10,7 @@ import HeaderDefault from './header-default/HeaderDefault'
 import HeroDefault from './hero-default/HeroDefault'
 import HowItWorksDefault from './how-it-works-default/HowItWorksDefault'
 import HowItWorksList from './how-it-works-list/HowItWorksList'
+import MoveInCalculator from './move-in-calculator/MoveInCalculator'
 import PricingBannerDefault from './pricing-banner-default/PricingBannerDefault'
 import StoryDefault from './story-default/StoryDefault'
 
@@ -49,6 +50,7 @@ const sectionRegistry = {
   'story-default': StoryDefault,
   'pricing-banner-default': PricingBannerDefault,
   'faq-default': FaqDefault,
+  'move-in-calculator': MoveInCalculator,
   'legal-document-default': LegalDocumentDefault,
   'footer-default': FooterDefault,
 }
