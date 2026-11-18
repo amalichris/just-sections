@@ -110,4 +110,6 @@ Mediterranean pigments are added there from foundations §2.3.
 ## Implementation notes
 
 - Static registry import: no heavy dependency, so it does not earn a lazy entry.
+- The intro's top padding (128px, 104px under 768px) clears the fixed `header-default`, matching
+  the legal pages. Added in v1.16.1 after the first consumer check.
 - Copy failure is silent: the share URL stays visible as selectable text.

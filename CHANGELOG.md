@@ -8,6 +8,13 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.16.1 — 2026-11-18
+
+### Sections
+
+- `move-in-calculator`: the title now clears the fixed `header-default` (128px top padding,
+  104px under 768px), matching the legal pages. No configuration changes.
+
 ## v1.16.0 — 2026-11-18
 
 ### Sections
