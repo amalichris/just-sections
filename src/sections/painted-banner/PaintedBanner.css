@@ -1,0 +1,32 @@
+/* Painted banner — surfaces/web.md §9. The one gradient: the painting fades
+   into the page surface over its bottom 55%. Decorative; text sits below it. */
+.painted-banner {
+  position: relative;
+  height: clamp(340px, 52vw, 640px);
+  overflow: hidden;
+}
+
+.painted-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.painted-banner__fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 55%;
+  background: linear-gradient(
+    to bottom,
+    rgb(245 244 237 / 0%) 0%,
+    rgb(245 244 237 / 85%) 70%,
+    var(--just-color-parchment) 100%
+  );
+}
+
+/* Content that follows a banner rises into its fade. */
+.painted-banner + * {
+  position: relative;
+  margin-top: clamp(-150px, -9vw, -64px);
+}

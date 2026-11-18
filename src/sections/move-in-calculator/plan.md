@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.4`
+- **Revision:** `1.5`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -67,6 +67,9 @@ Mediterranean pigments are added there from foundations §2.3.
 - `aside`: `{ title, body?, cta: Cta }` closing card after the comparison. Needs `title` and `cta`.
 - `disclaimer`: string[] fine print.
 - `shareUrl`: absolute page URL. Enables "Copy link" and the visible share URL. Omitted, neither renders.
+- `background`: `Media`, decorative painting (`alt: ''`) behind the header and title, under a parchment veil
+  (40% → 30% → 40% → solid), fading fully into the page before the tool. It reaches 160px above the
+  section so it runs behind a static `header-default`. The subtitle switches to `textEmphasis` over it.
 - `id`: defaults to `calculator`.
 
 **Query string.** The link always carries the latest breakdown. `rent`, `cheques`, `type`

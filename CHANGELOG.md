@@ -8,6 +8,27 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.19.0 — 2026-11-18
+
+### Sections
+
+- New `not-found-default`: required `title` (page `h1`); optional `description`, `links`
+  (`{ id, label, href }`), `banner` (`Media`), `bannerFocal`, `id`.
+- `legal-document-default`: optional `banner` (`Media`) and `bannerFocal`. A full-bleed painting
+  runs under the fixed header and the document's own `h1` rises into its fade.
+- `move-in-calculator`: optional `background` (`Media`), a painted backdrop behind the header and
+  title under a parchment veil, fading into the page before the tool.
+- `footer-default`: optional `brand` wordmark above the copyright. Visual refresh for every
+  consumer: `borderWarm` top rule, 40px block padding (32px on mobile), legal links in near-black
+  Inter 500, 24px apart. No configuration changes needed.
+- `header-default`: the `static` position stacks above a following section's backdrop.
+- `ProductPage`: page `meta.robots` (for example `noindex` on a not-found page).
+
+### Internal
+
+- Shared `painted-banner` piece (not a registered section) used by the legal and not-found
+  sections. Implements web §9 "Painted banner".
+
 ## v1.18.0 — 2026-11-18
 
 ### Sections

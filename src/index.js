@@ -32,6 +32,7 @@ export { default as HeaderDefault } from './sections/header-default/HeaderDefaul
 export { default as HeroDefault } from './sections/hero-default/HeroDefault'
 export { default as HowItWorksDefault } from './sections/how-it-works-default/HowItWorksDefault'
 export { default as MoveInCalculator } from './sections/move-in-calculator/MoveInCalculator'
+export { default as NotFoundDefault } from './sections/not-found-default/NotFoundDefault'
 export { default as PricingBannerDefault } from './sections/pricing-banner-default/PricingBannerDefault'
 
 /**

@@ -7,6 +7,8 @@ import './FooterDefault.css'
  *
  * @param {object} props
  * @param {string} props.productName Required name used in the copyright notice.
+ * @param {import('../types').Brand} [props.brand] Wordmark linking home, shown
+ *   above the copyright notice.
  * @param {string} [props.privacyHref] Destination for the Privacy link.
  * @param {string} [props.termsHref] Destination for the Terms link. With neither
  *   href supplied the legal navigation is not rendered.
@@ -15,6 +17,7 @@ import './FooterDefault.css'
  */
 export default function FooterDefault({
   productName,
+  brand,
   privacyHref,
   termsHref,
   surface = 'parchment',
@@ -29,7 +32,14 @@ export default function FooterDefault({
   return (
     <footer id={id} className={`footer-default ${surfaceClass}`}>
       <div className="footer-default__inner">
-        <p>© {year} {productName}. All rights reserved.</p>
+        <div className="footer-default__lead">
+          {brand ? (
+            <a className="footer-default__mark" href={brand.href}>
+              {brand.label}
+            </a>
+          ) : null}
+          <p>© {year} {productName}. All rights reserved.</p>
+        </div>
 
         {privacyHref || termsHref ? (
           <nav aria-label="Legal">

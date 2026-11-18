@@ -1,7 +1,7 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.13`
+- **Revision:** `0.14`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -39,7 +39,7 @@ The header follows the approved Marketing Landing Typography extension: 20px wor
 
 **Variant.**
 
-- `position`: `fixed` (default) or `static`. `static` renders the header in normal flow at the top of the page with no scroll states (no glass pill, no mobile rail), for tool pages that open directly into content. Any other value keeps `fixed`.
+- `position`: `fixed` (default) or `static`. `static` renders the header in normal flow at the top of the page with no scroll states (no glass pill, no mobile rail), for tool pages that open directly into content. It stacks at `z-index: 1` so a following section's backdrop can run behind it (v1.19.0). Any other value keeps `fixed`.
 
 There are no production navigation, brand, or CTA defaults.
 

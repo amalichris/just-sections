@@ -21,6 +21,7 @@ import './ProductPage.css'
  *   title?: string,
  *   description?: string,
  *   canonical?: string,
+ *   robots?: string,
  *   structuredData?: Record<string, unknown>,
  * }} PageMeta
  *
@@ -98,7 +99,7 @@ export default function ProductPage({ config, onInteraction }) {
  * @param {PageMeta | undefined} meta
  */
 function usePageMeta(meta) {
-  const { title, description, canonical, structuredData } = meta ?? {}
+  const { title, description, canonical, robots, structuredData } = meta ?? {}
   const structuredJson = structuredData ? JSON.stringify(structuredData) : ''
 
   useEffect(() => {
@@ -115,6 +116,7 @@ function usePageMeta(meta) {
 
     if (description) undo.push(setHeadElement('meta', { name: 'description' }, 'content', description))
     if (canonical) undo.push(setHeadElement('link', { rel: 'canonical' }, 'href', canonical))
+    if (robots) undo.push(setHeadElement('meta', { name: 'robots' }, 'content', robots))
 
     if (structuredJson) {
       const script = document.createElement('script')
@@ -125,7 +127,7 @@ function usePageMeta(meta) {
     }
 
     return () => undo.forEach((restore) => restore())
-  }, [title, description, canonical, structuredJson])
+  }, [title, description, canonical, robots, structuredJson])
 }
 
 function setHeadElement(tag, match, attribute, value) {

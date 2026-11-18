@@ -159,7 +159,8 @@
 .header-default--static {
   position: relative;
   inset: auto;
-  z-index: auto;
+  /* Above a following section's backdrop that extends up behind the header. */
+  z-index: 1;
 }
 
 @media (min-width: 768px) {

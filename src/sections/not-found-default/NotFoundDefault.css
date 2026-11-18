@@ -1,0 +1,80 @@
+.not-found-default {
+  min-height: 70vh;
+  padding-bottom: 96px;
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+  font-family: var(--just-font-body);
+}
+
+.not-found-default__content {
+  box-sizing: content-box;
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* Without a banner, clear the fixed header the way legal pages do. */
+.not-found-default:not(.not-found-default--banner) .not-found-default__content {
+  padding-top: 160px;
+}
+
+.not-found-default h1 {
+  margin: 0;
+  font-family: var(--just-font-heading);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.not-found-default h1 + p {
+  max-width: 44ch;
+  margin: 18px 0 0;
+  color: var(--just-color-olive-gray);
+  font-size: clamp(1.125rem, 1.8vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.not-found-default nav {
+  margin-top: 32px;
+  border-top: 1px solid var(--just-color-near-black);
+  border-bottom: 1px solid var(--just-color-border-warm);
+}
+
+.not-found-default ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 32px;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+}
+
+.not-found-default a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--just-color-near-black);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--just-color-ring-warm);
+  text-underline-offset: 4px;
+  transition: color 200ms ease-out;
+}
+
+.not-found-default a:hover {
+  color: var(--just-color-olive-gray);
+}
+
+.not-found-default a:focus-visible {
+  outline: 2px solid var(--just-color-focus-blue);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found-default a {
+    transition: none;
+  }
+}

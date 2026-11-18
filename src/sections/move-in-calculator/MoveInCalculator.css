@@ -46,6 +46,56 @@
   font-weight: 500;
 }
 
+/* Optional painted backdrop: full-bleed behind the header and title, softened
+   by a parchment veil and fading fully into the page before the tool. It
+   reaches 160px above the section so it runs behind the static header (68–92px
+   tall); `header-default--static` stacks above it. Decorative. */
+.move-in-calculator--painted {
+  position: relative;
+  isolation: isolate;
+}
+
+.mic-backdrop {
+  position: absolute;
+  top: -160px;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  height: calc(clamp(460px, 60vw, 760px) + 160px);
+  overflow: hidden;
+}
+
+.mic-backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.mic-backdrop::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(245 244 237 / 40%) 0%,
+    rgb(245 244 237 / 30%) 18%,
+    rgb(245 244 237 / 40%) 50%,
+    var(--just-color-parchment) 100%
+  );
+  content: '';
+}
+
+.move-in-calculator--painted .mic-intro {
+  padding-top: clamp(96px, 12vw, 168px);
+}
+
+/* Over the painting, the subtitle moves from textSecondary to textEmphasis so
+   it keeps well above 4.5:1 wherever the towers sit behind it. */
+.move-in-calculator--painted .mic-intro p {
+  color: var(--just-color-dark-warm);
+}
+
 .mic-wrap {
   box-sizing: border-box;
   width: min(100%, 1120px);
@@ -1089,6 +1139,14 @@
 @media (max-width: 767px) {
   .mic-intro {
     padding-block: 24px 28px;
+  }
+
+  .move-in-calculator--painted .mic-intro {
+    padding-top: 72px;
+  }
+
+  .mic-backdrop img {
+    object-position: 38% 30%;
   }
 
   .mic-card {

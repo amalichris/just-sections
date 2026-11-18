@@ -1,7 +1,7 @@
 # Legal document plan
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.5`
+- **Revision:** `1.6`
 - **Status:** Implemented
 - **Products / variants:** JustEjari and JustConvert, both surfaces (`parchment` default, `ivory`)
 
@@ -65,6 +65,10 @@ the 680px measure when their content can shrink, and individual cells remain squ
   `{ 'privacy-policy.md': '/privacy', 'terms-of-service.md': '/terms' }`, matching what the
   `terms-and-privacy-consultant` skill emits. Supply it only when routing those documents
   elsewhere.
+- `banner`: `Media`, decorative painting above the document (web §9 "Painted banner", v1.19.0). The painting runs
+  full-bleed from the top under the fixed header and the document's own `h1` rises into its fade.
+  Forces the parchment surface.
+- `bannerFocal`: vertical crop position, e.g. `'60%'`.
 - `id`: element id.
 
 **Variant.**

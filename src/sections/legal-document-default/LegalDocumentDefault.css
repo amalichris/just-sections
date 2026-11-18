@@ -20,6 +20,18 @@
   background: var(--just-color-ivory);
 }
 
+/* With a painted banner the painting runs full-bleed from the top, under the
+   fixed header, and the document rises into its fade. */
+.legal-document-default.legal-document-default--banner {
+  padding-top: 0;
+  padding-inline: 0;
+}
+
+.legal-document-default--banner .legal-document-default__container {
+  box-sizing: content-box;
+  padding-inline: 20px;
+}
+
 .legal-document-default__container {
   max-width: 680px;
   margin-inline: auto;

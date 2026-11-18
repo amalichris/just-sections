@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import requireProps from '../requireProps'
+import PaintedBanner from '../painted-banner/PaintedBanner'
 import './LegalDocumentDefault.css'
 
 /**
@@ -50,12 +51,17 @@ function resolveInternalRoute(href, internalLinks) {
  *   route. Defaults to the skill's filenames; supply it only when routing those
  *   documents somewhere else.
  * @param {'parchment' | 'ivory'} [props.surface]
+ * @param {Media} [props.banner] Decorative painting above the document; the
+ *   document's own `h1` rises into its fade. Parchment surface only.
+ * @param {string} [props.bannerFocal] Vertical crop position, e.g. `'60%'`.
  * @param {string} [props.id]
  */
 export default function LegalDocumentDefault({
   content,
   internalLinks = DEFAULT_INTERNAL_LINKS,
   surface = 'parchment',
+  banner,
+  bannerFocal,
   id,
 }) {
   const components = useMemo(
@@ -106,8 +112,9 @@ export default function LegalDocumentDefault({
   return (
     <section
       id={id}
-      className={`legal-document-default legal-document-default--${surface}`}
+      className={`legal-document-default legal-document-default--${banner?.src ? 'parchment legal-document-default--banner' : surface}`}
     >
+      {banner?.src ? <PaintedBanner media={banner} focal={bannerFocal} /> : null}
       <div className="legal-document-default__container">
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
           {content}

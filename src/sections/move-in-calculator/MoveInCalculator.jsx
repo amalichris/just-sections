@@ -31,6 +31,8 @@ import './MoveInCalculator.css'
  * @param {{ title: string, body?: string, cta: Cta }} [props.aside] Closing card.
  * @param {string[]} [props.disclaimer] Fine print paragraphs.
  * @param {string} [props.shareUrl] Absolute page URL. Enables "Copy link".
+ * @param {import('../types').Media} [props.background] Decorative painting
+ *   behind the title that fades into the page. Pass `alt: ''`.
  * @param {string} [props.id] Section id, defaults to `calculator`.
  */
 export default function MoveInCalculator({
@@ -40,6 +42,7 @@ export default function MoveInCalculator({
   aside,
   disclaimer,
   shareUrl,
+  background,
   id = 'calculator',
 }) {
   const uid = useId().replaceAll(':', '')
@@ -236,9 +239,23 @@ export default function MoveInCalculator({
   return (
     <section
       id={id}
-      className={`move-in-calculator${animate ? ' move-in-calculator--animate' : ''}`}
+      className={`move-in-calculator${background?.src ? ' move-in-calculator--painted' : ''}${animate ? ' move-in-calculator--animate' : ''}`}
       aria-labelledby={titleId}
     >
+      {background?.src ? (
+        <div className="mic-backdrop" aria-hidden="true">
+          <img
+            src={background.src}
+            srcSet={background.srcSet}
+            sizes={background.sizes}
+            alt={background.alt ?? ''}
+            width={background.width}
+            height={background.height}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+      ) : null}
       <div className="mic-wrap">
         <header className="mic-intro">
           <h1 id={titleId}>{title}</h1>

@@ -1,7 +1,7 @@
 # Default legal footer plan
 
 - **Section ID:** `footer-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page legal footer
 
@@ -29,9 +29,14 @@ The approved Default Legal Footer pattern uses a flat parchment surface by defau
 
 **Optional.** Absence of the value is the only signal; there is no `show`-style boolean.
 
+- `brand`: `Brand` — `{ label, href }`. Outfit 500 wordmark linking home, above the copyright notice (v1.19.0).
 - `privacyHref`: destination for the fixed Privacy label.
 - `termsHref`: destination for the fixed Terms label. With neither href supplied, the legal navigation is not rendered.
 - `id`: element id. Unset by default; the footer is not a navigation anchor.
+
+Styling follows chriseder.de's footer, adapted to Just tokens (v1.19.0): `borderWarm` top rule, 40px
+block padding (32px under 768px), legal links Inter 500 `nearBlack` 24px apart with `textSecondary`
+hover, copyright `textSecondary`.
 
 **Variant.**
 

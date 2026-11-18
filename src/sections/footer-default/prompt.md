@@ -1,7 +1,7 @@
 # Default legal footer implementation prompt
 
 - **Section ID:** `footer-default`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
