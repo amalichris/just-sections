@@ -1,7 +1,7 @@
 # Legal document plan
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Status:** Implemented
 - **Products / variants:** JustEjari and JustConvert, both surfaces (`parchment` default, `ivory`)
 
@@ -69,6 +69,12 @@ the 680px measure when their content can shrink, and individual cells remain squ
   full-bleed from the top under the fixed header and the document's own `h1` rises into its fade.
   Forces the parchment surface.
 - `bannerFocal`: vertical crop position, e.g. `'60%'`.
+- `header`: `{ title, description? }` (v1.20.0). Replaces the document's own `h1` with a short title
+  (Outfit 500, `clamp(48px, 7vw, 88px)`), an optional summary (`textSecondary`), and a facts row read
+  from the document itself: Version, Last updated, and the first `legal@` address (or first email)
+  as Questions, between a `nearBlack` top rule and a `borderWarm` bottom rule. The `h1` and the
+  `**Effective Date / Last Updated / Version**` lines are removed from the body, so nothing is
+  restated in config. Modelled on chriseder.de's privacy page.
 - `id`: element id.
 
 **Variant.**

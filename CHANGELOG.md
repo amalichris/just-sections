@@ -8,6 +8,14 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.20.0 — 2026-11-18
+
+### Sections
+
+- `legal-document-default`: optional `header` (`{ title, description? }`). A short page title,
+  a summary and a facts row (Version, Last updated, Questions) read from the document, in place
+  of the document's own `h1` and date lines. Configs without `header` render as before.
+
 ## v1.19.0 — 2026-11-18
 
 ### Sections

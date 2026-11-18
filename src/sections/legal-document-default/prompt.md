@@ -1,7 +1,7 @@
 # Legal document implementation prompt
 
 - **Section ID:** `legal-document-default`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight

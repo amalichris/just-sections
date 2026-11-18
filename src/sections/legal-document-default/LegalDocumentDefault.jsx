@@ -54,6 +54,9 @@ function resolveInternalRoute(href, internalLinks) {
  * @param {Media} [props.banner] Decorative painting above the document; the
  *   document's own `h1` rises into its fade. Parchment surface only.
  * @param {string} [props.bannerFocal] Vertical crop position, e.g. `'60%'`.
+ * @param {{ title: string, description?: string }} [props.header] Page header in
+ *   place of the document's own `h1`: a short title, an optional summary, and a
+ *   facts row (version, last updated, legal contact) read from the document.
  * @param {string} [props.id]
  */
 export default function LegalDocumentDefault({
@@ -62,8 +65,14 @@ export default function LegalDocumentDefault({
   surface = 'parchment',
   banner,
   bannerFocal,
+  header,
   id,
 }) {
+  // With a header, the facts come from the document itself and its own title
+  // and date lines are removed from the body, so nothing is restated in config.
+  const parsed = useMemo(() => (header?.title && content ? parseDocument(content) : null), [header?.title, content])
+  const body = parsed ? parsed.body : content
+
   const components = useMemo(
     () => ({
       // react-markdown emits a bare `<table>`, so the scroll container has to be
@@ -116,10 +125,49 @@ export default function LegalDocumentDefault({
     >
       {banner?.src ? <PaintedBanner media={banner} focal={bannerFocal} /> : null}
       <div className="legal-document-default__container">
+        {parsed ? (
+          <header className="legal-document-default__header">
+            <h1>{header.title}</h1>
+            {header.description ? <p className="legal-document-default__dek">{header.description}</p> : null}
+            {parsed.facts.length ? (
+              <dl className="legal-document-default__facts">
+                {parsed.facts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt>{fact.label}</dt>
+                    <dd>{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+          </header>
+        ) : null}
         <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-          {content}
+          {body}
         </ReactMarkdown>
       </div>
     </section>
   )
+}
+
+/**
+ * Reads the facts the terms-and-privacy skill writes under a document's `h1`
+ * (`**Version: 1.4**`, `**Last Updated: 12 August 2026**`) and its legal
+ * contact address, and returns the body without the `h1` and those lines.
+ * Accepts both `**Label: value**` and `**Label:** value`.
+ */
+function parseDocument(markdown) {
+  const field = (label) =>
+    markdown.match(new RegExp(`^\\*\\*${label}:\\s*(?:\\*\\*\\s*)?(.+?)(?:\\*\\*)?\\s*$`, 'mi'))?.[1]?.trim()
+  const email = markdown.match(/\blegal@[\w.-]+\.[a-z]{2,}/i)?.[0] ?? markdown.match(/\b[\w.+-]+@[\w.-]+\.[a-z]{2,}/i)?.[0]
+  const facts = [
+    { label: 'Version', value: field('Version') },
+    { label: 'Last updated', value: field('Last Updated') },
+    { label: 'Questions', value: email },
+  ].filter((fact) => fact.value)
+  const body = markdown
+    .replace(/^# .*\n/, '')
+    .replace(/^\*\*(?:Effective Date|Last Updated|Version):[^\n]*\n/gim, '')
+    .trim()
+
+  return { facts, body }
 }
