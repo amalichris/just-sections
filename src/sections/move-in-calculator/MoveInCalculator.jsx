@@ -45,7 +45,8 @@ export default function MoveInCalculator({
   const uid = useId().replaceAll(':', '')
   const titleId = `${id}-${uid}-title`
   const resultRef = useRef(null)
-  const introRef = useRef(null)
+  const inputsRef = useRef(null)
+  const deltaTimer = useRef(0)
   const chartRef = useRef(null)
   const animTimer = useRef(0)
   const [state, setState] = useState(() => initialState(assumptions))
@@ -56,12 +57,15 @@ export default function MoveInCalculator({
   const [chartFocused, setChartFocused] = useState(false)
   const [copied, setCopied] = useState('')
   const [dockVisible, setDockVisible] = useState(false)
+  const [delta, setDelta] = useState(0)
 
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return undefined
+    // The total bar is for the editing moment: inputs on screen, result not.
+    // Past the result it stays hidden, so it never covers later sections.
     let resultVisible = false
-    let pastIntro = false
-    const update = () => setDockVisible(pastIntro && !resultVisible)
+    let inputsVisible = false
+    const update = () => setDockVisible(inputsVisible && !resultVisible)
     const resultObserver = new IntersectionObserver(
       ([entry]) => {
         resultVisible = entry.isIntersecting
@@ -69,20 +73,26 @@ export default function MoveInCalculator({
       },
       { threshold: 0.25 },
     )
-    const introObserver = new IntersectionObserver(([entry]) => {
-      pastIntro = !entry.isIntersecting
+    const inputsObserver = new IntersectionObserver(([entry]) => {
+      inputsVisible = entry.isIntersecting
       update()
     })
     if (resultRef.current) resultObserver.observe(resultRef.current)
-    if (introRef.current) introObserver.observe(introRef.current)
+    if (inputsRef.current) inputsObserver.observe(inputsRef.current)
 
     return () => {
       resultObserver.disconnect()
-      introObserver.disconnect()
+      inputsObserver.disconnect()
     }
   }, [])
 
-  useEffect(() => () => clearTimeout(animTimer.current), [])
+  useEffect(
+    () => () => {
+      clearTimeout(animTimer.current)
+      clearTimeout(deltaTimer.current)
+    },
+    [],
+  )
 
   // Keep the address bar on the current breakdown, so copying the browser URL
   // shares the same result as "Copy link". Debounced so typing does not flood
@@ -120,8 +130,17 @@ export default function MoveInCalculator({
   const one = calc(1).total
 
   // Control taps animate the charts; typing never does (foundations §11).
+  // Taps also report how the move-in total moved, shown briefly in the total
+  // bar. Typing never does: number entry stays quiet (foundations §11).
   function tapped(patch) {
-    setState((prev) => withPatch(prev, patch, a))
+    const next = withPatch(state, patch, a)
+    const diff = Math.round(moveInTotal(next, a) - moveInTotal(state, a))
+    setState(next)
+    if (diff !== 0) {
+      setDelta(diff)
+      clearTimeout(deltaTimer.current)
+      deltaTimer.current = setTimeout(() => setDelta(0), 2500)
+    }
     setAnimate(true)
     clearTimeout(animTimer.current)
     animTimer.current = setTimeout(() => setAnimate(false), 450)
@@ -221,13 +240,13 @@ export default function MoveInCalculator({
       aria-labelledby={titleId}
     >
       <div className="mic-wrap">
-        <header className="mic-intro" ref={introRef}>
+        <header className="mic-intro">
           <h1 id={titleId}>{title}</h1>
           {subtitle ? <p>{subtitle}</p> : null}
         </header>
 
         <div className="mic-app">
-          <div className="mic-card mic-inputs">
+          <div className="mic-card mic-inputs" ref={inputsRef}>
             <div className="mic-field">
               <label htmlFor={`${uid}-rent`}>Annual rent</label>
               <div className="mic-hero-input" onClick={() => document.getElementById(`${uid}-rent`)?.focus()}>
@@ -580,8 +599,15 @@ export default function MoveInCalculator({
       <nav className="mic-dock" data-hidden={dockVisible ? 'false' : 'true'} aria-label="Move-in total">
         <a href={`#${id}-result`} tabIndex={dockVisible ? undefined : -1}>
           <span>
-            <span className="mic-dock-label">Cash to move in</span>
+            <span className={`mic-dock-label${delta ? ' mic-dock-label--delta' : ''}`}>
+              {delta ? `${fmt(Math.abs(delta))} ${delta < 0 ? 'less' : 'more'} than before` : 'Cash to move in'}
+            </span>
             <span className="mic-dock-value">{fmt(r.total)}</span>
+            <span className="mic-dock-strip" aria-hidden="true">
+              <span style={{ flexGrow: r.cheque, background: 'var(--mic-rent)' }} />
+              <span style={{ flexGrow: r.back, background: 'var(--mic-back)' }} />
+              <span style={{ flexGrow: r.fees, background: 'var(--mic-fees)' }} />
+            </span>
           </span>
           <span className="mic-dock-go">Breakdown</span>
         </a>
@@ -674,6 +700,21 @@ function withPatch(prev, patch, a) {
   if (!next.utilityTouched && ('type' in patch || 'beds' in patch)) next.utility = a.utilityEstimates[next.type][next.beds]
 
   return next
+}
+
+// The move-in total for a state, used to report how a tap moved it.
+function moveInTotal(s, a) {
+  const agentFee = s.agent ? ((s.rent * s.fee) / 100) * (1 + a.vatPercent / 100) : 0
+
+  return (
+    s.rent / s.cheques +
+    (s.rent * s.dep) / 100 +
+    a.utilityDeposit[s.type] +
+    agentFee +
+    a.connectionFee.amount +
+    a.registrationFee.amount +
+    s.once
+  )
 }
 
 // Defaults from config, then any values a shared link carries.

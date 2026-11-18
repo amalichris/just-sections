@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.3`
+- **Revision:** `1.4`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -87,7 +87,13 @@ the furnishing or bedroom defaults. When `shareUrl` is set, the address bar is k
 - 1024+: inputs 7/12 left, result 5/12 sticky right; monthly rows beside the marigold summary;
   year detail panel 288px beside the chart; no total bar.
 - 768–1023: single column; controls pair; result top splits total and composition; line items in
-  two columns; year detail below the chart; total bar shows while the result is off screen.
+  two columns; year detail below the chart; total bar as described below.
+- Total bar (under 1024px): shown only while the inputs card is on screen and the result card
+  is not, the moment when a change happens out of sight. Past the result it stays hidden, so it
+  never covers the later sections or the footer. After a tap that changes the total, its label
+  reads "AED X less than before" or "more than before" for 2.5s, then returns to "Cash to move
+  in"; typing never triggers it. A 3px rent / comes back / fees line runs along its bottom edge,
+  decorative only. The bar is not a live region: the result total already announces changes.
 - Under 768: everything one column; "per year" suffix hidden; chart labels on the move-in and
   selected month only.
 - Year chart: hover previews a month, tap or focus selects it, leaving returns to the selection.

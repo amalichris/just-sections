@@ -991,14 +991,38 @@
   display: block;
   color: var(--just-color-warm-silver);
   font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
   line-height: 1.2;
+  transition: color 200ms ease-out;
+}
+
+/* After a tap: how the total moved. Neutral ivory, not a status color. */
+.mic-dock-label--delta {
+  color: var(--just-color-ivory);
+}
+
+/* Decorative composition line, the same split as the result card's bar. */
+.mic-dock-strip {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+  height: 3px;
+  margin-top: 3px;
+}
+
+.mic-dock-strip span {
+  min-width: 2px;
+  height: 100%;
+  border-radius: 2px;
 }
 
 .mic-dock-value {
+  display: block;
   font-family: var(--just-font-heading);
   font-size: 1.375rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+  line-height: 1.15;
 }
 
 .mic-dock-go {
@@ -1015,6 +1039,7 @@
 
 /* Spring transitions on control taps only — never while typing (foundations §11). */
 .move-in-calculator--animate .mic-stack span,
+.move-in-calculator--animate .mic-dock-strip span,
 .move-in-calculator--animate .mic-bar > span,
 .move-in-calculator--animate .mic-plan-bar span {
   transition:

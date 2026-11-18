@@ -8,6 +8,15 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.17.2 — 2026-11-18
+
+### Sections
+
+- `move-in-calculator`: the total bar under 1024px now shows only while the inputs are on
+  screen and the result card is not, so it no longer covers later sections or the footer. After
+  a tap it briefly reads how the total moved ("AED 25,000 less than before"), and a small
+  rent / deposits / fees bar sits under the total. No configuration changes.
+
 ## v1.17.1 — 2026-11-18
 
 ### Sections
