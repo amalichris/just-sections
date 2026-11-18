@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
