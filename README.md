@@ -27,6 +27,25 @@ Hosts can observe section interactions without putting functions into page confi
 Callbacks are optional. Sections emit only the interactions documented in their dossier; the
 current FAQ reports `item_opened` and never includes question or answer copy.
 
+A config may also carry optional page `meta` for search engines:
+
+```js
+export default {
+  meta: {
+    title: 'Dubai move-in cost calculator | JustEjari',
+    description: 'Work out the cash you need to move in…',
+    canonical: 'https://www.example.com/move-in-costs',
+    structuredData: { '@context': 'https://schema.org', '@type': 'WebApplication' },
+  },
+  sections: [/* … */],
+}
+```
+
+`ProductPage` updates the host page's existing `<title>` and description in place, and adds a
+canonical link and JSON-LD only when supplied. Every field is optional; an absent field leaves
+the host HTML's value as it is. Keep the host HTML's own title and description as the fallback
+for clients that do not run JavaScript.
+
 Today's consumer is JustEjari's `web/` department. JustConvert is next.
 
 ## Install

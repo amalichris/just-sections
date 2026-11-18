@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import sectionRegistry from './sections/registry'
 import './ProductPage.css'
 
@@ -18,18 +18,26 @@ import './ProductPage.css'
  * }} SectionEntry
  *
  * @typedef {{
+ *   title?: string,
+ *   description?: string,
+ *   canonical?: string,
+ *   structuredData?: Record<string, unknown>,
+ * }} PageMeta
+ *
+ * @typedef {{
  *   sectionId: string,
  *   interaction: string,
  *   itemId?: string,
  * }} SectionInteraction
  *
  * @param {{
- *   config: { sections: SectionEntry[] },
+ *   config: { sections: SectionEntry[], meta?: PageMeta },
  *   onInteraction?: (event: SectionInteraction) => void,
  * }} props
  */
 export default function ProductPage({ config, onInteraction }) {
   const sections = config?.sections ?? []
+  usePageMeta(config?.meta)
   const hasCoverHero = sections.some(
     (entry) => entry.type === 'hero-default' && entry.props?.layout === 'optical-cover',
   )
@@ -75,4 +83,66 @@ export default function ProductPage({ config, onInteraction }) {
       </Suspense>
     </div>
   )
+}
+
+/**
+ * Applies a page config's optional `meta` to the document head.
+ *
+ * Updates the host page's existing `<title>` and description in place rather
+ * than adding second copies, so the static HTML keeps working for clients that
+ * do not run JavaScript and crawlers that do never see two competing values.
+ * Adds a canonical link and JSON-LD only when the config supplies them, and
+ * restores everything it changed when the page unmounts. Absence of a field
+ * leaves the host's value untouched.
+ *
+ * @param {PageMeta | undefined} meta
+ */
+function usePageMeta(meta) {
+  const { title, description, canonical, structuredData } = meta ?? {}
+  const structuredJson = structuredData ? JSON.stringify(structuredData) : ''
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined
+    const undo = []
+
+    if (title) {
+      const previous = document.title
+      document.title = title
+      undo.push(() => {
+        document.title = previous
+      })
+    }
+
+    if (description) undo.push(setHeadElement('meta', { name: 'description' }, 'content', description))
+    if (canonical) undo.push(setHeadElement('link', { rel: 'canonical' }, 'href', canonical))
+
+    if (structuredJson) {
+      const script = document.createElement('script')
+      script.type = 'application/ld+json'
+      script.textContent = structuredJson
+      document.head.appendChild(script)
+      undo.push(() => script.remove())
+    }
+
+    return () => undo.forEach((restore) => restore())
+  }, [title, description, canonical, structuredJson])
+}
+
+function setHeadElement(tag, match, attribute, value) {
+  const selector = `${tag}${Object.entries(match).map(([k, v]) => `[${k}="${v}"]`).join('')}`
+  const existing = document.head.querySelector(selector)
+
+  if (existing) {
+    const previous = existing.getAttribute(attribute)
+    existing.setAttribute(attribute, value)
+
+    return () => existing.setAttribute(attribute, previous)
+  }
+
+  const element = document.createElement(tag)
+  Object.entries(match).forEach(([k, v]) => element.setAttribute(k, v))
+  element.setAttribute(attribute, value)
+  document.head.appendChild(element)
+
+  return () => element.remove()
 }

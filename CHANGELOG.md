@@ -8,6 +8,15 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.18.0 — 2026-11-18
+
+### Sections
+
+- `ProductPage`: optional page `meta` (`title`, `description`, `canonical`, `structuredData`)
+  in a page config. It updates the host's existing title and description in place and adds a
+  canonical link and JSON-LD only when supplied, restoring them on unmount. Configs without
+  `meta` behave exactly as before. See README.
+
 ## v1.17.2 — 2026-11-18
 
 ### Sections
