@@ -33,6 +33,7 @@ import './MoveInCalculator.css'
  * @param {string} [props.shareUrl] Absolute page URL. Enables "Copy link".
  * @param {import('../types').Media} [props.background] Decorative painting
  *   behind the title that fades into the page. Pass `alt: ''`.
+ * @param {(event: { sectionId: string, interaction: string, itemId: string }) => void} [props.onInteraction]
  * @param {string} [props.id] Section id, defaults to `calculator`.
  */
 export default function MoveInCalculator({
@@ -43,6 +44,7 @@ export default function MoveInCalculator({
   disclaimer,
   shareUrl,
   background,
+  onInteraction,
   id = 'calculator',
 }) {
   const uid = useId().replaceAll(':', '')
@@ -52,7 +54,11 @@ export default function MoveInCalculator({
   const deltaTimer = useRef(0)
   const chartRef = useRef(null)
   const animTimer = useRef(0)
-  const [state, setState] = useState(() => initialState(assumptions))
+  const [initial] = useState(() => initialState(assumptions))
+  const [state, setState] = useState(initial.state)
+  const loaded = useRef(false)
+  const adjusted = useRef(false)
+  const typedChange = useRef(null)
   const [rentText, setRentText] = useState(() => formatBare(state.rent))
   const [animate, setAnimate] = useState(false)
   const [month, setMonth] = useState(0)
@@ -110,6 +116,24 @@ export default function MoveInCalculator({
     return () => clearTimeout(timer)
   }, [state, shareUrl, assumptions])
 
+  useEffect(() => {
+    if (!onInteraction || loaded.current || !assumptions || !title) return
+    loaded.current = true
+    onInteraction({ sectionId: id, interaction: 'estimate_loaded', itemId: initial.source })
+  }, [assumptions, id, initial.source, onInteraction, title])
+
+  useEffect(() => {
+    const change = typedChange.current
+    if (!onInteraction || !change || adjusted.current || !assumptions) return undefined
+    const timer = setTimeout(() => {
+      typedChange.current = null
+      if (adjusted.current || !estimateChanged(change.previous, state, assumptions)) return
+      adjusted.current = true
+      onInteraction({ sectionId: id, interaction: 'estimate_adjusted', itemId: change.group })
+    }, 450)
+    return () => clearTimeout(timer)
+  }, [assumptions, id, onInteraction, state])
+
   if (requireProps('MoveInCalculator', { title, assumptions })) return null
 
   const a = assumptions
@@ -135,8 +159,12 @@ export default function MoveInCalculator({
   // Control taps animate the charts; typing never does (foundations §11).
   // Taps also report how the move-in total moved, shown briefly in the total
   // bar. Typing never does: number entry stays quiet (foundations §11).
-  function tapped(patch) {
+  function tapped(patch, group) {
     const next = withPatch(state, patch, a)
+    if (onInteraction && !adjusted.current && estimateChanged(state, next, a)) {
+      adjusted.current = true
+      onInteraction({ sectionId: id, interaction: 'estimate_adjusted', itemId: group })
+    }
     const diff = Math.round(moveInTotal(next, a) - moveInTotal(state, a))
     setState(next)
     if (diff !== 0) {
@@ -149,14 +177,18 @@ export default function MoveInCalculator({
     animTimer.current = setTimeout(() => setAnimate(false), 450)
   }
 
-  function typed(patch) {
+  function typed(patch, group) {
+    if (onInteraction && !adjusted.current) {
+      const previous = typedChange.current?.group === group ? typedChange.current.previous : state
+      typedChange.current = { previous, group }
+    }
     setState((prev) => withPatch(prev, patch, a))
   }
 
   function setRent(value, viaTap) {
     setRentText(formatBare(value))
-    if (viaTap) tapped({ rent: value })
-    else typed({ rent: value })
+    if (viaTap) tapped({ rent: value }, 'rent')
+    else typed({ rent: value }, 'rent')
   }
 
   function shareLink() {
@@ -166,6 +198,7 @@ export default function MoveInCalculator({
   function copy(text, key) {
     const done = () => {
       setCopied(key)
+      onInteraction?.({ sectionId: id, interaction: 'estimate_copied', itemId: key })
       setTimeout(() => setCopied(''), 1600)
     }
     try {
@@ -275,7 +308,7 @@ export default function MoveInCalculator({
                   value={rentText}
                   onChange={(event) => {
                     setRentText(event.target.value)
-                    typed({ rent: parseAmount(event.target.value) })
+                    typed({ rent: parseAmount(event.target.value) }, 'rent')
                   }}
                   onBlur={() => setRentText(formatBare(s.rent))}
                 />
@@ -312,7 +345,7 @@ export default function MoveInCalculator({
                 value={s.cheques}
                 onChange={(v) => {
                   setMonth(0)
-                  tapped({ cheques: v })
+                  tapped({ cheques: v }, 'cheques')
                 }}
                 sub={s.cheques === 1 ? `One payment of ${fmt(s.rent)}` : `${s.cheques} payments of ${fmt(r.cheque)}`}
               />
@@ -320,27 +353,27 @@ export default function MoveInCalculator({
                 label="Property"
                 options={[['apartment', 'Apartment'], ['villa', 'Villa']]}
                 value={s.type}
-                onChange={(v) => tapped({ type: v })}
+                onChange={(v) => tapped({ type: v }, 'property')}
               />
               <Track
                 label="Furnishing"
                 options={[['unfurnished', 'Unfurnished'], ['furnished', 'Furnished']]}
                 value={s.furn}
-                onChange={(v) => tapped({ furn: v })}
+                onChange={(v) => tapped({ furn: v }, 'property')}
               />
               <Track
                 className="mic-wide"
                 label="Bedrooms"
                 options={[[0, 'Studio'], [1, '1'], [2, '2'], [3, '3'], [4, '4+']]}
                 value={s.beds}
-                onChange={(v) => tapped({ beds: v })}
+                onChange={(v) => tapped({ beds: v }, 'property')}
               />
               <Track
                 className="mic-wide"
                 label="Found through"
                 options={[[1, 'An agent'], [0, 'The landlord']]}
                 value={s.agent}
-                onChange={(v) => tapped({ agent: v })}
+                onChange={(v) => tapped({ agent: v }, 'fees')}
               />
             </div>
 
@@ -350,8 +383,8 @@ export default function MoveInCalculator({
                 <ChevronDown size={16} aria-hidden="true" />
               </summary>
               <div className="mic-adv-grid">
-                <NumberField id={`${uid}-dep`} label="Security deposit" suffix="% of rent" value={s.dep} onChange={(v) => typed({ dep: v, depTouched: true })} />
-                <NumberField id={`${uid}-fee`} label="Agent fee" suffix={`% + ${a.vatPercent}% VAT`} value={s.fee} onChange={(v) => typed({ fee: v })} />
+                <NumberField id={`${uid}-dep`} label="Security deposit" suffix="% of rent" value={s.dep} onChange={(v) => typed({ dep: v, depTouched: true }, 'fees')} />
+                <NumberField id={`${uid}-fee`} label="Agent fee" suffix={`% + ${a.vatPercent}% VAT`} value={s.fee} onChange={(v) => typed({ fee: v }, 'fees')} />
                 <NumberField
                   className="mic-wide"
                   id={`${uid}-once`}
@@ -359,7 +392,7 @@ export default function MoveInCalculator({
                   prefix={a.currency}
                   placeholder="Movers, furniture, internet setup"
                   value={s.once || ''}
-                  onChange={(v) => typed({ once: v })}
+                  onChange={(v) => typed({ once: v }, 'fees')}
                 />
               </div>
             </details>
@@ -448,13 +481,13 @@ export default function MoveInCalculator({
                   {a.utilityEstimates.label}
                   <small>Rough year-round average for a {BED_NAMES[s.beds]} {s.type}. Summer runs higher</small>
                 </label>
-                <AmountInput id={`${uid}-utility`} prefix={a.currency} value={s.utility} onChange={(v) => typed({ utility: v, utilityTouched: true })} />
+                <AmountInput id={`${uid}-utility`} prefix={a.currency} value={s.utility} onChange={(v) => typed({ utility: v, utilityTouched: true }, 'monthly')} />
               </div>
               <div className="mic-mrow">
                 <label className="mic-k" htmlFor={`${uid}-extra`}>
                   Internet, chiller and other<small>Chiller only if your building bills cooling separately</small>
                 </label>
-                <AmountInput id={`${uid}-extra`} prefix={a.currency} placeholder="0" value={s.extra || ''} onChange={(v) => typed({ extra: v })} />
+                <AmountInput id={`${uid}-extra`} prefix={a.currency} placeholder="0" value={s.extra || ''} onChange={(v) => typed({ extra: v }, 'monthly')} />
               </div>
             </div>
             <div className="mic-summary">
@@ -569,7 +602,7 @@ export default function MoveInCalculator({
                   aria-pressed={c === s.cheques}
                   onClick={() => {
                     setMonth(0)
-                    tapped({ cheques: c })
+                    tapped({ cheques: c }, 'cheques')
                   }}
                 >
                   <span className="mic-plan-label">{plural(c)}</span>
@@ -734,6 +767,14 @@ function moveInTotal(s, a) {
   )
 }
 
+function estimateChanged(previous, next, a) {
+  if (!Number.isFinite(next.rent) || next.rent <= 0) return false
+  return moveInTotal(previous, a) !== moveInTotal(next, a)
+    || previous.rent !== next.rent
+    || previous.cheques !== next.cheques
+    || previous.utility + previous.extra !== next.utility + next.extra
+}
+
 // Defaults from config, then any values a shared link carries.
 function initialState(a) {
   const base = {
@@ -751,11 +792,18 @@ function initialState(a) {
     utilityTouched: false,
     extra: 0,
   }
-  if (typeof window !== 'undefined' && a) {
-    const q = new URLSearchParams(window.location.search)
+  const q = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search)
+  let restored = false
+  if (a) {
     const rent = Number(q.get('rent'))
     const cheques = Number(q.get('cheques'))
     const beds = Number(q.get('beds'))
+    restored = (Number.isFinite(rent) && rent > 0)
+      || a.chequeOptions?.includes(cheques)
+      || ['apartment', 'villa'].includes(q.get('type'))
+      || (q.has('beds') && q.get('beds') !== '' && Number.isInteger(beds) && beds >= 0 && beds <= 4)
+      || ['0', '1'].includes(q.get('furnished'))
+      || ['0', '1'].includes(q.get('agent'))
     if (rent > 0) base.rent = rent
     if (a.chequeOptions?.includes(cheques)) base.cheques = cheques
     if (q.get('type') === 'villa' || q.get('type') === 'apartment') base.type = q.get('type')
@@ -767,8 +815,8 @@ function initialState(a) {
     base.dep = a.depositPercent[base.furn]
     base.utility = a.utilityEstimates[base.type][base.beds]
   }
-  if (typeof window !== 'undefined' && a) {
-    const q = new URLSearchParams(window.location.search)
+  if (a) {
+    restored ||= ['deposit', 'fee', 'extras', 'utilities', 'other'].some((key) => /^\d+(?:\.\d+)?$/.test(q.get(key) ?? ''))
     const read = (key) => (q.has(key) ? parseAmount(q.get(key)) : null)
     const dep = read('deposit')
     const fee = read('fee')
@@ -782,7 +830,7 @@ function initialState(a) {
     if (extra !== null) base.extra = extra
   }
 
-  return base
+  return { state: base, source: restored ? 'shared' : 'default' }
 }
 
 // Every input that changes the breakdown. The six main choices are always

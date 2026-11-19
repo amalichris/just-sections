@@ -8,6 +8,15 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.22.0 — 2026-11-19
+
+### Sections
+
+- `move-in-calculator`: optional interaction events for the initial estimate source, the first
+  meaningful adjustment, and successful clipboard copies. Consumers can receive them through
+  `ProductPage.onInteraction`. The callback receives fixed labels for the source, input group or
+  copy format.
+
 ## v1.21.0 — 2026-11-18
 
 ### Sections

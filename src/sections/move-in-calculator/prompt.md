@@ -1,7 +1,7 @@
 # Move-in calculator implementation prompt
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.5`
+- **Revision:** `1.6`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -22,6 +22,7 @@ describes.
 - The year breakdown is a fixed panel, never a floating tooltip.
 - Animate chart segments only for 450ms after a control tap; never on typing.
 - No new dependencies. Icons from `lucide-react`.
+- Report provider-neutral interactions through the existing `ProductPage` callback described in the plan.
 
 ## Verify and synchronize
 

@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.5`
+- **Revision:** `1.6`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -22,7 +22,7 @@ and 2026-11-18 (claude.ai artifact "Move-in Cost Calculator", version 7).
 - **Adapt:** every market figure and fee label moves into the `assumptions` prop so a fee change
   is a page-config edit. The prototype's eyebrow above the title is dropped.
 - **Exclude:** a floating tooltip on the year chart (it overflowed its card), broker-to-tenant
-  sending (v2), analytics.
+  sending (v2), provider-specific analytics.
 
 ## Just design-system translation
 
@@ -71,6 +71,11 @@ Mediterranean pigments are added there from foundations §2.3.
   (40% → 30% → 40% → solid), fading fully into the page before the tool. It reaches 160px above the
   section so it runs behind a static `header-default`. The subtitle switches to `textEmphasis` over it.
 - `id`: defaults to `calculator`.
+- `onInteraction`: optional callback supplied by `ProductPage`. Receives `{ sectionId, interaction, itemId }`.
+  `estimate_loaded` carries `default` or `shared`. `estimate_adjusted` carries the input group
+  of the first deliberate change to a valid estimate, after a tap or 450 ms of settled typing.
+  `estimate_copied` carries `link` or `breakdown` after clipboard success. No input values,
+  amounts, query strings or copied material are passed.
 
 **Query string.** The link always carries the latest breakdown. `rent`, `cheques`, `type`
 (`apartment`|`villa`), `beds` (0–4), `furnished` (`0`|`1`) and `agent` (`0`|`1`) are always
@@ -129,3 +134,5 @@ the furnishing or bedroom defaults. When `shareUrl` is set, the address bar is k
   away, so the intro keeps its own 48px top padding (24px under 768px). v1.16.1 briefly cleared a
   fixed header with 128px; v1.17.0 returns to the static composition the owner chose.
 - Copy failure is silent: the share URL stays visible as selectable text.
+
+- Verify the optional interaction callback reports the initial source once, the first valid adjustment once, and only successful clipboard copies.
