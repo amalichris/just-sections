@@ -3,7 +3,6 @@ import { Check, FileText } from 'lucide-react'
 import requireProps from '../requireProps'
 import './BenefitsList.css'
 
-const TONES = new Set(['chianti', 'sky', 'cypress', 'sunflower', 'charcoal'])
 const ICONS = { check: Check, document: FileText }
 const isText = (value) => typeof value === 'string' && value.trim().length > 0
 const isOptionalText = (value) => value === undefined || isText(value)
@@ -11,12 +10,10 @@ const isOptionalText = (value) => value === undefined || isText(value)
 function hasValidItems(items) {
   if (!Array.isArray(items) || items.length === 0) return false
   const ids = new Set()
-  const panels = items.some((item) => item?.tone !== undefined)
   return items.every((item) => {
     if (
       !item || !isText(item.id) || ids.has(item.id) ||
       !isText(item.title) || !isText(item.description) ||
-      (panels && !TONES.has(item.tone)) ||
       (item.icon !== undefined && (typeof item.icon !== 'string' || !Object.hasOwn(ICONS, item.icon)))
     ) return false
     ids.add(item.id)
@@ -28,7 +25,7 @@ function hasValidItems(items) {
  * Plain, always-visible outcome rows. No imagery or controls are required.
  * @param {object} props
  * @param {string} props.title Required heading.
- * @param {{ id: string, title: string, description: string, icon?: 'check' | 'document', tone?: 'chianti' | 'sky' | 'cypress' | 'sunflower' | 'charcoal' }[]} props.items
+ * @param {{ id: string, title: string, description: string, icon?: 'check' | 'document' }[]} props.items
  * @param {string} [props.eyebrow]
  * @param {string} [props.subtitle]
  * @param {string} [props.id='benefits']
@@ -43,10 +40,8 @@ export default function BenefitsList({ title, items, eyebrow, subtitle, id = 'be
     'valid optional copy': isOptionalText(eyebrow) && isOptionalText(subtitle) ? true : undefined,
   })) return null
 
-  const panels = items[0].tone !== undefined
-
   return (
-    <section id={id} className={panels ? 'benefits-list benefits-list--panels' : 'benefits-list'} aria-labelledby={titleId}>
+    <section id={id} className="benefits-list" aria-labelledby={titleId}>
       <div className="benefits-list__layout">
         <header className="benefits-list__intro">
           {eyebrow ? <p className="benefits-list__eyebrow">{eyebrow}</p> : null}
@@ -57,7 +52,7 @@ export default function BenefitsList({ title, items, eyebrow, subtitle, id = 'be
           {items.map((item) => {
             const Icon = item.icon === undefined ? undefined : ICONS[item.icon]
             return (
-              <li key={item.id} className={panels ? `benefits-list__item benefits-list__item--${item.tone}` : 'benefits-list__item'}>
+              <li key={item.id} className="benefits-list__item">
                 <div className="benefits-list__title">
                   {Icon ? <Icon size={item.icon === 'check' ? 16 : 20} aria-hidden="true" /> : null}
                   <h3>{item.title}</h3>

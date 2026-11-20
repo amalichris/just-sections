@@ -64,11 +64,3 @@ Optional wide-screen and phone-screen layouts support the approved mixed-device 
 presentation: 1.6× mobile rail width, centered wide artwork, stacked tablet copy, desktop
 65% media, and matching mobile screen top edges. Existing cards remain unchanged. See
 benefits-carousel revision 0.8 and the family web surface's mixed-screen artwork extension.
-
-## Editorial landing extensions
-
-The editorial hero reuses the painted legal banner geometry and sets its marketing headline
-left-aligned in the fade. Text-only benefits may use the existing carousel backdrop palette
-as panel surfaces with readable foregrounds. A near-black statement can cover that section
-during native scrolling, with phrase-by-phrase color progression and a static reduced-motion
-presentation. An offer can extend the CTA banner with a distinct trial and one-time price.

@@ -8,15 +8,6 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
-## v1.23.0 — 2026-11-20
-
-### Sections
-
-- `hero-default`: optional `editorial` layout uses the painted legal-banner geometry and a left-aligned marketing headline.
-- `benefits-list`: optional item tones make the list a grid of solid-color text panels.
-- `statement-reveal`: new full-screen scroll reveal with native scrolling and a static reduced-motion layout.
-- `pricing-banner-default`: optional `offer` displays trial and one-time pricing alongside the acquisition CTA.
-
 ## v1.22.0 — 2026-11-19
 
 ### Sections

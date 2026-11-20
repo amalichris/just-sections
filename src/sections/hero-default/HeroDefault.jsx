@@ -1,5 +1,4 @@
 import { useEffect, useId, useRef } from 'react'
-import PaintedBanner from '../painted-banner/PaintedBanner'
 import requireProps from '../requireProps'
 import './HeroDefault.css'
 
@@ -19,7 +18,7 @@ const DEVICE_OFFSET_MAX = 56
  * @param {Media} [props.background] Full-bleed artwork beneath the warm glass
  *   overlay. Omitted, the hero keeps its parchment backdrop.
  * @param {Media} [props.media] Product image following the copy in normal flow.
- * @param {'default' | 'optical-cover' | 'editorial'} [props.layout] Optional optical cover or painted, title-only editorial composition.
+ * @param {'default' | 'optical-cover'} [props.layout] Optional full-screen optical cover composition.
  * @param {'glass' | 'painted'} [props.backdrop='glass'] `painted` shows a painting
  *   without blur under a light parchment veil, fading into the page at the bottom,
  *   with no parallax and no pinned cover (web §9 "Painted imagery").
@@ -33,7 +32,7 @@ export default function HeroDefault({ title, subtitle, cta, background, media, l
 
   useEffect(() => {
     const hero = heroRef.current
-    if (!hero || layout === 'optical-cover' || layout === 'editorial' || painted) return undefined
+    if (!hero || layout === 'optical-cover' || painted) return undefined
 
     const parallaxQuery = window.matchMedia(PARALLAX_QUERY)
     let frameId = null
@@ -87,17 +86,6 @@ export default function HeroDefault({ title, subtitle, cta, background, media, l
   }, [layout, painted])
 
   if (requireProps('HeroDefault', { title })) return null
-
-  if (layout === 'editorial') {
-    return (
-      <section id={id} className="hero-default-editorial" aria-labelledby={titleId}>
-        {background ? <PaintedBanner media={background} /> : null}
-        <div className="hero-default-editorial__heading">
-          <h1 id={titleId}>{title}</h1>
-        </div>
-      </section>
-    )
-  }
 
   return (
     <section ref={heroRef} id={id} className={`hero-default${layout === 'optical-cover' ? ' hero-default--optical-cover' : ''}${painted ? ' hero-default--painted' : ''}`} aria-labelledby={titleId}>

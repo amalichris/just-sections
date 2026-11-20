@@ -122,13 +122,4 @@ export default [
       subtitle: 'A subtitle cannot stand in for the headline.',
     },
   },
-  {
-    id: 'editorial',
-    label: 'Editorial painted title',
-    props: {
-      title: 'Contracts from your phone',
-      layout: 'editorial',
-      background: fixtureMedia('Backdrop', { width: 1440, height: 900 }),
-    },
-  },
 ]

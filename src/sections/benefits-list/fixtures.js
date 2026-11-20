@@ -17,18 +17,4 @@ export default [
   { id: 'unknown-icon', label: 'Unknown icon', expectsNothing: true, props: { title: 'Invalid', items: [{ ...items[0], icon: 'unknown' }] } },
   { id: 'empty-items', label: 'Empty items', expectsNothing: true, props: { title: 'Invalid', items: [] } },
   { id: 'invalid-subtitle', label: 'Malformed optional copy', expectsNothing: true, props: { title: 'Invalid', items, subtitle: null } },
-  {
-    id: 'color-panels',
-    label: 'Text on colored panels',
-    props: {
-      title: 'From start to finish',
-      items: items.map((item, index) => ({ ...item, tone: ['chianti', 'sunflower', 'cypress'][index] })),
-    },
-  },
-  {
-    id: 'invalid-tone',
-    label: 'Incomplete tone set',
-    expectsNothing: true,
-    props: { title: 'Invalid panels', items: [{ ...items[0], tone: 'chianti' }, items[1]] },
-  },
 ]

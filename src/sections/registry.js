@@ -13,7 +13,6 @@ import HowItWorksList from './how-it-works-list/HowItWorksList'
 import MoveInCalculator from './move-in-calculator/MoveInCalculator'
 import NotFoundDefault from './not-found-default/NotFoundDefault'
 import PricingBannerDefault from './pricing-banner-default/PricingBannerDefault'
-import StatementReveal from './statement-reveal/StatementReveal'
 import StoryDefault from './story-default/StoryDefault'
 
 /**
@@ -49,7 +48,6 @@ const sectionRegistry = {
   'benefits-carousel': BenefitsCarousel,
   'how-it-works-default': HowItWorksDefault,
   'how-it-works-list': HowItWorksList,
-  'statement-reveal': StatementReveal,
   'story-default': StoryDefault,
   'pricing-banner-default': PricingBannerDefault,
   'faq-default': FaqDefault,
