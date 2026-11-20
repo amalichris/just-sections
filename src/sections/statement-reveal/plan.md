@@ -1,7 +1,7 @@
 # Statement reveal plan
 
 - **Section ID:** `statement-reveal`
-- **Revision:** `0.2`
+- **Revision:** `0.3`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic landing section
 
@@ -13,8 +13,9 @@ Give the reader one uninterrupted statement after the benefits and before pricin
 
 The supplied image gives the direction for muted, revealed, and accent text. The Philosophy
 and Sticky Card Stack entries in the inspiration index give a type-led statement and a
-native scroll cover. Use a near-black surface, Outfit heading, warm muted type, ivory
-revealed type, and coral emphasis. No media, ghosted duplicate text, or decorative labels.
+native scroll cover. Use the parchment page surface, Outfit heading, stone-gray muted type (3.31:1), near-black
+revealed type, and sienna emphasis (revision 0.3; 0.1-0.2 were near-black with ivory and coral.
+Coral is 2.83:1 on parchment, under the 3:1 large-text floor, so the accent moved to sienna, 3.93:1). No media, ghosted duplicate text, or decorative labels.
 
 ## Public configuration
 

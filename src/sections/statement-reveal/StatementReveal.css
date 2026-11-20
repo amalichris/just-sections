@@ -1,8 +1,8 @@
 .statement-reveal {
   position: relative;
   z-index: 2;
-  background: var(--just-color-near-black);
-  color: var(--just-color-ivory);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
 }
 
 .statement-reveal__stage {
@@ -22,12 +22,13 @@
 }
 
 .statement-reveal__phrase {
-  --phrase-color: var(--just-color-ivory);
+  --phrase-color: var(--just-color-near-black);
   color: var(--phrase-color);
 }
 
 .statement-reveal__phrase--accent {
-  --phrase-color: var(--just-color-coral);
+  /* Sienna, not coral: coral is 2.83:1 on parchment, under the 3:1 large-text floor. */
+  --phrase-color: var(--just-color-sienna);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -41,7 +42,7 @@
   }
 
   .statement-reveal[data-reveal] .statement-reveal__phrase {
-    /* Keep the unrevealed copy readable on the dark surface. */
+    /* Unrevealed copy stays readable: stone gray is 3.31:1 on parchment. */
     color: color-mix(in srgb, var(--phrase-color) var(--phrase-progress, 0%), var(--just-color-stone-gray));
   }
 

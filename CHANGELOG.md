@@ -8,6 +8,14 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.25.1 — 2026-11-20
+
+### Sections
+
+- `statement-reveal`: light presentation. Parchment surface, stone-gray type before reveal,
+  near-black once revealed, sienna emphasis (coral is under 3:1 on parchment). No configuration
+  change.
+
 ## v1.25.0 — 2026-11-20
 
 ### Sections
