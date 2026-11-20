@@ -1,7 +1,7 @@
 # Benefits carousel plan
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.8`
+- **Revision:** `0.9`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page feature section; `mediaBackdrop` variant per item. First expected consumer is JustConvert's main landing page
 
@@ -60,6 +60,7 @@ content is rejected rather than silently discarded. Default `card` behavior is u
 | `items[].mediaBackdropImage` | optional | `Media`, filled with `cover`; makes `media` optional. Exactly one of the two backdrop fields in card; forbidden in unframed |
 | `items[].media` | optional / required by variant | Contained `Media`; required in unframed, with neither backdrop field |
 | `items[].mediaVerticalAlignment` | variant | `bottom` (card default) \| `top` (unframed default); in card, top seats `media` on the panel's top edge with the 44px space below it, at every width. Any other value renders nothing |
+| `items[].label` | optional | Shorter tab-pill text; omitted, the pill shows `title`. The card heading always shows `title` |
 | `items[].descriptionOnMobile` | optional | Replaces `description` in the accordion or rail below 768px |
 | `eyebrow`, `subtitle` | optional | Intro copy |
 | `titleOnMobile`, `subtitleOnMobile` | optional | Replace `title` and `subtitle` below 768px. `subtitleOnMobile` alone shows a subtitle on mobile only |
@@ -184,3 +185,5 @@ cases, default/minimal/colour/top-aligned/mobile-copy/photo/rail/unframed varian
 375/430/768/1024/1440). No body overflow or broken loaded images; invalid cases render
 nothing. Build, lint and pack audit pass: 82 package files, no dev/pages/docs/image files.
 Firefox is not exposed by the available browser connection; its rendering remains unverified.
+
+- **0.9:** added optional `items[].label` for short tab pills beside longer card headlines (JustEjari request, 2026-11-20). Content only, no visual change.

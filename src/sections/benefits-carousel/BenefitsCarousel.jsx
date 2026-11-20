@@ -81,6 +81,7 @@ function hasValidItems(items, presentation) {
       !isNonEmptyString(item.title) ||
       !isNonEmptyString(item.description) ||
       !isOptionalString(item.descriptionOnMobile) ||
+      (item.label !== undefined && !isNonEmptyString(item.label)) ||
       !hasValidMediaField(item, presentation)
     ) {
       return false
@@ -156,6 +157,7 @@ function MediaPanel({ item, className, eager }) {
  * @param {{
  *   id: string,
  *   title: string,
+ *   label?: string,
  *   description: string,
  *   mediaBackdrop?: 'chianti' | 'sky' | 'cypress' | 'sunflower' | 'charcoal',
  *   mediaBackdropImage?: Media,
@@ -172,6 +174,7 @@ function MediaPanel({ item, className, eager }) {
  *   its top edge with `mediaVerticalAlignment: 'top'`. Unframed items require
  *   `media`, forbid backdrops, and default to top alignment. `descriptionOnMobile`
  *   replaces `description` in the accordion or rail below 768px.
+ *   `label` is shorter tab-pill text; omitted, the pill shows `title`.
  * @param {string} [props.eyebrow] Uppercase label above the title.
  * @param {string} [props.subtitle] Supporting copy below the title.
  * @param {string} [props.titleOnMobile] Replaces `title` below 768px.
@@ -343,7 +346,7 @@ export default function BenefitsCarousel({
                   tabIndex={isSelected ? 0 : -1}
                   onClick={() => selectIndex(index)}
                 >
-                  {item.title}
+                  {item.label ?? item.title}
                 </button>
               )
             })}

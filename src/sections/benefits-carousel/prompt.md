@@ -1,7 +1,7 @@
 # Benefits carousel implementation prompt
 
 - **Section ID:** `benefits-carousel`
-- **Revision:** `0.8`
+- **Revision:** `0.9`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -76,3 +76,5 @@ phone top-edge matching applies only to rails.
 Acceptance: review default + mixed-screen fixtures at 375/430/768/1024/1440, validate
 unknown layout/media rejection, stable stage, no body overflow, keyboard tabs and rail,
 complete wide screens and existing pointer/reduced-motion behavior; build/lint/package audit.
+
+Revision 0.9: render `item.label ?? item.title` in the tab pill only; validate `label` as an optional nonblank string.

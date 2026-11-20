@@ -8,6 +8,13 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.25.0 — 2026-11-20
+
+### Sections
+
+- `benefits-carousel`: optional `items[].label`, a shorter tab-pill text. Omitted, the pill shows
+  `title` as before; the card heading always shows `title`.
+
 ## v1.24.1 — 2026-11-20
 
 ### Sections

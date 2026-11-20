@@ -106,6 +106,14 @@ const unframedItems = [
 
 export default [
   {
+    id: 'pill-labels', label: 'Short pill labels',
+    props: { title: 'Everything in one place', items: colourItems.map((item, index) => ({ ...item, label: ['Rates', 'Time zones', 'Units', 'Offline'][index] ?? 'More' })) },
+  },
+  {
+    id: 'blank-pill-label', label: 'Blank pill label', expectsNothing: true,
+    props: { title: 'Invalid', items: colourItems.map((item, index) => (index === 0 ? { ...item, label: ' ' } : item)) },
+  },
+  {
     id: 'mixed-screens', label: 'Mixed phone and wide screens',
     props: { title: 'Ready for more room', layoutOnMobile: 'rail', items: [
       { ...colourItems[0], mediaLayout: 'phone-screen', mediaOnMobile: capture('Mobile phone') },
