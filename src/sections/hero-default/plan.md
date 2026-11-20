@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.8`
+- **Revision:** `1.10`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -112,3 +112,7 @@ above, approved for this variant only; the default implementation remains unchan
 Acceptance: check optical cover at 320/375/768/1280, two-line supplied headline, no
 horizontal overflow, following sections covering the hero, reverse scroll, reduced-motion
 fallback, legal routes unaffected, and unchanged default fixtures. No custom scroll driver.
+
+## Editorial landing update
+
+Add the optional `editorial` layout for a painted banner. Reuse PaintedBanner and its fade. Set the headline at display scale (`clamp(3.5rem, 12vw, 10rem)`, line-height 0.9, at most 11ch per line): it is the only thing in the hero. With a painting the hero fills exactly one screen (`100svh`): the painting takes the height the title leaves (240px minimum) and the left-aligned title rises into its fade at the bottom, so the whole statement is visible on arrival. On tall phones this matches the legal-title height; on short wide screens the title sits higher than the legal title, because the legal geometry would push a display-size title below the fold. Existing layouts keep their sizing and behavior.

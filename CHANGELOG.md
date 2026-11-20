@@ -8,6 +8,24 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.24.0 — 2026-11-20
+
+Supersedes v1.23.0, which was tagged with an earlier version of these changes and then reverted
+on `main`. Do not pin v1.23.0.
+
+### Sections
+
+- `hero-default`: optional `editorial` layout. A display-size, left-aligned title is the whole
+  hero. With a `background`, the hero fills one screen: the painting above, the title rising into
+  its fade at the bottom.
+- `benefits-list`: optional item tones make the list a grid of solid-color text panels.
+- `statement-reveal`: new full-screen scroll reveal with native scrolling and a static reduced-motion layout.
+- `pricing-banner-default`: optional `offer` displays trial and one-time pricing alongside the acquisition CTA.
+
+### Internal
+
+- JustEjari demo snapshot re-copied from the editorial landing config.
+
 ## v1.22.0 — 2026-11-19
 
 ### Sections

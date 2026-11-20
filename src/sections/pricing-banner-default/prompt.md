@@ -1,7 +1,7 @@
 # Pricing banner default implementation prompt
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.7`
+- **Revision:** `0.8`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -30,3 +30,7 @@ Build the centered, full-width Just acquisition banner exactly as described in `
 2. Inspect `/gallery/pricing-banner-default` at 375px, 430px, 768px, 1024px, and 1440px.
 3. Check the plan's acceptance criteria.
 4. If implementation changes a decision, update both `plan.md` and this file, then increment the shared Revision before completion.
+
+## Editorial landing update
+
+Add optional `offer` content with a required trial heading, trial description, price, unit and description, along with optional payment terms. In this presentation render the title and CTA on one side and the offer on the other. Stack on small screens. Keep previous card and band layouts when the offer is omitted.

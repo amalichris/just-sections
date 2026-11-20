@@ -250,3 +250,57 @@
     position: relative;
   }
 }
+
+.hero-default-editorial {
+  padding-block-end: clamp(48px, 7vw, 104px);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+/* With a painting, the hero is exactly the first screen: the painting takes
+   whatever height the display-size title leaves, and the title rises into its
+   fade at the bottom. On tall phones this lands at the legal-title height. */
+.hero-default-editorial:has(> .painted-banner) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100svh;
+}
+
+.hero-default-editorial > .painted-banner {
+  flex: 1 0 auto;
+  height: auto;
+  min-block-size: 240px;
+}
+
+.hero-default-editorial > .painted-banner img {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-default-editorial__heading {
+  box-sizing: border-box;
+  width: min(100%, 1248px);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4.444vw, 64px);
+  text-align: left;
+}
+
+/* Display scale: the title is the whole hero, so it is set far above the
+   marketing scale. Words wrap whole; a long single word may still break. */
+.hero-default-editorial h1 {
+  max-inline-size: 11ch;
+  margin: 0;
+  font-family: var(--just-font-heading);
+  white-space: pre-line;
+
+  font-size: clamp(3.5rem, 12vw, 10rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  overflow-wrap: break-word;
+}
+
+.hero-default-editorial__heading:first-child {
+  padding-block-start: 128px;
+}
