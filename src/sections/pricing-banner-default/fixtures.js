@@ -86,4 +86,31 @@ export default [
       title: 'Start with 3 PDF generations free.',
     },
   },
+  {
+    id: 'pay-as-you-go',
+    label: 'Pay-as-you-go offer',
+    props: {
+      title: 'Simple and transparent',
+      frame: 'card',
+      cta: { label: 'Start free', href: '#top' },
+      offer: {
+        trial: '3 free generations',
+        trialDescription: 'Start with three PDF generations on us.',
+        price: 'AED 79',
+        unit: 'Per generation',
+        description: 'One contract and addendum PDF.',
+        terms: 'No subscription or monthly fee.',
+      },
+    },
+  },
+  {
+    id: 'incomplete-offer',
+    label: 'Incomplete offer',
+    expectsNothing: true,
+    props: {
+      title: 'Pricing',
+      cta: { label: 'Start free', href: '#top' },
+      offer: { price: 'AED 79' },
+    },
+  },
 ]

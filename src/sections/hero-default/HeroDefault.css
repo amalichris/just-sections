@@ -250,3 +250,34 @@
     position: relative;
   }
 }
+
+.hero-default-editorial {
+  padding-block-end: clamp(48px, 7vw, 104px);
+  background: var(--just-color-parchment);
+  color: var(--just-color-near-black);
+}
+
+.hero-default-editorial__heading {
+  box-sizing: border-box;
+  width: min(100%, 1248px);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4.444vw, 64px);
+  text-align: left;
+}
+
+.hero-default-editorial h1 {
+  max-inline-size: 20ch;
+  margin: 0;
+  font-family: var(--just-font-heading);
+  white-space: pre-line;
+
+  font-size: clamp(2.875rem, 7.7vw, 6rem);
+  font-weight: 500;
+  line-height: 0.99;
+  letter-spacing: -0.055em;
+  overflow-wrap: anywhere;
+}
+
+.hero-default-editorial__heading:first-child {
+  padding-block-start: 128px;
+}

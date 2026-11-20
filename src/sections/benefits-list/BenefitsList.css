@@ -136,3 +136,67 @@
   .benefits-list__intro h2 { font-size: 4rem; }
   .benefits-list__subtitle { font-size: 1.25rem; }
 }
+
+.benefits-list--panels {
+  padding-block: clamp(48px, 7vw, 88px) clamp(24px, 4.444vw, 64px);
+}
+
+.benefits-list--panels .benefits-list__intro {
+  max-width: 34rem;
+}
+
+.benefits-list--panels .benefits-list__items {
+  display: grid;
+  gap: 12px;
+  border: 0;
+}
+
+.benefits-list--panels .benefits-list__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: end;
+  gap: 10px;
+  min-block-size: clamp(172px, 24vw, 280px);
+  padding: clamp(24px, 3.6vw, 48px);
+  border: 0;
+  border-radius: 24px;
+  background: var(--panel-color);
+  color: var(--just-color-ivory);
+}
+
+.benefits-list__item--chianti { --panel-color: #8e2441; }
+.benefits-list__item--sky { --panel-color: #245d90; }
+.benefits-list__item--cypress { --panel-color: #2d6b48; }
+.benefits-list__item--sunflower { --panel-color: #e8b314; }
+.benefits-list__item--charcoal { --panel-color: var(--just-color-dark-surface); }
+
+.benefits-list--panels .benefits-list__item--sunflower {
+  color: var(--just-color-near-black);
+}
+
+.benefits-list--panels :is(.benefits-list__description, .benefits-list__title svg) {
+  color: inherit;
+}
+
+.benefits-list--panels .benefits-list__description {
+  max-inline-size: 39ch;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  line-height: 1.5;
+}
+
+.benefits-list--panels h3 {
+  font-size: clamp(1.625rem, 3.1vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+@media (min-width: 768px) {
+  .benefits-list--panels .benefits-list__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .benefits-list--panels .benefits-list__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    min-block-size: clamp(172px, 21vw, 240px);
+  }
+}

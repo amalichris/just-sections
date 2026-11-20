@@ -1,7 +1,7 @@
 # Benefits list plan
 
 - **Section ID:** `benefits-list`
-- **Revision:** `0.1`
+- **Revision:** `0.2`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic Just landing sections; no section variants
 
@@ -62,3 +62,7 @@ Labelled section, `h2` id derived from `useId()`. Semantic unordered list, h3 pe
 PRD-001 coordinates release and page rhythm. This plan and its prompt own the section’s contract; the PRD references them rather than duplicating technical design.
 
 Verified 2026-10-07: five gallery widths matched; no body overflow; long-copy 320px reflow, tokens-only host and repeated-instance SSR checks passed. No controls or motion were added.
+
+## Editorial landing update
+
+Add a solid-panel presentation when all items supply a `tone` of chianti, sky, cypress, sunflower, or charcoal. Display all items in source order using a single column on phones and two columns at 768px. The final odd panel spans both columns. Match foregrounds to the fills. The plain list remains the default.

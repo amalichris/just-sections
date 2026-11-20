@@ -1,7 +1,7 @@
 # Default hero plan
 
 - **Section ID:** `hero-default`
-- **Revision:** `1.8`
+- **Revision:** `1.9`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page hero; initial JustEjari composition, extended with an optional CTA for JustConvert
 
@@ -112,3 +112,7 @@ above, approved for this variant only; the default implementation remains unchan
 Acceptance: check optical cover at 320/375/768/1280, two-line supplied headline, no
 horizontal overflow, following sections covering the hero, reverse scroll, reduced-motion
 fallback, legal routes unaffected, and unchanged default fixtures. No custom scroll driver.
+
+## Editorial landing update
+
+Add the optional `editorial` layout for a painted banner. Reuse PaintedBanner so the left-aligned heading starts at the same height as the legal title. Keep the headline on the marketing type scale. Existing layouts keep their sizing and behavior.

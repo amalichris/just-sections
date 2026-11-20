@@ -1,7 +1,7 @@
 # Pricing banner default plan
 
 - **Section ID:** `pricing-banner-default`
-- **Revision:** `0.7`
+- **Revision:** `0.8`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page acquisition banner; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -70,3 +70,7 @@ The section is labelled by its `h2`. Its CTA is a native link with a 44px minimu
 ## Implementation notes
 
 The CTA href is page-supplied and this library has no opinion about its value. JustEjari's page config, now in that product's `web/` department, still carries `#pricing` as a preview-safe placeholder because the live Mini App URL was not available when the page was written — replacing it is a change there, not here.
+
+## Editorial landing update
+
+Add optional `offer` content with a required trial heading, trial description, price, unit and description, along with optional payment terms. In this presentation render the title and CTA on one side and the offer on the other. Stack on small screens. Keep previous card and band layouts when the offer is omitted.
