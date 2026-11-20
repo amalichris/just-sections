@@ -75,6 +75,14 @@
   opacity: 1;
 }
 
+/* The section in view: full strength and an underline, no layout shift. */
+.header-default__links a[aria-current='location'] {
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
 .header-default__cta {
   display: inline-flex;
   grid-column: 3;

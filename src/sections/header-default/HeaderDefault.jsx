@@ -17,6 +17,40 @@ import './HeaderDefault.css'
  */
 export default function HeaderDefault({ brand, cta, navigation, position = 'fixed', id }) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeTargetId, setActiveTargetId] = useState(null)
+  const targetKey = navigation?.map(({ targetId }) => targetId).join(' ') ?? ''
+
+  // The last section whose top has passed a line 40% down the viewport is
+  // current; nothing is above the first one (the hero). Tops, not full rects:
+  // a section pinned under a later cover keeps a rect that spans the viewport.
+  useEffect(() => {
+    const targetIds = targetKey ? targetKey.split(' ') : []
+    if (!targetIds.length) return undefined
+    let frame
+
+    const update = () => {
+      frame = undefined
+      const line = window.innerHeight * 0.4
+      const current = targetIds.findLast((targetId) => {
+        const top = document.getElementById(targetId)?.getBoundingClientRect().top
+        return top !== undefined && top <= line
+      })
+      setActiveTargetId(current ?? null)
+    }
+    const schedule = () => {
+      if (frame === undefined) frame = window.requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+
+    return () => {
+      if (frame !== undefined) window.cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [targetKey])
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 767px)')
@@ -66,7 +100,9 @@ export default function HeaderDefault({ brand, cta, navigation, position = 'fixe
           <ul className="header-default__links">
             {navigation.map(({ label, targetId }) => (
               <li key={targetId}>
-                <a href={`#${targetId}`}>{label}</a>
+                <a href={`#${targetId}`} aria-current={targetId === activeTargetId ? 'location' : undefined}>
+                  {label}
+                </a>
               </li>
             ))}
           </ul>

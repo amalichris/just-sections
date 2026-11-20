@@ -1,7 +1,7 @@
 # Default header implementation prompt
 
 - **Section ID:** `header-default`
-- **Revision:** `0.14`
+- **Revision:** `0.15`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -40,3 +40,5 @@ Build the fixed landing header described in `plan.md`.
 2. Inspect the preview route at desktop, tablet, and mobile widths.
 3. Verify anchor targets, top/scrolled states, focus handling, and reduced motion.
 4. Update this file and `plan.md` together, incrementing Revision if implementation changes a decision.
+
+Revision 0.15: track the current section on scroll (rAF-throttled, passive) and mark its link with `aria-current="location"`; style it at full opacity with a 2px underline. No prop change.

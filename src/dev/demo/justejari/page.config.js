@@ -33,6 +33,7 @@ export default {
         brand: { label: PRODUCT_NAME, href: "#top" },
         navigation: [
           { label: "The app", targetId: "app-features" },
+          { label: "Pricing", targetId: "pricing" },
           { label: "FAQ", targetId: "faq" },
         ],
         cta: { label: "Open JustEjari", href: justEjariUrl },

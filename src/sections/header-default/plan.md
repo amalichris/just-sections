@@ -1,7 +1,7 @@
 # Default header plan
 
 - **Section ID:** `header-default`
-- **Revision:** `0.14`
+- **Revision:** `0.15`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page header; initial JustEjari composition, extended for JustConvert's App Store CTA
 
@@ -84,3 +84,5 @@ Adds the `static` position variant (v1.17.0). Lint and build pass; the fixed def
 ## Verification — Revision 0.12
 
 Lint and production build pass. Mobile preview measured at 375px: original 68px header (12px top + 44px control + 12px bottom), decorative background bottom inset 0px, no backdrop filter, and persistent controls. Background opacity is 0 at the top and 1 in the scrolled state; the configured fragment CTA reaches its target. No new props or dependencies. Desktop glass treatment and existing opaque preference fallbacks are retained. Safari/Firefox and native preference propagation were not tested.
+
+**Revision 0.15:** the navigation link of the last target section whose top has passed a line 40% down the viewport gets `aria-current="location"` and renders at full opacity with a 2px underline (6px offset), so the current section is visible without layout shift. Nothing is current above the first target. Tops are used rather than full rects because a section pinned under a later cover (`statement-reveal`) keeps a rect spanning the viewport. No prop change; links remain hidden below 768px as before.

@@ -8,6 +8,19 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.26.0 — 2026-11-20
+
+### Sections
+
+- `header-default`: the navigation link for the section in view is highlighted (full strength,
+  2px underline) and marked `aria-current="location"`. Current means the last linked section
+  whose top has passed 40% of the viewport; nothing is current over the hero. No configuration
+  change. Links stay hidden below 768px as before.
+
+### Internal
+
+- JustEjari demo navigation gains Pricing.
+
 ## v1.25.1 — 2026-11-20
 
 ### Sections
