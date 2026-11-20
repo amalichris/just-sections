@@ -1,7 +1,7 @@
 # Statement reveal plan
 
 - **Section ID:** `statement-reveal`
-- **Revision:** `0.1`
+- **Revision:** `0.2`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic landing section
 
@@ -23,7 +23,7 @@ rendered within a single heading, with a space between phrases. `id` defaults to
 
 ## Behavior
 
-A full-screen panel rises over the preceding colored benefits. Keep native scroll. Scrub the
+A full-screen panel rises over the preceding section, whichever section it is (revision 0.2; 0.1 pinned only `benefits-list` panels). Keep native scroll. Scrub the
 phrase colors from the moment the panel arrives until it releases, and reverse when scrolling
 back. Reduced-motion and oversized text use a static readable section. The animation enhances
 existing DOM text and adds no controls. Main sections after the statement scroll above the

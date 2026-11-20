@@ -8,6 +8,13 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.24.1 — 2026-11-20
+
+### Sections
+
+- `statement-reveal`: the panel now rises over whichever section precedes it (for example
+  `benefits-carousel`), not only `benefits-list` color panels. No configuration change.
+
 ## v1.24.0 — 2026-11-20
 
 Supersedes v1.23.0, which was tagged with an earlier version of these changes and then reverted

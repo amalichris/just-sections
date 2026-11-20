@@ -45,7 +45,7 @@
     color: color-mix(in srgb, var(--phrase-color) var(--phrase-progress, 0%), var(--just-color-stone-gray));
   }
 
-  .benefits-list--panels:has(+ .statement-reveal[data-reveal]) {
+  section:has(+ .statement-reveal[data-reveal]) {
     position: sticky;
     top: var(--benefits-cover-top, 0px);
     z-index: 1;

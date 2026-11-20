@@ -22,7 +22,8 @@ export default function StatementReveal({ id = 'statement', phrases }) {
     if (!root) return undefined
     const stage = root.firstElementChild
     const previous = root.previousElementSibling
-    const benefits = previous?.matches('.benefits-list--panels') ? previous : null
+    // Whatever section precedes the statement stays pinned while the panel covers it.
+    const benefits = previous?.matches('section') ? previous : null
     const parts = Array.from(stage.querySelectorAll('.statement-reveal__phrase'))
     const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
     let frame
