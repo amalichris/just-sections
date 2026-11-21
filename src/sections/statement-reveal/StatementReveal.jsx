@@ -26,10 +26,48 @@ export default function StatementReveal({ id = 'statement', phrases }) {
     const benefits = previous?.matches('section') ? previous : null
     const parts = Array.from(stage.querySelectorAll('.statement-reveal__phrase'))
     const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+    const heading = stage.querySelector('h2')
     let frame
+    let fittedFor
+
+    // Small-viewport height: stable while a mobile browser bar shows or hides,
+    // so scrolling never re-fits the text.
+    function smallViewportHeight() {
+      const probe = document.createElement('div')
+      probe.style.cssText = 'position:fixed;top:0;height:100svh;visibility:hidden;pointer-events:none'
+      document.body.append(probe)
+      const height = probe.offsetHeight
+      probe.remove()
+      return height
+    }
+
+    // Largest size at which the statement fills ~90% of the screen's free
+    // height without any word overflowing the line. Widths and heights only
+    // change on resize, so this runs once per viewport size.
+    function fit() {
+      const width = heading.clientWidth
+      const screen = smallViewportHeight()
+      const key = `${width}x${screen}`
+      if (key === fittedFor || !width) return
+      fittedFor = key
+      const padding = parseFloat(getComputedStyle(stage).paddingTop) + parseFloat(getComputedStyle(stage).paddingBottom)
+      const available = (screen - padding) * 0.9
+      heading.style.fontSize = ''
+      root.setAttribute('data-fit', '')
+      let low = 24
+      let high = 320
+      while (high - low > 1) {
+        const size = (low + high) / 2
+        heading.style.fontSize = `${size}px`
+        if (heading.scrollHeight <= available && heading.scrollWidth <= heading.clientWidth) low = size
+        else high = size
+      }
+      heading.style.fontSize = `${Math.floor(low)}px`
+    }
 
     function update() {
       frame = undefined
+      fit()
       const viewport = document.documentElement.clientHeight
       const stageHeight = stage.offsetHeight
       const active = motion.matches && stageHeight <= viewport + 1
@@ -68,6 +106,8 @@ export default function StatementReveal({ id = 'statement', phrases }) {
       window.removeEventListener('resize', schedule)
       window.removeEventListener('scroll', schedule)
       root.removeAttribute('data-reveal')
+      root.removeAttribute('data-fit')
+      heading.style.removeProperty('font-size')
       benefits?.style.removeProperty('--benefits-cover-top')
     }
   }, [phrases])

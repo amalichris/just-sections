@@ -1,7 +1,7 @@
 # Statement reveal plan
 
 - **Section ID:** `statement-reveal`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic landing section
 
@@ -35,3 +35,5 @@ preceding pinned benefits.
 Check stacking, forward and reverse reveal, no hidden text after zoom or on short screens,
 and static reduced-motion presentation. Review in a production landing page at 375, 768,
 and 1280px.
+
+**Revision 0.4:** the statement is sized to the screen. Script picks the largest font size at which the heading fills about 90% of the small-viewport height (`100svh` less the stage padding) with no word wider than the line, refitting only when width or `svh` changes. On phones the longest word usually sets the size; on wide screens the height does. The CSS clamp remains the no-script fallback.

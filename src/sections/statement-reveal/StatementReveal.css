@@ -21,6 +21,12 @@
   overflow-wrap: anywhere;
 }
 
+/* Fitted by script: whole words only, so an overflowing word shows up in the
+   measurement instead of being broken. The CSS size above is the fallback. */
+.statement-reveal[data-fit] h2 {
+  overflow-wrap: normal;
+}
+
 .statement-reveal__phrase {
   --phrase-color: var(--just-color-near-black);
   color: var(--phrase-color);

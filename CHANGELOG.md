@@ -8,6 +8,14 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.26.1 — 2026-11-21
+
+### Sections
+
+- `statement-reveal`: the statement is sized to fill the screen. The largest size at which it
+  takes about 90% of the screen height with no word wider than the line; on phones roughly
+  double the previous size. No configuration change; without script the old size applies.
+
 ## v1.26.0 — 2026-11-20
 
 ### Sections

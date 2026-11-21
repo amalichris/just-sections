@@ -1,7 +1,7 @@
 # Statement reveal implementation prompt
 
 - **Section ID:** `statement-reveal`
-- **Revision:** `0.3`
+- **Revision:** `0.4`
 - **Companion plan:** [plan.md](plan.md)
 
 Use the approved motion direction and existing design tokens. Register the section, render
@@ -11,3 +11,5 @@ forward and reverse phrase progression, and the static presentation on reduced m
 Revision 0.2: pin whichever `section` precedes the statement while the panel covers it, not only `benefits-list` panels.
 
 Revision 0.3: parchment surface, near-black revealed type, stone-gray unrevealed type, sienna accent.
+
+Revision 0.4: fit the heading's font size to the screen (binary search; ~90% of `100svh` minus stage padding; no word overflow; whole-word wrapping while fitted). Refit on width or `svh` change only.
