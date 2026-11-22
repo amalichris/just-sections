@@ -1,7 +1,7 @@
 # Statement reveal plan
 
 - **Section ID:** `statement-reveal`
-- **Revision:** `0.4`
+- **Revision:** `0.5`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic landing section
 
@@ -37,3 +37,5 @@ and static reduced-motion presentation. Review in a production landing page at 3
 and 1280px.
 
 **Revision 0.4:** the statement is sized to the screen. Script picks the largest font size at which the heading fills about 90% of the small-viewport height (`100svh` less the stage padding) with no word wider than the line, refitting only when width or `svh` changes. On phones the longest word usually sets the size; on wide screens the height does. The CSS clamp remains the no-script fallback.
+
+**Revision 0.5:** no cover and no pinning. The statement sits in normal page flow, and the preceding section is untouched. The reveal is word by word: from the moment the section's top reaches 60% of the viewport height, so the muted statement is seen first, until it fills the screen (its top at the viewport top), words switch from stone gray straight to their phrase colour in order, with no in-between colours, and reverse on scroll back. Reduced motion stays static. The 0.4 screen fit is kept. The heading is then set at 80% of that fitted size, for an editorial margin around the statement.

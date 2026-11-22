@@ -1,7 +1,7 @@
 # Default FAQ implementation prompt
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.9`
+- **Revision:** `1.0`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -17,7 +17,7 @@ Build the configurable FAQ section described in `plan.md`.
 - Keep the component and local CSS in this folder.
 - Require title and a non-empty item list; keep open-item state internal.
 - Treat eyebrow and subtitle as optional and render each only when supplied. Declare the spacing above the title on the eyebrow-to-title pair so an omitted eyebrow leaves no residual margin.
-- Use the approved Marketing FAQ pattern: flat configurable parchment/ivory surface (default parchment), typography, divider, Lucide Plus, native semantic controls, and motion behavior. Center the one-column introduction and constrain both it and the left-aligned accordion to 624px; restore left-aligned introduction text in the desktop split.
+- Use the approved Marketing FAQ pattern: flat configurable parchment/ivory surface (default parchment), typography, divider, Lucide Plus, native semantic controls, and motion behavior. Left-align the one-column introduction and constrain both it and the left-aligned accordion to 624px so they share a left edge (revision 1.0); the desktop split keeps the left-aligned introduction.
 - Preserve newline characters in answer strings as visible line breaks. Render only Markdown-style links with root-relative, HTTPS, or `mailto:` destinations, opening them in new tabs; keep answers otherwise plain text and do not add general rich-answer formatting.
 - Accept the optional runtime `onInteraction` hook passed through `ProductPage`. Emit `{ sectionId, interaction: 'item_opened', itemId }` only when a closed item opens; do not emit on initial render or close, and do not include question or answer copy. Keep this callback out of page config.
 - Do not add a CTA, search, categories, assets, rich-answer formatting, variants, or dependencies.

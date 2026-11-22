@@ -1,7 +1,7 @@
 # Value summary plan
 
 - **Section ID:** `value-summary`
-- **Revision:** `0.1`
+- **Revision:** `0.2`
 - **Status:** Implemented
 - **Products / variants:** Product-agnostic Just landing sections; no section variants
 
@@ -15,7 +15,7 @@ Catalog: `docs/inspiration/sections.md` → Claude Startups; source folder `docs
 
 - **Keep:** the offer summary’s prominent values, short labels, fine dividers and calm static presentation.
 - **Adapt:** Just fonts, palette, standard gutters, heading ramp and responsive stacking; consumer-owned facts and content.
-- **Exclude:** Claude assets/copy, serif typography, white section backgrounds, scroll reveals and count-up motion.
+- **Exclude:** Claude assets/copy, serif typography, white section backgrounds and count-up motion (scroll reveals were excluded until revision 0.2).
 
 ## Just design-system translation
 
@@ -40,7 +40,7 @@ No section variants, numeric animation, number formatting, links, CTA, media, cl
 
 Below 768px values stack with horizontal dividers and 24px padding. From 768px one to three items form a row; four items use 2×2 with dividers. From 1024px all items form a single row. Grid count derives from validated array length via section-local count classes, never style overrides. Values use Outfit 32px / 40px from 768px / 48px from 1200px, weight 500, line-height 1.1. Labels use Inter 16px and optional descriptions Inter 14px, oliveGray, line-height 1.6. Label precedes value in semantic `dl` source order; CSS displays the value above its label. Text wraps, including unbroken values; no truncation.
 
-No interaction, motion, requests, skeletons or optimistic state. Invalid/missing configuration renders nothing and reports using `requireProps` in development. Lists grow with content; all optional spacing belongs to adjacent rendered elements.
+No interaction, requests, skeletons or optimistic state. Invalid/missing configuration renders nothing and reports using `requireProps` in development. Lists grow with content; all optional spacing belongs to adjacent rendered elements.
 
 ## Accessibility
 
@@ -62,3 +62,5 @@ Labelled section, `h2` id derived from `useId()`. Semantic description list: dt 
 PRD-001 coordinates release and page rhythm. This plan and its prompt own the section’s contract; the PRD references them rather than duplicating technical design.
 
 Verified 2026-10-07: five gallery widths matched; no body overflow; long-copy 320px reflow, tokens-only host and repeated-instance SSR checks passed. No controls or motion were added.
+
+**Revision 0.2 (user-selected 2026-11-22):** values share the statement reveal's motion language. With motion allowed, each value waits in stone gray (3.31:1) and switches straight to near-black, with no colour fade and no movement, as its fact crosses a reading line at 60% of the viewport height; scrolling back reverses it. Facts sharing a row switch left to right 120ms apart. Titles, labels and descriptions are never muted. No-script and reduced motion show full ink. No count-up and no hidden content. This supersedes the earlier exclusion of scroll reveals.

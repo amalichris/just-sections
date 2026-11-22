@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from 'react'
+import { Fragment, useEffect, useId, useRef } from 'react'
 import requireProps from '../requireProps'
 import './StatementReveal.css'
 
@@ -10,7 +10,7 @@ function validPhrases(phrases) {
 }
 
 /**
- * Full-screen editorial statement enhanced by native scroll progress.
+ * Full-screen editorial statement, revealed word by word as it scrolls past.
  * @param {{ id?: string, phrases: { id: string, text: string, accent?: boolean }[] }} props
  */
 export default function StatementReveal({ id = 'statement', phrases }) {
@@ -21,10 +21,7 @@ export default function StatementReveal({ id = 'statement', phrases }) {
     const root = rootRef.current
     if (!root) return undefined
     const stage = root.firstElementChild
-    const previous = root.previousElementSibling
-    // Whatever section precedes the statement stays pinned while the panel covers it.
-    const benefits = previous?.matches('section') ? previous : null
-    const parts = Array.from(stage.querySelectorAll('.statement-reveal__phrase'))
+    const words = Array.from(stage.querySelectorAll('.statement-reveal__word'))
     const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
     const heading = stage.querySelector('h2')
     let frame
@@ -62,28 +59,26 @@ export default function StatementReveal({ id = 'statement', phrases }) {
         if (heading.scrollHeight <= available && heading.scrollWidth <= heading.clientWidth) low = size
         else high = size
       }
-      heading.style.fontSize = `${Math.floor(low)}px`
+      // Set below the fitted maximum so the statement keeps an editorial margin.
+      heading.style.fontSize = `${Math.floor(low * 0.8)}px`
     }
 
     function update() {
       frame = undefined
       fit()
-      const viewport = document.documentElement.clientHeight
-      const stageHeight = stage.offsetHeight
-      const active = motion.matches && stageHeight <= viewport + 1
+      const active = motion.matches
       root.toggleAttribute('data-reveal', active)
       if (!active) return
 
-      if (benefits) {
-        const top = viewport - benefits.offsetHeight
-        benefits.style.setProperty('--benefits-cover-top', `${top}px`)
-      }
-
-      const distance = root.offsetHeight - stageHeight
-      const progress = Math.min(1, Math.max(0, -root.getBoundingClientRect().top / distance))
-      for (const [index, part] of parts.entries()) {
-        const amount = Math.min(1, Math.max(0, progress * parts.length - index))
-        part.style.setProperty('--phrase-progress', `${Math.round(amount * 100)}%`)
+      // The muted statement shows first; the reveal starts once the section's
+      // top has climbed to 60% of the screen and completes as the section fills
+      // the screen (its top reaching the top of the viewport).
+      const start = document.documentElement.clientHeight * 0.6
+      const progress = Math.min(1, Math.max(0, 1 - root.getBoundingClientRect().top / start))
+      // Each word switches straight from gray to its real color, never between.
+      const revealed = Math.round(progress * words.length)
+      for (const [index, word] of words.entries()) {
+        word.toggleAttribute('data-revealed', index < revealed)
       }
     }
 
@@ -93,7 +88,6 @@ export default function StatementReveal({ id = 'statement', phrases }) {
 
     const observer = new ResizeObserver(schedule)
     observer.observe(stage)
-    if (benefits) observer.observe(benefits)
     motion.addEventListener('change', schedule)
     window.addEventListener('resize', schedule)
     window.addEventListener('scroll', schedule, { passive: true })
@@ -108,7 +102,7 @@ export default function StatementReveal({ id = 'statement', phrases }) {
       root.removeAttribute('data-reveal')
       root.removeAttribute('data-fit')
       heading.style.removeProperty('font-size')
-      benefits?.style.removeProperty('--benefits-cover-top')
+      for (const word of words) word.removeAttribute('data-revealed')
     }
   }, [phrases])
 
@@ -122,7 +116,13 @@ export default function StatementReveal({ id = 'statement', phrases }) {
         <h2 id={titleId}>
           {phrases.map(({ id: phraseId, text, accent }, index) => (
             <span key={phraseId} className={accent ? 'statement-reveal__phrase statement-reveal__phrase--accent' : 'statement-reveal__phrase'}>
-              {index > 0 ? ' ' : null}{text}
+              {index > 0 ? ' ' : null}
+              {text.trim().split(/\s+/).map((word, wordIndex) => (
+                <Fragment key={wordIndex}>
+                  {wordIndex > 0 ? ' ' : null}
+                  <span className="statement-reveal__word">{word}</span>
+                </Fragment>
+              ))}
             </span>
           ))}
         </h2>

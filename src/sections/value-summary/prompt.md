@@ -1,7 +1,7 @@
 # Value summary implementation prompt
 
 - **Section ID:** `value-summary`
-- **Revision:** `0.1`
+- **Revision:** `0.2`
 - **Companion plan:** [plan.md](plan.md)
 
 ## Preflight
@@ -15,3 +15,5 @@ Implement the exact public configuration and responsive behavior in plan.md in t
 ## Verify and synchronize
 
 Create fixtures for every documented case; register and export the component. Run lint/build, review the gallery at 375/430/768/1024/1440, verify iframe widths, long-copy reflow at 320px, repeated labels and tokens-only rendering. Record actual outcomes in the plan. If implementation changes a decision, increment both revisions before completion.
+
+Revision 0.2: per plan.md revision 0.2, script sets `data-motion` (motion allowed) and toggles `data-inked` per item when its top is above 60% of the viewport; un-inked values are stone gray. Same-row facts use 120ms colour-switch delays.

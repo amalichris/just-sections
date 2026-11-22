@@ -8,6 +8,27 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.27.0 — 2026-11-22
+
+### Sections
+
+- `statement-reveal`: no longer covers the preceding section or pins itself. It sits in normal
+  page flow at one screen height and reveals word by word: each word switches straight from
+  stone gray to its colour, starting once the section's top reaches 60% of the screen and
+  completing as the section fills the screen. Type is set at 80% of the fitted size, with
+  `text-wrap: pretty`. No configuration change; reduced motion stays static.
+- `value-summary`: values wait in stone gray and switch to ink as each fact crosses a reading
+  line at 60% of the screen; facts in one row switch left to right 120ms apart. Titles,
+  labels and descriptions are never muted. No configuration change; no-script and reduced
+  motion show full ink.
+- `faq-default`: below 1024px the eyebrow, title and subtitle are left-aligned on the
+  accordion's left edge instead of centred. No configuration change.
+
+### Internal
+
+- Design system records the statement and value-summary motion; JustEjari demo gains the
+  pricing value summary.
+
 ## v1.26.1 — 2026-11-21
 
 ### Sections

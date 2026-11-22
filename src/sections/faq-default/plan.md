@@ -1,7 +1,7 @@
 # Default FAQ plan
 
 - **Section ID:** `faq-default`
-- **Revision:** `0.9`
+- **Revision:** `1.0`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page FAQ; initial JustEjari preview fixture
 
@@ -49,7 +49,7 @@ The 12px space above the title belongs to the eyebrow-to-title pair, so omitting
 
 ## Behavior and responsive design
 
-All items are closed at first render. Opening an item closes any previously open answer; activating the open item closes it. At less than 1024px, the intro stacks above the accordion: the eyebrow, title, and subtitle are centered inside a 624px maximum intro measure, while the left-aligned accordion is centered and capped at the same 624px width. At 1024px and above, the layout uses a left-aligned intro column and right accordion column within a 1120px maximum container and 20–64px responsive gutters. Rows have 24px vertical visual padding within a 72px minimum trigger.
+All items are closed at first render. Opening an item closes any previously open answer; activating the open item closes it. At less than 1024px, the intro stacks above the accordion: the eyebrow, title, and subtitle are left-aligned inside a 624px maximum intro measure that shares the accordion's left edge (revision 1.0; earlier revisions centered them), while the left-aligned accordion is centered and capped at the same 624px width. At 1024px and above, the layout uses a left-aligned intro column and right accordion column within a 1120px maximum container and 20–64px responsive gutters. Rows have 24px vertical visual padding within a 72px minimum trigger.
 
 The answer height, opacity, and Plus rotation use a 200ms `cubic-bezier(0.32, 0.72, 0, 1)` transition, except opacity, which uses 200ms ease-out. Reduced motion removes transitions and press scaling. The section has no assets or loading state. When supplied, the host interaction callback fires after the open state is selected and does not control accordion behavior.
 
@@ -63,7 +63,7 @@ Use a labelled `section` and `h2`, then an `h3` and native button for every ques
 - [x] Requires only the documented content configuration and defaults `id` to `faq`.
 - [x] Starts fully collapsed and keeps at most one answer open.
 - [x] Uses documented question/answer type, colors, dividers, focus, press, motion, and reduced-motion behavior.
-- [x] Centers the one-column introduction while keeping its 624px accordion content left-aligned and constrained.
+- [x] Left-aligns the one-column introduction on the accordion's left edge while keeping its 624px accordion content left-aligned and constrained.
 - [x] Uses the two-column layout at desktop widths, with left-aligned intro text and a 624px maximum accordion column.
 - [x] Preserves configured newline characters as plain-text answer line breaks and renders safe new-tab Markdown-style answer links without adding general rich-answer formatting.
 - [x] Optionally reports item opens through `ProductPage` using stable section and item identifiers, without putting runtime callbacks in page config or exposing FAQ copy.

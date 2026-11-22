@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import requireProps from '../requireProps'
 import './ValueSummary.css'
 
@@ -19,7 +19,8 @@ function hasValidItems(items) {
 }
 
 /**
- * Static, page-owned facts with optional qualifications. No number formatting.
+ * Page-owned facts with optional qualifications; values ink in as they are read.
+ * No number formatting.
  * @param {object} props
  * @param {string} props.title Required heading.
  * @param {{ id: string, value: string, label: string, description?: string }[]} props.items
@@ -30,6 +31,43 @@ function hasValidItems(items) {
 export default function ValueSummary({ title, items, eyebrow, subtitle, id = 'value-summary' }) {
   const instanceId = useId().replaceAll(':', '')
   const titleId = `${id}-${instanceId}-title`
+  const rootRef = useRef(null)
+
+  // Values sit in muted gray and switch to ink as each crosses a reading line
+  // at 60% of the screen, reversing on scroll back. Script only mutes what it
+  // can also reveal, so no-script and reduced motion stay in full ink.
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return undefined
+    const items = Array.from(root.querySelectorAll('.value-summary__item'))
+    const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+    let frame
+
+    function update() {
+      frame = undefined
+      root.toggleAttribute('data-motion', motion.matches)
+      const line = document.documentElement.clientHeight * 0.6
+      for (const item of items) item.toggleAttribute('data-inked', item.getBoundingClientRect().top < line)
+    }
+
+    function schedule() {
+      if (frame === undefined) frame = window.requestAnimationFrame(update)
+    }
+
+    motion.addEventListener('change', schedule)
+    window.addEventListener('resize', schedule)
+    window.addEventListener('scroll', schedule, { passive: true })
+    update()
+
+    return () => {
+      if (frame !== undefined) window.cancelAnimationFrame(frame)
+      motion.removeEventListener('change', schedule)
+      window.removeEventListener('resize', schedule)
+      window.removeEventListener('scroll', schedule)
+      root.removeAttribute('data-motion')
+      for (const item of items) item.removeAttribute('data-inked')
+    }
+  }, [items])
 
   if (requireProps('ValueSummary', {
     'a nonblank title': isText(title) ? true : undefined,
@@ -38,7 +76,7 @@ export default function ValueSummary({ title, items, eyebrow, subtitle, id = 'va
   })) return null
 
   return (
-    <section id={id} className="value-summary" aria-labelledby={titleId}>
+    <section ref={rootRef} id={id} className="value-summary" aria-labelledby={titleId}>
       <div className="value-summary__layout">
         <header className="value-summary__intro">
           {eyebrow ? <p className="value-summary__eyebrow">{eyebrow}</p> : null}

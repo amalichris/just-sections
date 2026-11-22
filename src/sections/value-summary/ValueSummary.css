@@ -153,3 +153,24 @@
   .value-summary__subtitle { font-size: 1.25rem; }
   .value-summary__value { font-size: 3rem; }
 }
+
+/* Values wait in stone gray (3.31:1 on parchment) and switch straight to ink as
+   each crosses the reading line. Facts sharing a row switch left to right. */
+@media (prefers-reduced-motion: no-preference) {
+  .value-summary[data-motion] .value-summary__item:not([data-inked]) .value-summary__value {
+    color: var(--just-color-stone-gray);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-width: 1023px) {
+  .value-summary__items--2 .value-summary__item:nth-child(2) .value-summary__value,
+  .value-summary__items--3 .value-summary__item:nth-child(2) .value-summary__value,
+  .value-summary__items--4 .value-summary__item:nth-child(even) .value-summary__value { transition: color 0s 120ms; }
+  .value-summary__items--3 .value-summary__item:nth-child(3) .value-summary__value { transition: color 0s 240ms; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  .value-summary__item:nth-child(2) .value-summary__value { transition: color 0s 120ms; }
+  .value-summary__item:nth-child(3) .value-summary__value { transition: color 0s 240ms; }
+  .value-summary__item:nth-child(4) .value-summary__value { transition: color 0s 360ms; }
+}

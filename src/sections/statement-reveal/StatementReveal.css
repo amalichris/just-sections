@@ -1,6 +1,4 @@
 .statement-reveal {
-  position: relative;
-  z-index: 2;
   background: var(--just-color-parchment);
   color: var(--just-color-near-black);
 }
@@ -19,6 +17,7 @@
   font: 500 clamp(1.875rem, 5.35vw, 5.25rem)/1.06 var(--just-font-heading);
   letter-spacing: -0.045em;
   overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 /* Fitted by script: whole words only, so an overflowing word shows up in the
@@ -38,28 +37,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .statement-reveal[data-reveal] {
-    min-block-size: 172svh;
-  }
-
-  .statement-reveal[data-reveal] .statement-reveal__stage {
-    position: sticky;
-    top: 0;
-  }
-
-  .statement-reveal[data-reveal] .statement-reveal__phrase {
+  .statement-reveal[data-reveal] .statement-reveal__word:not([data-revealed]) {
     /* Unrevealed copy stays readable: stone gray is 3.31:1 on parchment. */
-    color: color-mix(in srgb, var(--phrase-color) var(--phrase-progress, 0%), var(--just-color-stone-gray));
-  }
-
-  section:has(+ .statement-reveal[data-reveal]) {
-    position: sticky;
-    top: var(--benefits-cover-top, 0px);
-    z-index: 1;
-  }
-
-  .statement-reveal[data-reveal] ~ * {
-    position: relative;
-    z-index: 2;
+    color: var(--just-color-stone-gray);
   }
 }

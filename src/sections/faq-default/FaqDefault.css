@@ -31,7 +31,6 @@
 .faq-default__intro {
   width: min(100%, 624px);
   margin: 0 auto;
-  text-align: center;
 }
 
 /* Spacing lives on the pair, not the element, so an omitted eyebrow leaves no
@@ -51,7 +50,7 @@
 
 .faq-default__subtitle {
   max-width: 34rem;
-  margin: 16px auto 0;
+  margin-top: 16px;
   color: var(--just-color-olive-gray);
   font-family: var(--just-font-body);
   font-size: 1rem;
@@ -192,7 +191,6 @@
   .faq-default__intro {
     width: auto;
     margin: 0;
-    text-align: left;
   }
 
   .faq-default__layout {

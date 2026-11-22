@@ -75,6 +75,21 @@ export default {
       },
     },
     {
+      // Mirrors justejari/web page config.
+      type: "value-summary",
+      id: "value",
+      props: {
+        title: "Pay per contract.",
+        subtitle: "You pay when the contract and addendum are ready. Nothing before that.",
+        items: [
+          { id: "price", value: "AED 79", label: "Per generation", description: "One PDF with the contract and addendum. Plus 5% VAT." },
+          { id: "free", value: "3 free", label: "To start", description: "Your first three contracts and addenda cost nothing." },
+          { id: "revisions", value: "Free", label: "Revisions", description: "Unlock a contract, change it and generate it again." },
+          { id: "subscription", value: "None", label: "Subscription", description: "Pay as you go. No monthly fee." },
+        ],
+      },
+    },
+    {
       type: "pricing-banner-default",
       id: "pricing",
       props: {
