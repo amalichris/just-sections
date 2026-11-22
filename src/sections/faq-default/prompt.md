@@ -1,7 +1,7 @@
 # Default FAQ implementation prompt
 
 - **Section ID:** `faq-default`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -29,3 +29,5 @@ Build the configurable FAQ section described in `plan.md`.
 2. Inspect `/gallery/faq-default` at 375px, 430px, 768px, 1024px, and 1440px.
 3. Verify exclusive expansion, Plus rotation, keyboard behavior, focus visibility, 44px targets, reduced motion, and one interaction callback per item opening.
 4. Update this file and `plan.md` together, incrementing Revision if implementation changes a decision.
+
+Revision 1.1: desktop columns `minmax(0, 1fr) minmax(0, 2fr)`; drop the fixed 280–400px intro track and `space-between`.

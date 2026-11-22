@@ -8,6 +8,14 @@ Consumers install from a git tag, so nothing here reaches a live page until that
 
 ---
 
+## v1.27.1 — 2026-11-22
+
+### Sections
+
+- `faq-default`: from 1024px the intro and accordion split one third to two thirds at every
+  width (a 4/8 twelve-column split). Previously fixed tracks drifted towards 50/50 between
+  1024 and 1200px. The accordion keeps its 624px cap on the right. No configuration change.
+
 ## v1.27.0 — 2026-11-22
 
 ### Sections

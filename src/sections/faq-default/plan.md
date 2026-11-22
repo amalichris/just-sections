@@ -1,7 +1,7 @@
 # Default FAQ plan
 
 - **Section ID:** `faq-default`
-- **Revision:** `1.0`
+- **Revision:** `1.1`
 - **Status:** Implemented
 - **Products / variants:** Configurable Just landing-page FAQ; initial JustEjari preview fixture
 
@@ -72,3 +72,5 @@ Use a labelled `section` and `h2`, then an `h3` and native button for every ques
 ## Implementation notes
 
 The `fixtures.js` content is deliberately non-production, for visual review in the gallery. A consuming page supplies final FAQ copy.
+
+**Revision 1.1:** at 1024px and above the intro and accordion columns split one third to two thirds (`1fr` / `2fr`, a 4/8 twelve-column split) at every width; the accordion keeps its 624px cap, right-aligned in its column. Earlier fixed 400px / 624px tracks drifted towards 50/50 between 1024 and 1200px.
