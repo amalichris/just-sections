@@ -1,7 +1,7 @@
 # Move-in calculator plan
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Status:** Approved
 - **Products / variants:** JustEjari `/move-in-costs` (web PRD-002). No variants
 
@@ -136,3 +136,7 @@ the furnishing or bedroom defaults. When `shareUrl` is set, the address bar is k
 - Copy failure is silent: the share URL stays visible as selectable text.
 
 - Verify the optional interaction callback reports the initial source once, the first valid adjustment once, and only successful clipboard copies.
+
+## Query-safe share URLs (revision 1.7)
+
+The existing absolute shareUrl may include configured query parameters and a fragment. Merge the current estimate parameters with URLSearchParams.set rather than concatenating another question mark. Preserve configured tags and fragments; estimate values replace any defaults. No prop, visible text, style or interaction-signal change. Host configurations own acquisition policy; the section remains provider-neutral. Verify plain URLs and query/fragment fixtures, clipboard success/failure and restored estimate values.

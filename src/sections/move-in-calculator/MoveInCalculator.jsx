@@ -1,3 +1,4 @@
+import { estimateShareUrl } from './share-url.js'
 import { useEffect, useId, useRef, useState } from 'react'
 import { ChevronDown, Copy, Link } from 'lucide-react'
 import requireProps from '../requireProps'
@@ -192,7 +193,7 @@ export default function MoveInCalculator({
   }
 
   function shareLink() {
-    return `${shareUrl}?${shareParams(s, a)}`
+    return estimateShareUrl(shareUrl, shareParams(s, a))
   }
 
   function copy(text, key) {

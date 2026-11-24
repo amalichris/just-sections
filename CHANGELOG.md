@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.27.2 — 2026-11-24
+
+### Sections
+- `move-in-calculator`: Copy link now merges estimate values into an existing shareUrl query, preserving configured acquisition tags and fragments. No prop change; plain share URLs work as before.
+
+### Internal
+- Query-merge regression fixtures; dossier revision 1.7. JustEjari adopts this patch on develop. JustConvert is explicitly deferred because its current v1.15.1 pages do not use the calculator; no unrelated section upgrade is needed. Main branches remain unchanged.
+
 Every released version of `just-sections`. Entries describe what a **consumer** experiences,
 not what the diff looks like.
 

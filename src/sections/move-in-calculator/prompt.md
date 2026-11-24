@@ -1,7 +1,7 @@
 # Move-in calculator implementation prompt
 
 - **Section ID:** `move-in-calculator`
-- **Revision:** `1.6`
+- **Revision:** `1.7`
 - **Companion plan:** [`plan.md`](plan.md)
 
 ## Preflight
@@ -30,3 +30,7 @@ describes.
 2. Review every fixture in the gallery at 375, 768, 1024 and 1440.
 3. Check the plan's acceptance criteria.
 4. If a decision changes, update both files and increment the shared Revision.
+
+## Query-safe share URLs (revision 1.7)
+
+The existing absolute shareUrl may include configured query parameters and a fragment. Merge the current estimate parameters with URLSearchParams.set rather than concatenating another question mark. Preserve configured tags and fragments; estimate values replace any defaults. No prop, visible text, style or interaction-signal change. Host configurations own acquisition policy; the section remains provider-neutral. Verify plain URLs and query/fragment fixtures, clipboard success/failure and restored estimate values.
